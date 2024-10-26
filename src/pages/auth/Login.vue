@@ -49,6 +49,7 @@ import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { useForm, useToast } from 'vuestic-ui'
 import { validators } from '../../services/utils'
+import { login } from '../../api/user/auth'
 
 const { validate } = useForm('form')
 const { push } = useRouter()
@@ -60,10 +61,15 @@ const formData = reactive({
   keepLoggedIn: false,
 })
 
-const submit = () => {
+const submit = async () => {
   if (validate()) {
-    init({ message: "You've successfully logged in", color: 'success' })
-    push({ name: 'dashboard' })
+    const loginUser = await login(formData.email, formData.password)
+    if (loginUser.code == 200) {
+      init({ message: "You've successfully logged in", color: 'success' })
+      push({ name: 'dashboard' })
+    } else {
+      init({ message: loginUser.message, color: 'error' })
+    }
   }
 }
 </script>
