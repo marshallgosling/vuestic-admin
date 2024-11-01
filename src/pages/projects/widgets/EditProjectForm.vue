@@ -91,7 +91,7 @@ const { users: ownerUsers, filters: ownerFilters } = useUsers({ pagination: ref(
       multiple
       :rules="[(v: any) => ('length' in v && v.length > 0) || 'This field is required']"
       :options="teamUsers"
-      :max-visible-options="$vaBreakpoint.mdUp ? 3 : 1"
+      :max-visible-options="3"
     >
       <template #content="{ valueArray }">
         <template v-if="valueArray">

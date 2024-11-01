@@ -122,8 +122,8 @@
     "startedTopic": "{name} 开始了一个新话题"
   },
   "user": {
+    "menu": "账户设定",
     "language": "修改语言",
-    "logout": "登出",
     "logout": "登出",
     "profile": "我的资料",
     "settings": "设置",

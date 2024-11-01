@@ -85,7 +85,7 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
 </script>
 
 <template>
-  <h1 class="page-title">Projects</h1>
+  <h1 class="page-title">AI 实例列表</h1>
 
   <VaCard>
     <VaCardContent>
@@ -96,12 +96,12 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
             color="background-element"
             border-color="background-element"
             :options="[
-              { label: 'Cards', value: true },
-              { label: 'Table', value: false },
+              { label: '图标', value: true },
+              { label: '列表', value: false },
             ]"
           />
         </div>
-        <VaButton icon="add" @click="createNewProject">Project</VaButton>
+        <VaButton icon="add" @click="createNewProject">启动实例</VaButton>
       </div>
 
       <ProjectCards

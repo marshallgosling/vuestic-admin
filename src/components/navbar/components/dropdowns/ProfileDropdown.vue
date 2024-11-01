@@ -4,8 +4,7 @@
       <template #anchor>
         <VaButton preset="secondary" color="textPrimary">
           <span class="profile-dropdown__anchor min-w-max">
-            <slot />
-            <VaAvatar :size="32" color="warning"> 😍 </VaAvatar>
+            {{  t(`user.menu`) }}
           </span>
         </VaButton>
       </template>
@@ -110,7 +109,7 @@ withDefaults(
         list: [
           {
             name: 'logout',
-            to: 'login',
+            to: 'logout',
             icon: 'mso-logout',
           },
         ],

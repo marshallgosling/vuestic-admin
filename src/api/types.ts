@@ -1,25 +1,37 @@
 // type.ts
 import type { ResponseData } from './responseType'
+import { Instance, Network, Storage } from '../pages/instances/types'
 
 export interface empty extends ResponseData {}
 
 export interface loginUser extends ResponseData {
   data: {
-    id: number
-    name: string
     token: string
-    group: string
-    avatar: string
-    email: string
   }
 }
 // 定义一个接口，用于规范用户的数据类型
-export interface userList extends ResponseData {
+export interface userProfile extends ResponseData {
   data: {
     id: number
     name: string
-    age: number
+    group: string
     email: string
     avatar: string
   }
+}
+
+export interface networkList extends ResponseData {
+  data: Network[]
+}
+
+export interface storageList extends ResponseData {
+  data: Storage[]
+}
+
+export interface instanceList extends ResponseData {
+  data: Instance[]
+}
+
+export interface instanceItem extends ResponseData {
+  data: Instance
 }

@@ -1,12 +1,13 @@
 import { defineStore } from 'pinia'
+import { getUserProfile } from '../api/user'
 
 export const useUserStore = defineStore('user', {
   state: () => {
     return {
-      userName: 'Vasili Savitski',
-      email: 'vasili@gmail.com',
-      memberSince: '8/12/2020',
-      pfp: 'https://picsum.photos/id/22/200/300',
+      userName: '',
+      email: '',
+      group: '',
+      avatar: '',
       is2FAEnabled: false,
     }
   },
@@ -18,6 +19,14 @@ export const useUserStore = defineStore('user', {
 
     changeUserName(userName: string) {
       this.userName = userName
+    },
+
+    async fetchUserPreference() {
+      const loginUser = await getUserProfile()
+      this.userName = loginUser.data.name
+      this.email = loginUser.data.email
+      this.group = loginUser.data.group
+      this.avatar = loginUser.data.avatar
     },
   },
 })

@@ -17,13 +17,17 @@ const request: AxiosInstance = axios.create({
       // 在开发中，一般还需要单点登录或者其他功能的通用请求头，可以一并配置进来
     },
   },
-  timeout: 5000, //超时的时间的设置
+  timeout: 50000, //超时的时间的设置
 })
 const { init } = useToast()
+
 //第二步:request实例添加请求与响应拦截器
 request.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    //config配置对象,headers属性请求头,经常给服务器端携带公共参数
+    //登录信息
+    if (localStorage.getItem('token')) {
+      config.headers.Authorization = localStorage.getItem('token')
+    }
     //返回配置对象
     return config
   },
@@ -51,6 +55,8 @@ request.interceptors.response.use(
     switch (status) {
       case 401:
         message = 'TOKEN过期'
+        localStorage.removeItem('token')
+        //push({ name: 'login'} )
         break
       case 403:
         message = '无权访问'
@@ -65,7 +71,7 @@ request.interceptors.response.use(
         message = '网络出现问题'
         break
     }
-    //提示错误信息
+    // //提示错误信息
     init({ message: message, color: 'error' })
     return Promise.reject(error)
   },

@@ -37,6 +37,16 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../pages/users/UsersPage.vue'),
       },
       {
+        name: 'instances',
+        path: 'instances',
+        component: () => import('../pages/instances/InstancePage.vue'),
+      },
+      {
+        name: 'projects',
+        path: 'projects',
+        component: () => import('../pages/projects/ProjectsPage.vue'),
+      },
+      {
         name: 'projects',
         path: 'projects',
         component: () => import('../pages/projects/ProjectsPage.vue'),
@@ -76,6 +86,11 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         name: 'login',
+        path: 'login',
+        component: () => import('../pages/auth/Login.vue'),
+      },
+      {
+        name: 'logout',
         path: 'login',
         component: () => import('../pages/auth/Login.vue'),
       },
@@ -121,6 +136,30 @@ const router = createRouter({
     }
   },
   routes,
+})
+
+router.beforeEach((to, from, next) => {
+  if (
+    to.name === 'login' ||
+    to.name === 'signup' ||
+    to.name === 'recover-password' ||
+    to.name === 'recover-password-email'
+  ) {
+    next()
+  } 
+  else if (
+    to.name === 'logout'
+  ) {
+    localStorage.removeItem('token')
+    next()
+  }
+  else {
+    if (!localStorage.getItem('token')) {
+      next({ name: 'login' })
+    } else {
+      next()
+    }
+  }
 })
 
 export default router

@@ -1,5 +1,5 @@
-import request from '../../services/request'
-import { loginUser, empty } from '../types'
+import request from '../services/request'
+import { loginUser, empty } from './types'
 
 enum API {
   AUTH_LOGIN_URL = '/auth/login',

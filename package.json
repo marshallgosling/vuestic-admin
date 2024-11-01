@@ -4,7 +4,7 @@
   "version": "3.1.0",
   "scripts": {
     "prepare": "husky install",
-    "dev": "vite --port 3000 --host",
+    "dev": "vite --port 8083 --host",
     "build": "npm run lint && vue-tsc --noEmit && vite build",
     "build:ci": "vite build",
     "start:ci": "serve -s ./dist",
@@ -21,6 +21,7 @@
     ]
   },
   "dependencies": {
+    "@floating-ui/dom": "^1.6.11",
     "@gtm-support/vue-gtm": "^2.0.0",
     "@vuestic/compiler": "latest",
     "@vuestic/tailwind": "^0.1.3",
