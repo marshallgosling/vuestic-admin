@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { PropType } from 'vue'
 import { Instance } from '../types'
-import ProjectStatusBadge from '../components/ProjectStatusBadge.vue'
+import InstanceStatusBadge from '../components/InstanceStatusBadge.vue'
 
 defineProps({
   instances: {
@@ -41,10 +41,13 @@ const avatarColor = (userName: string) => {
       :style="{ '--va-card-outlined-border': '1px solid var(--va-background-element)' }"
       outlined
     >
+    <VaCardBlock class="flex-nowrap" vertical>
+      
+
       <VaCardContent class="flex flex-col h-full">
         <div class="text-[var(--va-secondary)]">{{ instance.created_at }}</div>
-        <div class="flex flex-col items-center gap-4 grow">
-          <h4 class="va-h4 text-center self-stretch overflow-hidden line-clamp-2 text-ellipsis">
+        <div class="flex flex-col gap-1 grow">
+          <h4 class="va-h4 text-left self-stretch overflow-hidden line-clamp-2 text-ellipsis">
             {{ instance.name }}
           </h4>
           <p>
@@ -55,18 +58,27 @@ const avatarColor = (userName: string) => {
             <span class="text-[var(--va-secondary)]">描述: </span>
             <span>{{ instance.description }}</span>
           </p>
-          
-          <ProjectStatusBadge :status="instance.status" />
+          <p>
+            <span class="text-[var(--va-secondary)]">IP: </span>
+            <span>{{ instance.networks[0].ip }}</span>
+          </p>
+          <InstanceStatusBadge :status="instance.status" />
         </div>
-        <VaDivider class="my-6" />
-        <div class="flex justify-between">
-          <VaButton preset="secondary" icon="mso-edit" color="secondary" @click="$emit('edit', instance)" />
-          <VaButton preset="secondary" icon="mso-delete" color="danger" @click="$emit('delete', instance)" />
-          <VaButton preset="secondary" icon="mso-delete" color="danger" @click="$emit('start', instance)" />
-          <VaButton preset="secondary" icon="mso-delete" color="danger" @click="$emit('stop', instance)" />
-          <VaButton preset="secondary" icon="mso-delete" color="danger" @click="$emit('reboot', instance)" />
+
+        <VaDivider class="my-2" />
+        <div class="flex justify-right gap-2">
+          
+          <VaButton preset="secondary" icon="mso-edit" color="primary" size="small" @click="$emit('edit', instance)" >修改</VaButton>
+          <VaButton preset="secondary" icon="mso-delete" color="danger" size="small" @click="$emit('delete', instance)" >删除</VaButton>
+
+            <VaButton preset="secondary" icon="mso-play_arrow" color="primary" size="small" @click="$emit('start', instance)">启动</VaButton>
+            <VaButton preset="secondary" icon="mso-highlight_keyboard_focus" color="primary" size="small" @click="$emit('stop', instance)" >停止</VaButton>
+            <VaButton preset="secondary" icon="mso-forward_media" color="primary" size="small" @click="$emit('reboot', instance)" >重启</VaButton>
+
         </div>
       </VaCardContent>
+    
+      </VaCardBlock>
     </VaCard>
   </VaInnerLoading>
   <div v-else class="p-4 flex justify-center items-center text-[var(--va-secondary)]">没有任何实例</div>

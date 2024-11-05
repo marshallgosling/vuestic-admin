@@ -10,7 +10,7 @@ import { useModal, useToast } from 'vuestic-ui'
 
 const doShowAsCards = useLocalStorage('instances-view', true)
 
-const { instances, update, add, isLoading, remove, start, stop, reboot, init } = useInstances()
+const { instances, update, add, isLoading, remove, start, stop, reboot } = useInstances()
 
 const instanceToEdit = ref<Instance | null>(null)
 const doShowInstanceFormModal = ref(false)
@@ -30,21 +30,105 @@ const { init: notify } = useToast()
 const onInstanceSaved = async (instance: Instance) => {
   doShowInstanceFormModal.value = false
   if ('id' in instance) {
-    await update(instance as Instance)
+    const ret = await update(instance as Instance)
     notify({
-      message: 'Instance updated',
-      color: 'success',
+      message: ret.message,
+      color: ret.code==200?'success':'error',
     })
   } else {
-    await add(instance as Instance)
+    const ret = await add(instance as Instance)
     notify({
-      message: 'Instance created',
-      color: 'success',
+      message: ret.message,
+      color: ret.code==200?'success':'error',
     })
   }
 }
 
 const { confirm } = useModal()
+
+const onInstanceReboot = async (instance: Instance) => {
+  const response = await confirm({
+    title: 'Reboot Instance',
+    message: `Are you sure you want to reboot Instance "${instance.name}"?`,
+    okText: 'Reboot',
+    size: 'small',
+    maxWidth: '380px',
+  })
+
+  if (!response) {
+    return
+  }
+
+  const res = await reboot(instance)
+  if(res.code == 200) {
+    notify({
+      message: 'Instance rebooted',
+      color: 'success',
+    })
+  } else {
+    notify({
+      message: res.message,
+      color: 'error',
+    })
+  }
+}
+
+const onInstanceStart = async (instance: Instance) => {
+  const response = await confirm({
+    title: 'Start Instance',
+    message: `Are you sure you want to start Instance "${instance.name}"?`,
+    okText: 'Start',
+    size: 'small',
+    maxWidth: '380px',
+  })
+
+  if (!response) {
+    return
+  }
+
+  const res = await start(instance)
+  if(res.code == 200) {
+    notify({
+      message: 'Instance Started',
+      color: 'success',
+    })
+  } else {
+    notify({
+      message: res.message,
+      color: 'error',
+    })
+  }
+  
+}
+
+const onInstanceStop = async (instance: Instance) => {
+  const response = await confirm({
+    title: 'Stop Instance',
+    message: `Are you sure you want to stop Instance "${instance.name}"?`,
+    okText: 'STOP',
+    size: 'small',
+    maxWidth: '380px',
+  })
+
+  if (!response) {
+    return
+  }
+
+  const res = await stop(instance)
+  if(res.code == 200) {
+    notify({
+      message: 'Instance Stopped',
+      color: 'success',
+    })
+  } else {
+    notify({
+      message: res.message,
+      color: 'error',
+    })
+  }
+  
+}
+
 
 const onInstanceDeleted = async (instance: Instance) => {
   const response = await confirm({
@@ -72,7 +156,7 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
   if (editFormRef.value.isFormHasUnsavedChanges) {
     const agreed = await confirm({
       maxWidth: '380px',
-      message: 'Form has unsaved changes. Are you sure you want to close it?',
+      message: '确认要取消吗？',
       size: 'small',
     })
     if (agreed) {
@@ -110,6 +194,9 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
         :loading="isLoading"
         @edit="editInstance"
         @delete="onInstanceDeleted"
+        @reboot="onInstanceReboot"
+        @start="onInstanceStart"
+        @stop="onInstanceStop"
       />
       <InstanceTable
         v-else
@@ -117,6 +204,9 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
         :loading="isLoading"
         @edit="editInstance"
         @delete="onInstanceDeleted"
+        @reboot="onInstanceReboot"
+        @start="onInstanceStart"
+        @stop="onInstanceStop"
       />
     </VaCardContent>
 
@@ -130,12 +220,12 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
       hide-default-actions
       :before-cancel="beforeEditFormModalClose"
     >
-      <h1 v-if="instanceToEdit === null" class="va-h5 mb-4">Add instance</h1>
-      <h1 v-else class="va-h5 mb-4">Edit instance</h1>
+      <h1 v-if="instanceToEdit === null" class="va-h5 mb-4">启动实例</h1>
+      <h1 v-else class="va-h5 mb-4">修改实例</h1>
       <EditInstanceForm
         ref="editFormRef"
         :instance="instanceToEdit"
-        :save-button-label="instanceToEdit === null ? 'Add' : 'Save'"
+        :save-button-label="instanceToEdit === null ? '添加' : '保存'"
         @close="cancel"
         @save="
           (instance) => {

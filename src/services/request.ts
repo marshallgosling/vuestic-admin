@@ -26,7 +26,7 @@ request.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     //登录信息
     if (localStorage.getItem('token')) {
-      config.headers.Authorization = localStorage.getItem('token')
+      config.headers.Authorization = 'Bearer ' + localStorage.getItem('token')
     }
     //返回配置对象
     return config
@@ -57,6 +57,7 @@ request.interceptors.response.use(
         message = 'TOKEN过期'
         localStorage.removeItem('token')
         //push({ name: 'login'} )
+        window.location.href = '/#/login'
         break
       case 403:
         message = '无权访问'
@@ -73,6 +74,7 @@ request.interceptors.response.use(
     }
     // //提示错误信息
     init({ message: message, color: 'error' })
+    
     return Promise.reject(error)
   },
 )

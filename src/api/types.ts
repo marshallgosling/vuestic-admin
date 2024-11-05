@@ -1,6 +1,7 @@
 // type.ts
 import type { ResponseData } from './responseType'
-import { Instance, Network, Storage } from '../pages/instances/types'
+import { Instance } from '../pages/instances/types'
+import { Network } from '../pages/networks/types'
 
 export interface empty extends ResponseData {}
 
@@ -34,4 +35,8 @@ export interface instanceList extends ResponseData {
 
 export interface instanceItem extends ResponseData {
   data: Instance
+}
+
+export interface networkItem extends ResponseData {
+  data: Network
 }

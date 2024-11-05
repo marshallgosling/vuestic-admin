@@ -1,5 +1,6 @@
 import request from '../services/request'
-import { instanceList, instanceItem, Instance } from './types'
+import { instanceList, instanceItem,  empty } from './types'
+import { Instance } from '../pages/instances/types'
 
 enum API {
   INSTANCE_LIST_URL = '/instance/list',
@@ -10,8 +11,8 @@ enum API {
   INSTANCE_ACTION_URL = '/instance/action',
 }
 
-export const getInstances = () => {
-    return request.get<any, instanceList>(API.INSTANCE_LIST_URL)
+export const getInstances = (query: string) => {
+    return request.get<any, instanceList>(API.INSTANCE_LIST_URL+"?"+query)
 }
 
 export const getInstanceInfo = (id: string) => {
@@ -19,29 +20,29 @@ export const getInstanceInfo = (id: string) => {
 }
 
 export const startInstance = (id: string) => {
-    return request.post(API.INSTANCE_LIST_URL, { action: "start", id })
+    return request.post<any, empty>(API.INSTANCE_ACTION_URL, { action: "start", id })
 }
 
 export const stopInstance = (id: string) => {
-    return request.post(API.INSTANCE_LIST_URL, { action: "stop", id })
+    return request.post<any, empty>(API.INSTANCE_ACTION_URL, { action: "stop", id })
 }
 
 export const rebootInstance = (id: string) => {
-    return request.post(API.INSTANCE_LIST_URL, { action: "reboot", id })
+    return request.post<any, empty>(API.INSTANCE_ACTION_URL, { action: "reboot", id })
 }
 
 export const initInstance = (id: string) => {
-    return request.post(API.INSTANCE_LIST_URL, { action: "init", id })
+    return request.post<any, empty>(API.INSTANCE_ACTION_URL, { action: "init", id })
 }
 
 export const deleteInstance = (id: string) => {
-    return request.delete(API.INSTANCE_DELETE_URL+id)
+    return request.delete<any, empty>(API.INSTANCE_DELETE_URL+id)
 }
 
 export const updateInstance = (instance: Instance) => {
-    return request.put(API.INSTANCE_UPDATE_URL, instance)
+    return request.put<any, instanceItem>(API.INSTANCE_UPDATE_URL, instance)
 }
 
 export const createInstance = (instance: Instance) => {
-    return request.put(API.INSTANCE_UPDATE_URL, instance)
+    return request.put<any, instanceItem>(API.INSTANCE_UPDATE_URL, instance)
 }

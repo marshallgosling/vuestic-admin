@@ -59,7 +59,7 @@ const formData = reactive({
   submiting: false
 })
 
-const submit = async (e) => {
+const submit = async () => {
   if (validate()) {
     formData.submiting = true;
     const loginUser = await login(formData.email, formData.password)

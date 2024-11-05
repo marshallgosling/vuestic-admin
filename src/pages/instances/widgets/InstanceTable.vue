@@ -3,16 +3,17 @@ import { PropType, computed } from 'vue'
 import { defineVaDataTableColumns } from 'vuestic-ui'
 import { Instance } from '../types'
 import UserAvatar from '../../users/widgets/UserAvatar.vue'
-import ProjectStatusBadge from '../components/ProjectStatusBadge.vue'
+import InstanceStatusBadge from '../components/InstanceStatusBadge.vue'
 // import { Pagination, Sorting } from '../../../data/pages/projects'
 import { useVModel } from '@vueuse/core'
 
 const columns = defineVaDataTableColumns([
-  { label: 'Project name', key: 'project_name', sortable: true },
-  { label: 'Project owner', key: 'project_owner', sortable: true },
-  { label: 'Team', key: 'team', sortable: true },
-  { label: 'Status', key: 'status', sortable: true },
-  { label: 'Creation Date', key: 'created_at', sortable: true },
+  { label: 'ID', key: 'id', sortable: true },
+  { label: '名称', key: 'name', sortable: true },
+  { label: '域', key: 'domain', sortable: true },
+  { label: 'IP', key: 'network', sortable: true },
+  { label: '状态', key: 'status', sortable: true },
+  { label: '创建日期', key: 'created_at', sortable: true },
   { label: ' ', key: 'actions' },
 ])
 
@@ -75,9 +76,18 @@ const avatarColor = (userName: string) => {
           {{ instance.name }}
         </div>
       </template>
-      
+      <template #cell(domain)="{ rowData: instance }">
+        <div class="flex items-center gap-2 ellipsis max-w-[230px]">
+          {{ instance.domain}}
+        </div>
+      </template>
+      <template #cell(network)="{ rowData: instance }">
+        <div class="flex items-center gap-2 ellipsis max-w-[230px]">
+          {{ instance.networks[0].ip}}
+        </div>
+      </template>
       <template #cell(status)="{ rowData: instance }">
-        <ProjectStatusBadge :status="instance.status" />
+        <InstanceStatusBadge :status="instance.status" />
       </template>
 
       <template #cell(actions)="{ rowData: instance }">
@@ -85,24 +95,24 @@ const avatarColor = (userName: string) => {
           <VaButton
             preset="primary"
             size="small"
-            color="primary"
-            icon="mso-play"
+            color="success"
+            icon="mso-play_arrow"
             aria-label="Start"
             @click="$emit('start', instance as Instance)"
           />
           <VaButton
             preset="primary"
             size="small"
-            color="primary"
-            icon="mso-stop"
+            color="danger"
+            icon="mso-highlight_keyboard_focus"
             aria-label="Stop"
             @click="$emit('stop', instance as Instance)"
           />
           <VaButton
             preset="primary"
             size="small"
-            color="primary"
-            icon="mso-edit"
+            color="warning"
+            icon="mso-forward_media"
             aria-label="Reboot"
             @click="$emit('reboot', instance as Instance)"
           />

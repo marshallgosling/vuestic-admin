@@ -19,10 +19,17 @@ export default {
       },
     },
     {
-      name: 'users',
-      displayName: 'menu.users',
+      name: 'instances',
+      displayName: 'menu.instances',
       meta: {
-        icon: 'group',
+        icon: 'folder_shared',
+      },
+    },
+    {
+      name: 'networks',
+      displayName: 'menu.networks',
+      meta: {
+        icon: 'folder_shared',
       },
     },
     {
@@ -54,28 +61,6 @@ export default {
       ],
     },
     {
-      name: 'auth',
-      displayName: 'menu.auth',
-      meta: {
-        icon: 'login',
-      },
-      children: [
-        {
-          name: 'login',
-          displayName: 'menu.login',
-        },
-        {
-          name: 'signup',
-          displayName: 'menu.signup',
-        },
-        {
-          name: 'recover-password',
-          displayName: 'menu.recover-password',
-        },
-      ],
-    },
-
-    {
       name: 'faq',
       displayName: 'menu.faq',
       meta: {
@@ -95,13 +80,7 @@ export default {
       meta: {
         icon: 'manage_accounts',
       },
-    },
-    {
-      name: 'settings',
-      displayName: 'menu.settings',
-      meta: {
-        icon: 'settings',
-      },
-    },
+    }
+    
   ] as INavigationRoute[],
 }
