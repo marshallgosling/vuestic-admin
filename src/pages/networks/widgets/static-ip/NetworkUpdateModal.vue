@@ -30,6 +30,6 @@ const update = async (network: Network) => {
   const res = await updateNetwork(network)
   init({ message: res.message, color: res.code == 200 ? 'success' : 'error' })
   emits('close')
-  if(ret.code==200)emits('reload')
+  if(res.code==200)emits('reload')
 }
 </script>
