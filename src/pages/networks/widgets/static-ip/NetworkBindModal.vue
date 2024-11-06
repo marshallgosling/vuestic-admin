@@ -1,16 +1,16 @@
 <template>
   <VaModal hide-default-actions model-value size="small" close-button @cancel="emits('close')">
-    <h3 class="va-h4 mb-4">修改静态IP</h3>
-    <NetworkEdit :network="newNetwork" submit-text="保存" @cancel="emits('close')" @save="update" />
+    <h3 class="va-h4 mb-4">绑定实例</h3>
+    <InstanceList :network="props.network" submit-text="保存" @cancel="emits('close')" @save="bind" />
   </VaModal>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import NetworkEdit from './NetworkEdit.vue'
+import InstanceList from './InstanceList.vue'
 import { Network } from '../../types'
 import { useToast } from 'vuestic-ui'
-import { updateNetwork } from '../../../../api/network'
+import { bindNetwork } from '../../../../api/network'
 
 const isModalOpen = ref(false)
 const { init } = useToast()
@@ -19,17 +19,13 @@ const props = defineProps<{
   network: Network
 }>()
 
-const newNetwork = ref({ ...props.network })
-
-console.log(newNetwork)
-
 const emits = defineEmits(['close', 'reload'])
 
-const update = async (network: Network) => {
+const bind = async (network: Network) => {
   isModalOpen.value = false
-  const res = await updateNetwork(network)
+  const res = await bindNetwork(network)
   init({ message: res.message, color: res.code == 200 ? 'success' : 'error' })
   emits('close')
-  if(ret.code==200)emits('reload')
+  emits('reload')
 }
 </script>

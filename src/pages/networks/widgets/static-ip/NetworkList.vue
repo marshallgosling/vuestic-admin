@@ -22,6 +22,7 @@
         :network="network"
         @edit="networkToEdit = network"
         @remove="remove(network)"
+        @bind="networkToBind = network"
       />
       <div
         class="sm:h-[114px] p-4 rounded-lg border border-dashed border-primary flex flex-col sm:flex-row items-start sm:items-center gap-4"
@@ -37,8 +38,9 @@
       </div>
     </template>
   </div>
-  <NetworkCreateModal v-if="showCreate" @close="showCreate = false" />
-  <NetworkUpdateModal v-if="networkToEdit" :netork="networkToEdit" @close="networkToEdit = undefined" />
+  <NetworkCreateModal v-if="showCreate" @close="showCreate = false" @reload="reload" />
+  <NetworkUpdateModal v-if="networkToEdit" :network="networkToEdit" @close="networkToEdit=undefined" @reload="reload" />
+  <NetworkBindModal v-if="networkToBind" :network="networkToBind" @close="networkToBind=undefined" @reload="reload" />
 </template>
 
 <script lang="ts" setup>
@@ -49,25 +51,40 @@ import { Network } from '../../types'
 import { useModal, useToast } from 'vuestic-ui'
 import NetworkCreateModal from './NetworkCreateModal.vue'
 import NetworkUpdateModal from './NetworkUpdateModal.vue'
+import NetworkBindModal from './NetworkBindModal.vue'
 import { deleteNetwork, getNetworks } from '../../../../api/network'
+import { getInstances } from '../../../../api/instance'
 
 const loading = ref(false)
-var networks: any;
+const networks = ref<Network[]>();
+var instanceListOptions: {}[];
 
 const fetch = async () => {
     loading.value = true
     const { data } = await getNetworks('all')
-    networks = data as Network[]
+    networks.value = data
     loading.value = false
-  }
+}
 
-  fetch()
+fetch()
+
+const fetchInstance = async () => {
+  const instanceList = await getInstances('new');
+  instanceListOptions = instanceList.data.map((instance) => {
+    return {
+      label: instance.name,
+      value: instance.id,
+    }})
+}
+
+fetchInstance()
+
 const { confirm } = useModal()
 
 const showCreate = ref<boolean>(false)
 const networkToEdit = ref<Network>()
+const networkToBind = ref<Network>()
 const { init } = useToast()
-
 
 const remove = async (network: Network) => {
   confirm({
@@ -78,7 +95,12 @@ const remove = async (network: Network) => {
     if (!ok) return
     const res = await deleteNetwork(network.id)
     init({ message: res.message, color: res.code == 200 ? 'success' : 'error' })
+    fetch()
   })
+}
+
+const reload = () => {
+  fetch()
 }
 
 const { getColor, colorToRgba } = useColors()

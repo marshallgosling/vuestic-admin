@@ -16,11 +16,11 @@ export type Network = {
   type: string
   status: Status
   created_at: string
-  instance: Instance
   instance_id: string
+  instance_name: string
 }
 
-export type EmptyNetwork = Omit<Network, 'ip' | 'netmask' | 'gateway' | 'status' | 'created_at' | 'instance'> & {
+export type EmptyNetwork = Omit<Network, 'ip' | 'netmask' | 'gateway' | 'status' | 'created_at' | 'instance_name' > & {
   id: Network['id'] | ''
   name: Network['name'] | ''
   instance_id: Network['instance_id'] | ''

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import { EmptyInstance, Instance, DomainList, InstanceType } from '../types'
+import { EmptyInstance, Instance, InstanceType } from '../types'
 import { SelectOption } from 'vuestic-ui'
 
 

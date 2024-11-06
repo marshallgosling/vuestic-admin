@@ -28,5 +28,9 @@ export const updateNetwork = (network: Network) => {
 }
 
 export const createNetwork = (network: any) => {
-    return request.put<any, networkItem>(API.NETWORK_UPDATE_URL, network)
+    return request.put<any, networkItem>(API.NETWORK_CREATE_URL, network)
+}
+
+export const bindNetwork = (network: Network) => {
+    return request.post<any, networkItem>(API.NETWORK_ACTION_URL, { action: 'bind', payload: network })
 }

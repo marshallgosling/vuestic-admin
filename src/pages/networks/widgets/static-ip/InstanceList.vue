@@ -1,10 +1,12 @@
 <template>
   <VaForm ref="form" @submit.prevent="submit">
-    <VaInput
-      v-model="networkLocal.name"
-      :rules="[(v) => !!v || '此为必填项']"
+    <VaSelect
+      v-model="networkLocal.instance_id"
+      :options="instanceListOptions"
+      :rules="[(v) => !!v || '此为必选项']"
       class="mb-4"
-      label="名称"
+      label="选择实例"
+      text-by="label" value-by="value" track-by="value"
     />
 
     <div class="flex justify-end gap-3">
@@ -24,6 +26,7 @@ const emits = defineEmits(['save', 'cancel'])
 
 const props = defineProps<{
   network: Network
+  instanceListOptions: {}[]
   submitText: string
 }>()
 

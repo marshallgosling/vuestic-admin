@@ -41,8 +41,6 @@ const avatarColor = (userName: string) => {
       :style="{ '--va-card-outlined-border': '1px solid var(--va-background-element)' }"
       outlined
     >
-    <VaCardBlock class="flex-nowrap" vertical>
-      
 
       <VaCardContent class="flex flex-col h-full">
         <div class="text-[var(--va-secondary)]">{{ instance.created_at }}</div>
@@ -50,19 +48,26 @@ const avatarColor = (userName: string) => {
           <h4 class="va-h4 text-left self-stretch overflow-hidden line-clamp-2 text-ellipsis">
             {{ instance.name }}
           </h4>
-          <p>
-            <span class="text-[var(--va-secondary)]">域: </span>
-            <span>{{ instance.domain }}</span>
-          </p>
-          <p>
-            <span class="text-[var(--va-secondary)]">描述: </span>
-            <span>{{ instance.description }}</span>
-          </p>
-          <p>
-            <span class="text-[var(--va-secondary)]">IP: </span>
-            <span>{{ instance.networks[0].ip }}</span>
-          </p>
-          <InstanceStatusBadge :status="instance.status" />
+        </div>
+        <div class="grid grid-cols-3 gap-4 ">
+          <VaImage fit="contain" class="max-h-32 col-span-1 pd-1" src="http://localhost:8080/front/instance-small.png"/>
+
+          <div class="flex flex-col gap-1 grow col-span-2">
+            <p>
+              <span class="text-[var(--va-secondary)]">域: </span>
+              <span>{{ instance.domain }}</span>
+            </p>
+            <p>
+              <span class="text-[var(--va-secondary)]">描述: </span>
+              <span>{{ instance.description }}</span>
+            </p>
+            <p>
+              <span class="text-[var(--va-secondary)]">IP: </span>
+              <span>{{ instance.networks[0].ip }}</span>
+            </p>
+            <p>&nbsp;</p>
+            <InstanceStatusBadge :status="instance.status" />
+          </div>
         </div>
 
         <VaDivider class="my-2" />
@@ -77,8 +82,7 @@ const avatarColor = (userName: string) => {
 
         </div>
       </VaCardContent>
-    
-      </VaCardBlock>
+
     </VaCard>
   </VaInnerLoading>
   <div v-else class="p-4 flex justify-center items-center text-[var(--va-secondary)]">没有任何实例</div>

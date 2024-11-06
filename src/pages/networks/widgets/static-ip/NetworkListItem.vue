@@ -11,7 +11,7 @@
         <NetworkLogo :type="network.type" />
         <div>
           <div class="text-secondary">静态 IP {{ network.ip }}</div>
-          <div class="text-secondary">已附加到 {{ network.instance ? network.instance.name : '无' }}</div>
+          <div class="text-secondary">{{ network.instance_id ? '已附加到 '+network.instance_name : '未绑定实例' }}  <VaButton v-if="network.instance_id == ''" size="small" preset="primary" @click="emits('bind')">绑定</VaButton></div>
         </div>
       </div>
     </div>
@@ -23,20 +23,13 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
 import NetworkLogo from '../../network-logo/NetworkLogo.vue'
 import { Network } from '../../types'
 
-const emits = defineEmits(['edit', 'remove'])
+const emits = defineEmits(['edit', 'remove', 'bind'])
 
 const props = defineProps<{
   network: Network
 }>()
 
-// const network = computed(() => props.network)
-
-// const expirationDateString = computed(() => {
-//   const e = props.card.expirationDate
-//   return `${e[0]}${e[1]}/${e[2]}${e[3]}`
-// })
 </script>
