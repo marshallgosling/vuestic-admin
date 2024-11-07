@@ -27,11 +27,11 @@ pre {
 }
 
 .page-title {
-  @apply text-[32px] md:text-5xl font-bold leading-9 md:leading-[56px] max-sm:mt-6 mb-6 md:mb-4;
+  @apply text-[24px] md:text-3xl font-bold leading-9 md:leading-[32px] max-sm:mt-6 mb-6 md:mb-4; margin-top: 16px;
 }
 
 .h1 {
-  @apply text-[32px] md:text-5xl font-bold leading-9 md:leading-[56px] max-sm:mt-6 mb-6 md:mb-4;
+  @apply text-[24px] md:text-3xl font-bold leading-9 md:leading-[32px] max-sm:mt-6 mb-6 md:mb-4;
 }
 
 .h3,

@@ -1,15 +1,15 @@
 <template>
   <VaForm ref="form" @submit.prevent="submit">
-    <h1 class="font-semibold text-4xl mb-4">登录操控台</h1>
+    <h1 class="font-semibold text-4xl mb-4">{{ t('auth.console') }}</h1>
     <p class="text-base mb-4 leading-5">
-      还未成为会员？
-      <RouterLink :to="{ name: 'signup' }" class="font-semibold text-primary">立即注册</RouterLink>
+      {{ t('auth.not_a_member') }}
+      <RouterLink :to="{ name: 'signup' }" class="font-semibold text-primary">{{ t('auth.sign_up_rightnow') }}</RouterLink>
     </p>
     <VaInput
       v-model="formData.email"
       :rules="[validators.required, validators.email]"
       class="mb-4"
-      label="Email 邮箱"
+      :label="t('auth.email')"
       type="email"
     />
     <VaValue v-slot="isPasswordVisible" :default-value="false">
@@ -18,7 +18,7 @@
         :rules="[validators.required]"
         :type="isPasswordVisible.value ? 'text' : 'password'"
         class="mb-4"
-        label="密码"
+        :label="t('auth.password')"
         @clickAppendInner.stop="isPasswordVisible.value = !isPasswordVisible.value"
       >
         <template #appendInner>
@@ -32,11 +32,11 @@
     </VaValue>
 
     <div class="auth-layout__options flex flex-col sm:flex-row items-start sm:items-center justify-between">
-      <VaCheckbox v-model="formData.keepLoggedIn" class="mb-2 sm:mb-0" label="保持登录" />
+      <VaCheckbox v-model="formData.keepLoggedIn" class="mb-2 sm:mb-0" :label="t('auth.keep_logged_in')" />
     </div>
 
     <div class="flex justify-center mt-4">
-      <VaButton class="w-full" @click="submit()" :disabled="formData.submiting">登录</VaButton>
+      <VaButton class="w-full" @click="submit()" :disabled="formData.submiting">{{ t('auth.login') }}</VaButton>
     </div>
   </VaForm>
 </template>
@@ -47,7 +47,9 @@ import { useRouter } from 'vue-router'
 import { useForm, useToast } from 'vuestic-ui'
 import { validators } from '../../services/utils'
 import { login } from '../../api/auth'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n();
 const { validate } = useForm('form')
 const { push } = useRouter()
 const { init } = useToast()

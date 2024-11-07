@@ -2,6 +2,7 @@
 import type { ResponseData } from './responseType'
 import { Instance } from '../pages/instances/types'
 import { Network } from '../pages/networks/types'
+import { KeyPair } from '../pages/keypairs/types'
 
 export interface empty extends ResponseData {}
 
@@ -15,9 +16,7 @@ export interface userProfile extends ResponseData {
   data: {
     id: number
     name: string
-    group: string
     email: string
-    avatar: string
   }
 }
 
@@ -39,4 +38,12 @@ export interface instanceItem extends ResponseData {
 
 export interface networkItem extends ResponseData {
   data: Network
+}
+
+export interface keypairList extends ResponseData {
+  data: KeyPair[]
+}
+
+export interface keypairItem extends ResponseData {
+  data: KeyPair
 }

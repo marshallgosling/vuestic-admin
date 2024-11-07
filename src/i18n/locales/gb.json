@@ -1,16 +1,33 @@
 {
   "auth": {
+    "console": "Login to console",
+    "not_a_member": "Not a member?",
+    "already_a_member": "Already a member？",
+    "sign_up_rightnow": "Sign up right now!",
     "agree": "I agree to",
     "createAccount": "Create account",
     "createNewAccount": "Create New Account",
     "email": "Email",
     "login": "Login",
     "password": "Password",
+    "repeat_password": "Repeat Password",
     "recover_password": "Recover password",
     "sign_up": "Sign Up",
     "keep_logged_in": "Keep me logged in",
     "termsOfUse": "Terms of Use.",
     "reset_password": "Reset password"
+  },
+  "rules": {
+    "password": "Password should be 8+ characters: letters, numbers, and special characters.",
+    "password_required": "Password field is required",
+    "password_length": "Password must be at least 8 characters long",
+    "password_empty": "Password must contain at least one letter",
+    "password_number": "Password must contain at least one number",
+    "password_special": "Password must contain at least one special character",
+    "repeat_password": "Repeat Password field is required",
+    "password_match": "Passwords don't match",
+    "email_required": "Email field is required",
+    "email_valid": "Email should be valid"
   },
   "404": {
     "title": "This page’s gone fishing.",

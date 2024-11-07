@@ -14,9 +14,11 @@
         <RouterLink to="/" aria-label="Visit home page">
           <VuesticLogo />
         </RouterLink>
+        
       </div>
     </template>
     <template #right>
+      <AppLayoutNavigation v-if="!isMobile" class="p-4" />
       <AppNavbarActions class="app-navbar__actions" :is-mobile="isMobile" />
     </template>
   </VaNavbar>
@@ -27,6 +29,8 @@ import { storeToRefs } from 'pinia'
 import { useGlobalStore } from '../../stores/global-store'
 import AppNavbarActions from './components/AppNavbarActions.vue'
 import VuesticLogo from '../VuesticLogo.vue'
+import AppLayoutNavigation from '../app-layout-navigation/AppLayoutNavigation.vue';
+
 
 defineProps({
   isMobile: { type: Boolean, default: false },
@@ -35,6 +39,7 @@ defineProps({
 const GlobalStore = useGlobalStore()
 
 const { isSidebarMinimized } = storeToRefs(GlobalStore)
+
 </script>
 
 <style lang="scss" scoped>

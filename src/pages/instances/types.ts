@@ -62,11 +62,12 @@ export type Instance = {
   description: string
   instance_type: string
   created_at: string
+  key_name: string
   networks: Network[]
   storages: Storage[]
 }
 
-export type EmptyInstance = Omit<Instance, 'id' | 'status' | 'instance_type' | 'networks' | 'storages' | 'created_at'> & {
+export type EmptyInstance = Omit<Instance, 'id' | 'status' | 'instance_type' | 'networks' | 'storages' | 'created_at' | 'key_name'> & {
   name: Instance['name'] | ''
   domain: Instance['domain'] | ''
   description: Instance['description'] | ''

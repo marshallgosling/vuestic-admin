@@ -2,7 +2,7 @@ import request from '../services/request'
 import { userProfile } from './types'
 
 enum API {
-  USER_PROFILE_URL = '/user/profile',
+  USER_PROFILE_URL = '/auth/me',
 }
 
 // 用于获取用户信息

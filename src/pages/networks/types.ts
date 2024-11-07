@@ -1,5 +1,3 @@
-import { Instance } from "../instances/types"
-
 export enum PaymentSystemType {
   Visa = 'visa',
   MasterCard = 'mastercard',

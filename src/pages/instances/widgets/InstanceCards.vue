@@ -65,7 +65,10 @@ const avatarColor = (userName: string) => {
               <span class="text-[var(--va-secondary)]">IP: </span>
               <span>{{ instance.networks[0].ip }}</span>
             </p>
-            <p>&nbsp;</p>
+            <p>
+              <span class="text-[var(--va-secondary)]">密钥对: </span>
+              <span>{{ instance.key_name }}</span>
+            </p>
             <InstanceStatusBadge :status="instance.status" />
           </div>
         </div>

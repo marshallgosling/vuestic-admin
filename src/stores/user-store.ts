@@ -6,8 +6,6 @@ export const useUserStore = defineStore('user', {
     return {
       userName: '',
       email: '',
-      group: '',
-      avatar: '',
       is2FAEnabled: false,
     }
   },
@@ -25,8 +23,8 @@ export const useUserStore = defineStore('user', {
       const loginUser = await getUserProfile()
       this.userName = loginUser.data.name
       this.email = loginUser.data.email
-      this.group = loginUser.data.group
-      this.avatar = loginUser.data.avatar
+      // this.group = loginUser.data.group
+      // this.avatar = loginUser.data.avatar
     },
   },
 })

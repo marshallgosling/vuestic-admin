@@ -18,7 +18,7 @@
           <VaButton class="px-4 py-4" icon="md_close" preset="plain" @click="onCloseSidebarButtonClick" />
         </div>
       </div>
-      <AppLayoutNavigation v-if="!isMobile" class="p-4" />
+      
       <main class="p-4 pt-0">
         <article>
           <RouterView />
@@ -36,7 +36,6 @@ import { useBreakpoint } from 'vuestic-ui'
 
 import { useGlobalStore } from '../stores/global-store'
 
-import AppLayoutNavigation from '../components/app-layout-navigation/AppLayoutNavigation.vue'
 import AppNavbar from '../components/navbar/AppNavbar.vue'
 import AppSidebar from '../components/sidebar/AppSidebar.vue'
 

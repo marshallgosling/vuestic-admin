@@ -22,14 +22,21 @@ export default {
       name: 'instances',
       displayName: 'menu.instances',
       meta: {
-        icon: 'folder_shared',
+        icon: 'developer_board',
       },
     },
     {
       name: 'networks',
       displayName: 'menu.networks',
       meta: {
-        icon: 'folder_shared',
+        icon: 'multiple_stop',
+      },
+    },
+    {
+      name: 'keypairs',
+      displayName: 'menu.keypairs',
+      meta: {
+        icon: 'vpn_key',
       },
     },
     {
@@ -65,13 +72,6 @@ export default {
       displayName: 'menu.faq',
       meta: {
         icon: 'quiz',
-      },
-    },
-    {
-      name: '404',
-      displayName: 'menu.404',
-      meta: {
-        icon: 'vuestic-iconset-files',
       },
     },
     {

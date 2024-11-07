@@ -47,6 +47,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../pages/networks/NetworksPage.vue'),
       },
       {
+        name: 'keypairs',
+        path: 'keypairs',
+        component: () => import('../pages/keypairs/KeysPage.vue'),
+      },
+      {
         name: 'projects',
         path: 'projects',
         component: () => import('../pages/projects/ProjectsPage.vue'),

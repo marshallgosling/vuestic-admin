@@ -10,7 +10,7 @@ const props = defineProps<{
 }>()
 
 defineEmits<{
-  (event: 'save', intance: Instance): void
+  (event: 'save', instance: Instance): void
   (event: 'close'): void
 }>()
 
