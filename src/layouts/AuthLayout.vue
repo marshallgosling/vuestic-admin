@@ -7,7 +7,7 @@
         to="/"
         aria-label="Visit homepage"
       >
-        <LiuwanerLogo :height="28" start="#FFF" />
+        <CenturyLogo :height="28" start="#FFF" />
       </RouterLink>
     </template>
     <template #content>
@@ -23,7 +23,7 @@
         <main class="h-full flex flex-row items-center justify-start mx-auto max-w-[420px]">
           <div class="flex flex-col items-start">
             <RouterLink class="py-4" to="/" aria-label="Visit homepage">
-              <LiuwanerLogo class="mb-2" start="#0E41C9" />
+              <CenturyLogo class="mb-2" start="#0E41C9" />
             </RouterLink>
             <RouterView />
           </div>
@@ -35,7 +35,7 @@
 
 <script lang="ts" setup>
 import { useBreakpoint } from 'vuestic-ui'
-import LiuwanerLogo from '../components/LiuwanerLogo.vue'
+import CenturyLogo from '../components/CenturyLogo.vue'
 
 const breakpoint = useBreakpoint()
 </script>

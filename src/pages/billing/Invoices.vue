@@ -1,29 +1,45 @@
 <template>
   <VaCard class="mb-6">
     <VaCardContent>
-      <h2 class="page-sub-title">Invoices</h2>
-      <template v-for="(item, index) in itemsInView" :key="item.id">
+      <h2 class="page-sub-title">{{ t('billing.invoices') }}</h2>
+      <div class="flex items-center mt-2 justify-between md:justify-items-stretch mb-1">
+          <div class="flex items-center w-48 font-bold">
+            {{ t('billing.month') }}
+          </div>
+          <div class="w-20 font-bold">
+            {{ t('billing.amount') }}
+          </div>
+          <div class="w-20 font-bold">
+            {{ t('billing.tax') }}
+          </div>
+          <div class="w-20 font-bold">
+            {{ t('billing.tax_amount') }}
+          </div>
+          <div class="w-20"> </div>
+      </div>
+
+      <template v-for="(item, index) in paymentInvoices" :key="item.id">
         <div class="flex items-center justify-between md:justify-items-stretch">
           <div class="flex items-center w-48">
-            {{ item.date }}
+            {{ item.name }}
           </div>
           <div class="w-20">
-            {{ item.amount }}
+            {{ currency }} {{ item.amount }}
           </div>
-          <div>
-            <VaButton preset="primary" @click="download">Download</VaButton>
+          <div class="w-20">
+            {{ item.tax }} %
+          </div>
+          <div class="w-20">
+            {{ currency }} {{ item.tax_amount }}
+          </div>
+          <div class="w-20">
+            <VaButton preset="primary" size="small" @click="download">{{ t('billing.download') }}</VaButton>
           </div>
         </div>
-
-        <VaDivider v-if="index !== itemsInView.length - 1" />
+        <VaDivider v-if="index !== paymentInvoices.length - 1" />
       </template>
     </VaCardContent>
-    <VaCardActions vertical class="flex flex-wrap content-center mt-4">
-      <VaButton v-if="numberOfInvoicesInVIew < maxNumberOfInvoices" preset="primary" @click="increaseNumberOfInvoices()"
-        >Show more
-      </VaButton>
-      <VaButton v-else preset="primary" @click="numberOfInvoicesInVIew = minNumberOfInvoices">Show less </VaButton>
-    </VaCardActions>
+    
   </VaCard>
 </template>
 
@@ -31,59 +47,15 @@
 import { computed, ref } from 'vue'
 import { useToast } from 'vuestic-ui'
 import { useI18n } from 'vue-i18n'
+import { usePaymentInvoicesStore } from '../../stores/invoice-store'
 
 const { init } = useToast()
-const { locale } = useI18n()
+const { t } = useI18n()
 
-const minNumberOfInvoices = 7
-const maxNumberOfInvoices = 20
+const invoiceStore = usePaymentInvoicesStore()
 
-const numberOfInvoicesInVIew = ref(minNumberOfInvoices)
-
-const increaseNumberOfInvoices = (step = 10) => {
-  numberOfInvoicesInVIew.value = Math.min(numberOfInvoicesInVIew.value + step, maxNumberOfInvoices)
-}
-
-function getRandomDateInBetween(start: string, end: string): Date {
-  const startDate = Date.parse(start)
-  const endDate = Date.parse(end)
-
-  return new Date(Math.floor(Math.random() * (endDate - startDate + 1) + startDate))
-}
-
-function getLanguageCode(): string {
-  const countryCodeToLanguageCodeMapping: Record<any, string> = {
-    br: 'pt',
-    cn: 'zh-CN',
-    gb: 'en-GB',
-    ir: 'fa',
-  }
-
-  return countryCodeToLanguageCodeMapping[locale.value] || 'en-GB'
-}
-
-function getRandomDateString(): string {
-  const startDate = '2020-01-01'
-  const endDate = '2023-12-01'
-
-  const dateFormatOptions: Intl.DateTimeFormatOptions = {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  }
-
-  return getRandomDateInBetween(startDate, endDate).toLocaleDateString(getLanguageCode(), dateFormatOptions)
-}
-
-const allItems = Array.from({ length: maxNumberOfInvoices }, (_, i) => ({
-  id: i,
-  date: getRandomDateString(),
-  amount: `$${(Math.random() * 100).toFixed(2)}`,
-}))
-
-const itemsInView = computed(() => {
-  return allItems.slice(0, numberOfInvoicesInVIew.value)
-})
+const paymentInvoices = computed(() => invoiceStore.allInvoices)
+const currency = ref(invoiceStore.currency)
 
 const download = () => {
   init({

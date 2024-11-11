@@ -1,14 +1,14 @@
 <template>
   <VaCard class="mb-6">
     <VaCardContent>
-      <h2 class="page-sub-title">Payment info</h2>
+      <h2 class="page-sub-title">{{ t('billing.payment_info') }}</h2>
 
       <div class="flex items-center justify-between md:justify-items-stretch">
         <div
           class="flex grow flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-1 justify-between items-start md:items-center"
         >
           <div class="md:w-48">
-            <p class="mb-1">Payment plan</p>
+            <p class="mb-1">{{ t('billing.payment_amount') }}</p>
             <p class="font-bold">
               {{ paymentPlan.isYearly ? paymentPlan.priceYear : paymentPlan.priceMonth }}&nbsp;/{{
                 paymentPlan.isYearly ? 'yearly' : 'monthly'
@@ -17,16 +17,7 @@
           </div>
         </div>
 
-        <div class="md:w-48 flex flex-col justify-end items-end">
-          <VaButton preset="primary" @click="togglePaymentPlanModal">
-            Switch to {{ paymentPlan.isYearly ? 'monthly' : 'annual' }}
-          </VaButton>
-
-          <div v-if="!paymentPlan.isYearly" class="mt-2 text-regularSmall">
-            <span>{{ paymentPlan.priceYear }}&nbsp;/year</span>
-            <span class="text-danger ml-1">save 16%</span>
-          </div>
-        </div>
+       
       </div>
 
       <template v-if="paymentCard">
@@ -37,12 +28,12 @@
             class="flex grow flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-1 justify-between items-start md:items-center"
           >
             <div class="md:w-48">
-              <p class="mb-1">Payment method</p>
+              <p class="mb-1">{{ t('billing.payment_method') }}</p>
               <p class="font-bold capitalize">{{ paymentCard.paymentSystem }} {{ paymentCard.cardNumberMasked }}</p>
             </div>
           </div>
           <div class="md:w-48 flex justify-end">
-            <VaButton :to="{ name: 'payment-methods' }" preset="primary">Payment preferences</VaButton>
+            <VaButton :to="{ name: 'payment-methods' }" preset="primary">{{ t('billing.payment_cards') }}</VaButton>
           </div>
         </div>
       </template>
@@ -60,7 +51,7 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
 import { usePaymentCardsStore } from '../../stores/payment-cards'
-
+import { useI18n } from 'vue-i18n'
 import ChangeYourPaymentPlan from './modals/ChangeYourPaymentPlan.vue'
 
 const paymentPlan = ref({
@@ -77,7 +68,7 @@ const paymentPlan = ref({
 })
 
 const cardStore = usePaymentCardsStore()
-
+const { t } = useI18n()
 const isChangeYourPaymentPlanModalOpen = ref(false)
 
 const paymentCard = computed(() => cardStore.currentPaymentCard)

@@ -3,6 +3,8 @@ import type { ResponseData } from './responseType'
 import { Instance } from '../pages/instances/types'
 import { Network } from '../pages/networks/types'
 import { KeyPair } from '../pages/keypairs/types'
+import { Invoice } from '../pages/billing/types'
+import { PaymentCard } from '../pages/payments/types'
 
 export interface empty extends ResponseData {}
 
@@ -46,4 +48,20 @@ export interface keypairList extends ResponseData {
 
 export interface keypairItem extends ResponseData {
   data: KeyPair
+}
+
+export interface invoiceList extends ResponseData {
+  data: Invoice[]
+}
+
+export interface invoiceItem extends ResponseData {
+  data: Invoice
+}
+
+export interface paymentCardList extends ResponseData {
+  data: PaymentCard[]
+}
+
+export interface paymentCardItem extends ResponseData {
+  data: PaymentCard
 }

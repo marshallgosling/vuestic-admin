@@ -12,7 +12,7 @@
           />
         </Transition>
         <RouterLink to="/" aria-label="Visit home page">
-          <VuesticLogo />
+          <CenturyLogo />
         </RouterLink>
         
       </div>
@@ -28,7 +28,7 @@
 import { storeToRefs } from 'pinia'
 import { useGlobalStore } from '../../stores/global-store'
 import AppNavbarActions from './components/AppNavbarActions.vue'
-import VuesticLogo from '../VuesticLogo.vue'
+import CenturyLogo from '../CenturyLogo.vue'
 import AppLayoutNavigation from '../app-layout-navigation/AppLayoutNavigation.vue';
 
 

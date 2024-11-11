@@ -1,4 +1,17 @@
 {
+  "billing": {
+    "information": "计费信息",
+    "month": "月份",
+    "amount": "金额",
+    "tax": "税率",
+    "tax_amount": "税额",
+    "download": "下载",
+    "payment_info": "付款信息",
+    "payment_amount": "付款金额",
+    "payment_method": "付款方式",
+    "payment_cards": "管理卡片",
+    "invoices": "发票"
+  },
   "auth": {
     "console": "登录操控台",
     "not_a_member": "还未成为会员？",

@@ -1,38 +1,13 @@
 // src/stores/cards.ts
 
 import { defineStore } from 'pinia'
-import { sleep } from '../services/utils'
 import { PaymentSystemType, PaymentCard } from '../pages/payments/types' // adjust the import path accordingly
+import { getPaymentCards } from '../api/billing';
 
 // Simulated fetch function
 const fetchPaymentCards = async () => {
-  await sleep(1000)
-  return [
-    {
-      id: '1',
-      name: 'Main card',
-      isPrimary: true,
-      paymentSystem: PaymentSystemType.Visa,
-      cardNumberMasked: '****1679',
-      expirationDate: '0924',
-    },
-    {
-      id: '2',
-      name: 'Online shopping',
-      isPrimary: false,
-      paymentSystem: PaymentSystemType.MasterCard,
-      cardNumberMasked: '****8921',
-      expirationDate: '1123',
-    },
-    {
-      id: '3',
-      name: 'Backup Visa',
-      isPrimary: false,
-      paymentSystem: PaymentSystemType.MasterCard,
-      cardNumberMasked: '****4523',
-      expirationDate: '1222',
-    },
-  ]
+  const { data } = await getPaymentCards("");
+  return data as PaymentCard[]
 }
 
 export const usePaymentCardsStore = defineStore({
@@ -52,16 +27,16 @@ export const usePaymentCardsStore = defineStore({
       this.loading = false
     },
     create(card: PaymentCard) {
-      this.paymentCards.unshift(card)
+      //this.paymentCards.unshift(card)
     },
     update(card: PaymentCard) {
-      const index = this.paymentCards.findIndex((existingCard) => existingCard.id === card.id)
-      if (index !== -1) {
-        this.paymentCards.splice(index, 1, card)
-      }
+      // const index = this.paymentCards.findIndex((existingCard) => existingCard.id === card.id)
+      // if (index !== -1) {
+      //   this.paymentCards.splice(index, 1, card)
+      // }
     },
     remove(cardId: string) {
-      this.paymentCards = this.paymentCards.filter((card) => card.id !== cardId)
+      //this.paymentCards = this.paymentCards.filter((card) => card.id !== cardId)
     },
   },
 })
