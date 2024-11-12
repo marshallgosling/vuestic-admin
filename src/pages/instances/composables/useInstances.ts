@@ -7,7 +7,7 @@ import {
   initInstance,
   deleteInstance,
   updateInstance,
-  createInstance
+  createInstance,
 } from '../../../api/instance'
 
 import { Instance } from '../types'
@@ -87,7 +87,6 @@ export const useInstances = () => {
       await initInstance(instance.id)
       await fetch()
       isLoading.value = false
-    }
-
+    },
   }
 }

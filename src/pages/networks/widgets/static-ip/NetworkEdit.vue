@@ -1,11 +1,6 @@
 <template>
   <VaForm ref="form" @submit.prevent="submit">
-    <VaInput
-      v-model="networkLocal.name"
-      :rules="[(v) => !!v || '此为必填项']"
-      class="mb-4"
-      label="名称"
-    />
+    <VaInput v-model="networkLocal.name" :rules="[(v) => !!v || '此为必填项']" class="mb-4" label="名称" />
 
     <div class="flex justify-end gap-3">
       <VaButton color="secondary" preset="secondary" @click="emits('cancel')">取消</VaButton>

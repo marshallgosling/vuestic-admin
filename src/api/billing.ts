@@ -8,29 +8,29 @@ enum API {
   CARDS_URL = '/billing/cards',
   CREATE_URL = '/billing/create',
   UPDATE_URL = '/billing/update',
-  DELETE_URL = '/billing/delete/'
+  DELETE_URL = '/billing/delete/',
 }
 
 export const getInvoices = (query: string) => {
-    return request.get<any, invoiceList>(API.INVOICES_URL+"?"+query)
+  return request.get<any, invoiceList>(API.INVOICES_URL + '?' + query)
 }
 
 export const getPaymentCard = () => {
-    return request.get<any, paymentCardItem>(API.CARD_URL)
+  return request.get<any, paymentCardItem>(API.CARD_URL)
 }
 
 export const getPaymentCards = (query: string) => {
-    return request.get<any, paymentCardList>(API.CARDS_URL+"?"+query)
+  return request.get<any, paymentCardList>(API.CARDS_URL + '?' + query)
 }
 
 export const deletePaymentCard = (id: string) => {
-    return request.delete<any, empty>(API.DELETE_URL+id)
+  return request.delete<any, empty>(API.DELETE_URL + id)
 }
 
 export const updatePaymentCard = (card: PaymentCard) => {
-    return request.put<any, paymentCardItem>(API.UPDATE_URL, card)
+  return request.put<any, paymentCardItem>(API.UPDATE_URL, card)
 }
 
 export const createPaymentCard = (card: any) => {
-    return request.post<any, paymentCardItem>(API.CREATE_URL, card)
+  return request.post<any, paymentCardItem>(API.CREATE_URL, card)
 }

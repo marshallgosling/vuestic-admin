@@ -1,7 +1,7 @@
 <template>
   <VaModal hide-default-actions model-value size="small" close-button @cancel="emits('close')">
     <h3 class="va-h4 mb-4">创建静态IP</h3>
-    <NetworkEdit :network="newNetwork" submit-text="创建" @cancel="emits('close')"  @save="create"/>
+    <NetworkEdit :network="newNetwork" submit-text="创建" @cancel="emits('close')" @save="create" />
   </VaModal>
 </template>
 
@@ -30,8 +30,8 @@ const newNetwork = ref({ ...defaultNewNetwork } as Network)
 const create = async (network: Network) => {
   isModalOpen.value = false
   const ret = await createNetwork(network)
-  init({ message: ret.message, color: ret.code==200?'success':'error' })
+  init({ message: ret.message, color: ret.code == 200 ? 'success' : 'danger' })
   emits('close')
-  if(ret.code==200)emits('reload')
+  if (ret.code == 200) emits('reload')
 }
 </script>

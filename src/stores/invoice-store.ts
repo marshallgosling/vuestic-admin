@@ -1,12 +1,10 @@
-// src/stores/cards.ts
-
 import { defineStore } from 'pinia'
 import { getInvoices } from '../api/billing'
 import { Invoice } from '../pages/billing/types'
 
 // Simulated fetch function
 const fetchInvoices = async () => {
-  const { data } = await getInvoices("");
+  const { data } = await getInvoices('')
   return data as Invoice[]
 }
 
@@ -15,7 +13,7 @@ export const usePaymentInvoicesStore = defineStore({
   state: () => ({
     invoices: [] as Invoice[],
     loading: false,
-    currency: '$'
+    currency: '$',
   }),
   getters: {
     //currentPaymentCard: (state): PaymentCard | undefined => state.paymentCards.find((card) => card.isPrimary),
@@ -26,6 +24,6 @@ export const usePaymentInvoicesStore = defineStore({
       this.loading = true
       this.invoices = await fetchInvoices()
       this.loading = false
-    }
+    },
   },
 })

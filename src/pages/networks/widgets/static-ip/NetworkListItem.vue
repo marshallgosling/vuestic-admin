@@ -5,13 +5,17 @@
     <div class="flex flex-col gap-2 flex-grow">
       <div class="flex items-center">
         <div class="text-lg font-bold capitalize">{{ network.name }}</div>
-        
       </div>
       <div class="flex gap-4 items-center">
         <NetworkLogo :type="network.type" />
         <div>
           <div class="text-secondary">静态 IP {{ network.ip }}</div>
-          <div class="text-secondary">{{ network.instance_id ? '已附加到 '+network.instance_name : '未绑定实例' }}  <VaButton v-if="network.instance_id == ''" size="small" preset="primary" @click="emits('bind')">绑定</VaButton></div>
+          <div class="text-secondary">
+            {{ network.instance_id ? '已附加到 ' + network.instance_name : '未绑定实例' }}
+            <VaButton v-if="network.instance_id == ''" size="small" preset="primary" @click="emits('bind')"
+              >绑定</VaButton
+            >
+          </div>
         </div>
       </div>
     </div>
@@ -28,8 +32,7 @@ import { Network } from '../../types'
 
 const emits = defineEmits(['edit', 'remove', 'bind'])
 
-const props = defineProps<{
+defineProps<{
   network: Network
 }>()
-
 </script>

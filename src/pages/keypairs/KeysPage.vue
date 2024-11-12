@@ -12,10 +12,10 @@ const { keys, add, isLoading, remove, enable } = useKeyPairs()
 const keyToEdit = ref<KeyPair | null>(null)
 const doShowKeyPairFormModal = ref(false)
 
-const editInstance = (instance: KeyPair) => {
-  keyToEdit.value = instance
-  doShowKeyPairFormModal.value = true
-}
+// const editInstance = (instance: KeyPair) => {
+//   keyToEdit.value = instance
+//   doShowKeyPairFormModal.value = true
+// }
 
 const createNewKeyPair = () => {
   keyToEdit.value = null
@@ -36,7 +36,7 @@ const onKeySaved = async (instance: KeyPair) => {
     const ret = await add(instance as KeyPair)
     notify({
       message: ret.message,
-      color: ret.code==200?'success':'error',
+      color: ret.code == 200 ? 'success' : 'error',
     })
   }
 }
@@ -58,9 +58,9 @@ const onKeyDeleted = async (key: KeyPair) => {
 
   const ret = await remove(key)
   notify({
-      message: ret.message,
-      color: ret.code==200?'success':'error',
-    })
+    message: ret.message,
+    color: ret.code == 200 ? 'success' : 'error',
+  })
 }
 
 const onKeyCheck = async (key: KeyPair) => {
@@ -78,9 +78,9 @@ const onKeyCheck = async (key: KeyPair) => {
 
   const ret = await enable(key)
   notify({
-      message: ret.message,
-      color: ret.code==200?'success':'error',
-    })
+    message: ret.message,
+    color: ret.code == 200 ? 'success' : 'error',
+  })
 }
 
 const editFormRef = ref()
@@ -110,12 +110,7 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
         <VaButton icon="add" @click="createNewKeyPair">创建</VaButton>
       </div>
 
-      <KeyTable
-        :keys="keys"
-        :loading="isLoading"
-        @check="onKeyCheck"
-        @delete="onKeyDeleted"
-      />
+      <KeyTable :keys="keys" :loading="isLoading" @check="onKeyCheck" @delete="onKeyDeleted" />
     </VaCardContent>
 
     <VaModal

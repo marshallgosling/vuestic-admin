@@ -8,12 +8,15 @@ import MonthlyEarnings from './cards/MonthlyEarnings.vue'
 import RegionRevenue from './cards/RegionRevenue.vue'
 import Timeline from './cards/Timeline.vue'
 import { useI18n } from 'vue-i18n'
+import { useUserStore } from '../../../stores/user-store'
 
-const { t } = useI18n();
+const { t } = useI18n()
+const store = useUserStore()
+store.fetchUserPreference()
 </script>
 
 <template>
-  <h1 class="page-title font-bold">{{ t('Dashboard') }}</h1>
+  <h1 class="page-title font-bold">{{ t('dashboard.dashboard') }}</h1>
   <section class="flex flex-col gap-4">
     <div class="flex flex-col sm:flex-row gap-4">
       <RevenueUpdates class="w-full sm:w-[70%]" />

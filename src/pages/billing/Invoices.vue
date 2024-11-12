@@ -3,19 +3,19 @@
     <VaCardContent>
       <h2 class="page-sub-title">{{ t('billing.invoices') }}</h2>
       <div class="flex items-center mt-2 justify-between md:justify-items-stretch mb-1">
-          <div class="flex items-center w-48 font-bold">
-            {{ t('billing.month') }}
-          </div>
-          <div class="w-20 font-bold">
-            {{ t('billing.amount') }}
-          </div>
-          <div class="w-20 font-bold">
-            {{ t('billing.tax') }}
-          </div>
-          <div class="w-20 font-bold">
-            {{ t('billing.tax_amount') }}
-          </div>
-          <div class="w-20"> </div>
+        <div class="flex items-center w-48 font-bold">
+          {{ t('billing.month') }}
+        </div>
+        <div class="w-20 font-bold">
+          {{ t('billing.amount') }}
+        </div>
+        <div class="w-20 font-bold">
+          {{ t('billing.tax') }}
+        </div>
+        <div class="w-20 font-bold">
+          {{ t('billing.tax_amount') }}
+        </div>
+        <div class="w-20"></div>
       </div>
 
       <template v-for="(item, index) in paymentInvoices" :key="item.id">
@@ -23,15 +23,9 @@
           <div class="flex items-center w-48">
             {{ item.name }}
           </div>
-          <div class="w-20">
-            {{ currency }} {{ item.amount }}
-          </div>
-          <div class="w-20">
-            {{ item.tax }} %
-          </div>
-          <div class="w-20">
-            {{ currency }} {{ item.tax_amount }}
-          </div>
+          <div class="w-20">{{ currency }} {{ item.amount }}</div>
+          <div class="w-20">{{ item.tax }} %</div>
+          <div class="w-20">{{ currency }} {{ item.tax_amount }}</div>
           <div class="w-20">
             <VaButton preset="primary" size="small" @click="download">{{ t('billing.download') }}</VaButton>
           </div>
@@ -39,7 +33,6 @@
         <VaDivider v-if="index !== paymentInvoices.length - 1" />
       </template>
     </VaCardContent>
-    
   </VaCard>
 </template>
 

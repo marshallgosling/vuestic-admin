@@ -3,7 +3,9 @@
     <h1 class="font-semibold text-4xl mb-4">{{ t('auth.console') }}</h1>
     <p class="text-base mb-4 leading-5">
       {{ t('auth.not_a_member') }}
-      <RouterLink :to="{ name: 'signup' }" class="font-semibold text-primary">{{ t('auth.sign_up_rightnow') }}</RouterLink>
+      <RouterLink :to="{ name: 'signup' }" class="font-semibold text-primary">{{
+        t('auth.sign_up_rightnow')
+      }}</RouterLink>
     </p>
     <VaInput
       v-model="formData.email"
@@ -36,7 +38,7 @@
     </div>
 
     <div class="flex justify-center mt-4">
-      <VaButton class="w-full" @click="submit()" :disabled="formData.submiting">{{ t('auth.login') }}</VaButton>
+      <VaButton class="w-full" :disabled="formData.submiting" @click="submit()">{{ t('auth.login') }}</VaButton>
     </div>
   </VaForm>
 </template>
@@ -49,7 +51,7 @@ import { validators } from '../../services/utils'
 import { login } from '../../api/auth'
 import { useI18n } from 'vue-i18n'
 
-const { t } = useI18n();
+const { t } = useI18n()
 const { validate } = useForm('form')
 const { push } = useRouter()
 const { init } = useToast()
@@ -58,21 +60,21 @@ const formData = reactive({
   email: '',
   password: '',
   keepLoggedIn: true,
-  submiting: false
+  submiting: false,
 })
 
 const submit = async () => {
   if (validate()) {
-    formData.submiting = true;
+    formData.submiting = true
     const loginUser = await login(formData.email, formData.password)
     if (loginUser.code == 200) {
       localStorage.setItem('token', loginUser.data.token)
       init({ message: loginUser.message, color: 'success' })
-      push({ name: 'dashboard' })
+      push({ name: 'instances' })
     } else {
-      init({ message: loginUser.message, color: 'error' })
+      init({ message: loginUser.message, color: 'danger' })
     }
-    formData.submiting = false;
+    formData.submiting = false
   }
 }
 </script>

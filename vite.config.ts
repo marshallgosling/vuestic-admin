@@ -7,8 +7,9 @@ import { vuestic } from '@vuestic/compiler/vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/console/',
   build: {
-    sourcemap: true,
+    sourcemap: false,
   },
   plugins: [
     vuestic({

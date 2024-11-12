@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { PropType, computed } from 'vue'
+import { PropType } from 'vue'
 import { defineVaDataTableColumns } from 'vuestic-ui'
 import { Instance } from '../types'
-import UserAvatar from '../../users/widgets/UserAvatar.vue'
+// import UserAvatar from '../../users/widgets/UserAvatar.vue'
 import InstanceStatusBadge from '../components/InstanceStatusBadge.vue'
 // import { Pagination, Sorting } from '../../../data/pages/projects'
-import { useVModel } from '@vueuse/core'
+// import { useVModel } from '@vueuse/core'
 
 const columns = defineVaDataTableColumns([
   { label: 'ID', key: 'id', sortable: true },
@@ -17,7 +17,7 @@ const columns = defineVaDataTableColumns([
   { label: ' ', key: 'actions' },
 ])
 
-const props = defineProps({
+defineProps({
   instances: {
     type: Array as PropType<Instance[]>,
     required: true,
@@ -40,7 +40,7 @@ const props = defineProps({
   // },
 })
 
-const emit = defineEmits<{
+defineEmits<{
   (event: 'edit', instance: Instance): void
   (event: 'delete', instance: Instance): void
   (event: 'start', instance: Instance): void
@@ -48,24 +48,19 @@ const emit = defineEmits<{
   (event: 'reboot', instance: Instance): void
 }>()
 
-const avatarColor = (userName: string) => {
-  const colors = ['primary', '#FFD43A', '#ADFF00', '#262824', 'danger']
-  const index = userName.charCodeAt(0) % colors.length
-  return colors[index]
-}
+// const avatarColor = (userName: string) => {
+//   const colors = ['primary', '#FFD43A', '#ADFF00', '#262824', 'danger']
+//   const index = userName.charCodeAt(0) % colors.length
+//   return colors[index]
+// }
 
 // const sortByVModel = useVModel(props, 'sortBy', emit)
 // const sortingOrderVModel = useVModel(props, 'sortingOrder', emit)
-
 </script>
 
 <template>
   <div>
-    <VaDataTable
-      :items="instances"
-      :columns="columns"
-      :loading="loading"
-    >
+    <VaDataTable :items="instances" :columns="columns" :loading="loading">
       <template #cell(id)="{ rowData: instance }">
         <div class="ellipsis max-w-[230px] lg:max-w-[450px]">
           {{ instance.id }}
@@ -78,12 +73,12 @@ const avatarColor = (userName: string) => {
       </template>
       <template #cell(domain)="{ rowData: instance }">
         <div class="flex items-center gap-2 ellipsis max-w-[230px]">
-          {{ instance.domain}}
+          {{ instance.domain }}
         </div>
       </template>
       <template #cell(network)="{ rowData: instance }">
         <div class="flex items-center gap-2 ellipsis max-w-[230px]">
-          {{ instance.networks[0].ip}}
+          {{ instance.networks[0].ip }}
         </div>
       </template>
       <template #cell(status)="{ rowData: instance }">
@@ -135,7 +130,6 @@ const avatarColor = (userName: string) => {
         </div>
       </template>
     </VaDataTable>
-    
   </div>
 </template>
 

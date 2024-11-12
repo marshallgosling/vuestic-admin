@@ -8,12 +8,16 @@
     close-button
     @update:modelValue="emits('cancel')"
   >
-    <h1 class="va-h5 mb-4">设置用户名</h1>
+    <h1 class="va-h5 mb-4">{{ t('user.input_username') }}</h1>
     <VaForm ref="form" @submit.prevent="submit">
-      <VaInput v-model="Name" class="mb-4" label="Name" placeholder="Name" />
+      <VaInput v-model="Name" class="mb-4" :label="t('user.name')" :placeholder="store.userName" />
       <div class="flex flex-col-reverse md:flex-row md:items-center md:justify-end md:space-x-4">
-        <VaButton :style="buttonStyles" preset="secondary" color="secondary" @click="emits('cancel')"> Cancel</VaButton>
-        <VaButton :style="buttonStyles" class="mb-4 md:mb-0" type="submit" @click="submit"> Save</VaButton>
+        <VaButton :style="buttonStyles" preset="secondary" color="secondary" @click="emits('cancel')">
+          {{ t('vuestic.cancel') }}</VaButton
+        >
+        <VaButton :style="buttonStyles" class="mb-4 md:mb-0" type="submit" @click="submit">
+          {{ t('vuestic.ok') }}</VaButton
+        >
       </div>
     </VaForm>
   </VaModal>
@@ -21,10 +25,10 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { useUserStore } from '../../../stores/user-store'
-
 import { buttonStyles } from '../styles'
 import { useToast } from 'vuestic-ui'
-
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 const store = useUserStore()
 
 const { init } = useToast()

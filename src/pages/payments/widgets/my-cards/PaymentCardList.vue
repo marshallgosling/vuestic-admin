@@ -28,12 +28,12 @@
         :style="{ backgroundColor: colorToRgba(getColor('primary'), 0.07) }"
       >
         <div class="flex flex-col gap-2 flex-grow">
-          <div class="text-lg font-bold leading-relaxed">Important note</div>
+          <div class="text-lg font-bold leading-relaxed">{{ t('billing.important_note') }}</div>
           <div class="text-secondary text-sm leading-tight">
-            Please carefully read Product Terms before adding your new payment card
+            {{ t('billing.card_help') }}
           </div>
         </div>
-        <VaButton class="flex-none w-full sm:w-auto" @click="showCreate = true">Add card</VaButton>
+        <VaButton class="flex-none w-full sm:w-auto" @click="showCreate = true">{{ t('billing.add_card') }}</VaButton>
       </div>
     </template>
   </div>
@@ -50,7 +50,8 @@ import { PaymentCard } from '../../types'
 import { useModal, useToast } from 'vuestic-ui'
 import PaymentCardCreateModal from './PaymentCardCreateModal.vue'
 import PaymentCardUpdateModal from './PaymentCardUpdateModal.vue'
-
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 const store = usePaymentCardsStore()
 
 const list = computed(() => store.allPaymentCards)
@@ -64,13 +65,14 @@ const { init } = useToast()
 store.load()
 const remove = async (card: PaymentCard) => {
   confirm({
-    message: 'Are you really sure you want to delete this card?',
+    message: t('billing.confirm_delete_card'),
     size: 'small',
     maxWidth: '380px',
-  }).then((ok) => {
+  }).then(async (ok) => {
     if (!ok) return
-    store.remove(card.id)
-    init({ message: 'Payment card has been deleted', color: 'success' })
+    const { code, message } = await store.remove(card.id)
+    if (code == 200) init({ message: t('billing.confirm_delete_card'), color: 'success' })
+    else init({ message: message, color: 'danger' })
   })
 }
 

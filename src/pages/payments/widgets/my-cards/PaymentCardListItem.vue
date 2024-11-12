@@ -11,12 +11,12 @@
         <PaymentSystem :type="card.paymentSystem" />
         <div>
           <div class="text-[15px] font-bold mb-2 capitalize">{{ card.paymentSystem }} {{ card.cardNumberMasked }}</div>
-          <div class="text-secondary">Card expires at {{ expirationDateString }}</div>
+          <div class="text-secondary">{{ t('billing.card_expires_at') }} {{ expirationDateString }}</div>
         </div>
       </div>
     </div>
     <div class="w-full sm:w-auto flex-none flex sm:block">
-      <VaButton class="mr-2 flex-grow" preset="primary" @click="emits('edit')">Edit</VaButton>
+      <VaButton class="mr-2 flex-grow" preset="primary" @click="emits('edit')">{{ t('billing.edit') }}</VaButton>
       <VaButton icon="mso-delete" preset="primary" aria-label="Remove" @click="emits('remove')" />
     </div>
   </div>
@@ -26,7 +26,8 @@
 import { computed } from 'vue'
 import PaymentSystem from '../../payment-system/PaymentSystem.vue'
 import { PaymentCard } from '../../types'
-
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 const emits = defineEmits(['edit', 'remove'])
 
 const props = defineProps<{

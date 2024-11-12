@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import { EmptyInstance, Instance, InstanceType } from '../types'
+import { EmptyInstance, Instance } from '../types'
 import { SelectOption } from 'vuestic-ui'
-
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps<{
   instance: Instance | null
@@ -13,6 +13,8 @@ defineEmits<{
   (event: 'save', instance: Instance): void
   (event: 'close'): void
 }>()
+
+const { t } = useI18n()
 
 const defaultNewInstance: EmptyInstance = {
   name: '',
@@ -30,7 +32,8 @@ const isFormHasUnsavedChanges = computed(() => {
     // }
 
     return (
-      newInstance.value[key as keyof EmptyInstance] !== (props.instance ?? defaultNewInstance)?.[key as keyof EmptyInstance]
+      newInstance.value[key as keyof EmptyInstance] !==
+      (props.instance ?? defaultNewInstance)?.[key as keyof EmptyInstance]
     )
   })
 })
@@ -57,7 +60,7 @@ watch(
   { immediate: true },
 )
 
-const required = (v: string | SelectOption) => !!v || '必填项'
+const required = (v: string | SelectOption) => !!v || t('rules.required')
 const DomainListOptions = [
   {
     label: '区域 A',
@@ -82,12 +85,28 @@ const InstanceTypeOptions = [
 
 <template>
   <VaForm v-slot="{ validate }" class="flex flex-col gap-2">
-    <VaInput v-model="newInstance.name" label="实例名称" :rules="[required]" />
-    <VaInput v-model="newInstance.description" label="描述"  />
-    <VaSelect v-model="newInstance.domain" label="域" :rules="[required]" :options="DomainListOptions" text-by="label" value-by="value" track-by="value" />
-    <VaSelect v-model="newInstance.instance_type" label="实例类型" :rules="[required]" :options="InstanceTypeOptions" text-by="label" value-by="value" track-by="value" />
+    <VaInput v-model="newInstance.name" :label="t('instance.name')" :rules="[required]" />
+    <VaInput v-model="newInstance.description" :label="t('instance.description')" />
+    <VaSelect
+      v-model="newInstance.domain"
+      :label="t('instance.domain')"
+      :rules="[required]"
+      :options="DomainListOptions"
+      text-by="label"
+      value-by="value"
+      track-by="value"
+    />
+    <VaSelect
+      v-model="newInstance.instance_type"
+      :label="t('instance.type')"
+      :rules="[required]"
+      :options="InstanceTypeOptions"
+      text-by="label"
+      value-by="value"
+      track-by="value"
+    />
     <div class="flex justify-end flex-col-reverse sm:flex-row mt-4 gap-2">
-      <VaButton preset="secondary" color="secondary" @click="$emit('close')">取消</VaButton>
+      <VaButton preset="secondary" color="secondary" @click="$emit('close')">{{ t('confirm.close') }}</VaButton>
       <VaButton @click="validate() && $emit('save', newInstance as Instance)">{{ saveButtonLabel }}</VaButton>
     </div>
   </VaForm>

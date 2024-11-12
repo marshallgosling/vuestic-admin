@@ -14,7 +14,7 @@ defineEmits<{
 }>()
 
 const defaultNewKeyPair: EmptyKeyPair = {
-  name: ''
+  name: '',
 }
 
 const newKeyPair = ref({ ...defaultNewKeyPair })
@@ -51,13 +51,12 @@ watch(
 )
 
 const required = (v: string | SelectOption) => !!v || '必填项'
-
 </script>
 
 <template>
   <VaForm v-slot="{ validate }" class="flex flex-col gap-2">
     <VaInput v-model="newKeyPair.name" label="名称" :rules="[required]" />
-    
+
     <div class="flex justify-end flex-col-reverse sm:flex-row mt-4 gap-2">
       <VaButton preset="secondary" color="secondary" @click="$emit('close')">取消</VaButton>
       <VaButton @click="validate() && $emit('save', newKeyPair as KeyPair)">{{ saveButtonLabel }}</VaButton>

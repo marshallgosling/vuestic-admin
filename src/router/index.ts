@@ -151,14 +151,10 @@ router.beforeEach((to, from, next) => {
     to.name === 'recover-password-email'
   ) {
     next()
-  } 
-  else if (
-    to.name === 'logout'
-  ) {
+  } else if (to.name === 'logout') {
     localStorage.removeItem('token')
     next()
-  }
-  else {
+  } else {
     if (!localStorage.getItem('token')) {
       next({ name: 'login' })
     } else {

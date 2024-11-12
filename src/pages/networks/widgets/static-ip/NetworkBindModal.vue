@@ -1,7 +1,13 @@
 <template>
   <VaModal hide-default-actions model-value size="small" close-button @cancel="emits('close')">
     <h3 class="va-h4 mb-4">绑定实例</h3>
-    <InstanceList :network="props.network" submit-text="保存" @cancel="emits('close')" @save="bind" />
+    <InstanceList
+      :network="props.network"
+      :instance-list-options="props.instanceListOptions"
+      submit-text="保存"
+      @cancel="emits('close')"
+      @save="bind"
+    />
   </VaModal>
 </template>
 
@@ -17,6 +23,7 @@ const { init } = useToast()
 
 const props = defineProps<{
   network: Network
+  instanceListOptions: any[]
 }>()
 
 const emits = defineEmits(['close', 'reload'])
@@ -24,7 +31,7 @@ const emits = defineEmits(['close', 'reload'])
 const bind = async (network: Network) => {
   isModalOpen.value = false
   const res = await bindNetwork(network)
-  init({ message: res.message, color: res.code == 200 ? 'success' : 'error' })
+  init({ message: res.message, color: res.code == 200 ? 'success' : 'danger' })
   emits('close')
   emits('reload')
 }

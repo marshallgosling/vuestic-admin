@@ -57,7 +57,7 @@ request.interceptors.response.use(
         message = 'TOKEN过期'
         localStorage.removeItem('token')
         //push({ name: 'login'} )
-        window.location.href = '/#/login'
+        window.location.href = '/console/auth/login'
         break
       case 403:
         message = '无权访问'
@@ -74,7 +74,7 @@ request.interceptors.response.use(
     }
     // //提示错误信息
     init({ message: message, color: 'error' })
-    
+
     return Promise.reject(error)
   },
 )

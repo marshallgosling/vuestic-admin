@@ -29,18 +29,29 @@
         :style="{ backgroundColor: colorToRgba(getColor('primary'), 0.07) }"
       >
         <div class="flex flex-col gap-2 flex-grow">
-          <div class="text-lg font-bold leading-relaxed">创建静态IP</div>
+          <div class="text-lg font-bold leading-relaxed">{{ t('network.create') }}</div>
           <div class="text-secondary text-sm leading-tight">
-            请合理创建您的静态 IP 地址库，以便您在需要时可以快速找到它们。
+            {{ t('network.help_create') }}
           </div>
         </div>
-        <VaButton class="flex-none w-full sm:w-auto" @click="showCreate = true">创建静态IP</VaButton>
+        <VaButton class="flex-none w-full sm:w-auto" @click="showCreate = true">{{ t('network.create') }}</VaButton>
       </div>
     </template>
   </div>
   <NetworkCreateModal v-if="showCreate" @close="showCreate = false" @reload="reload" />
-  <NetworkUpdateModal v-if="networkToEdit" :network="networkToEdit" @close="networkToEdit=undefined" @reload="reload" />
-  <NetworkBindModal v-if="networkToBind" :network="networkToBind" @close="networkToBind=undefined" @reload="reload" />
+  <NetworkUpdateModal
+    v-if="networkToEdit"
+    :network="networkToEdit"
+    @close="networkToEdit = undefined"
+    @reload="reload"
+  />
+  <NetworkBindModal
+    v-if="networkToBind"
+    :network="networkToBind"
+    :instance-list-options="instanceListOptions"
+    @close="networkToBind = undefined"
+    @reload="reload"
+  />
 </template>
 
 <script lang="ts" setup>
@@ -54,27 +65,30 @@ import NetworkUpdateModal from './NetworkUpdateModal.vue'
 import NetworkBindModal from './NetworkBindModal.vue'
 import { deleteNetwork, getNetworks } from '../../../../api/network'
 import { getInstances } from '../../../../api/instance'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 
 const loading = ref(false)
-const networks = ref<Network[]>();
-var instanceListOptions: {}[];
+const networks = ref<Network[]>()
+let instanceListOptions: any[]
 
 const fetch = async () => {
-    loading.value = true
-    const { data } = await getNetworks('all')
-    networks.value = data
-    loading.value = false
+  loading.value = true
+  const { data } = await getNetworks('all')
+  networks.value = data
+  loading.value = false
 }
 
 fetch()
 
 const fetchInstance = async () => {
-  const instanceList = await getInstances('new');
+  const instanceList = await getInstances('new')
   instanceListOptions = instanceList.data.map((instance) => {
     return {
       label: instance.name,
       value: instance.id,
-    }})
+    }
+  })
 }
 
 fetchInstance()
@@ -88,13 +102,13 @@ const { init } = useToast()
 
 const remove = async (network: Network) => {
   confirm({
-    message: '确认要删除该静态IP吗？',
+    message: t('network.confirm_delete'),
     size: 'small',
     maxWidth: '380px',
   }).then(async (ok) => {
     if (!ok) return
     const res = await deleteNetwork(network.id)
-    init({ message: res.message, color: res.code == 200 ? 'success' : 'error' })
+    init({ message: res.message, color: res.code == 200 ? 'success' : 'danger' })
     fetch()
   })
 }

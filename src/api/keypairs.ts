@@ -10,17 +10,17 @@ enum API {
 }
 
 export const getKeyPairs = (query: string) => {
-    return request.get<any, keypairList>(API.LIST_URL+"?"+query)
+  return request.get<any, keypairList>(API.LIST_URL + '?' + query)
 }
 
 export const createKeyPair = (key: KeyPair) => {
-    return request.post<any, keypairItem>(API.CREATE_URL, key)
+  return request.post<any, keypairItem>(API.CREATE_URL, key)
 }
 
 export const deleteKeyPair = (id: string) => {
-    return request.delete<any, empty>(API.CREATE_URL + id)
+  return request.delete<any, empty>(API.CREATE_URL + id)
 }
 
 export const enableKeyPair = (id: string) => {
-    return request.post<any, empty>(API.ACTION_URL, { action: "enable", id })
+  return request.post<any, empty>(API.ACTION_URL, { action: 'enable', id })
 }

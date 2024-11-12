@@ -7,17 +7,10 @@ export interface INavigationRoute {
 
 export default {
   root: {
-    name: '/',
+    name: '/instances',
     displayName: 'navigationRoutes.home',
   },
   routes: [
-    {
-      name: 'dashboard',
-      displayName: 'menu.dashboard',
-      meta: {
-        icon: 'vuestic-iconset-dashboard',
-      },
-    },
     {
       name: 'instances',
       displayName: 'menu.instances',
@@ -37,13 +30,6 @@ export default {
       displayName: 'menu.keypairs',
       meta: {
         icon: 'vpn_key',
-      },
-    },
-    {
-      name: 'projects',
-      displayName: 'menu.projects',
-      meta: {
-        icon: 'folder_shared',
       },
     },
     {
@@ -74,13 +60,5 @@ export default {
         icon: 'quiz',
       },
     },
-    {
-      name: 'preferences',
-      displayName: 'menu.preferences',
-      meta: {
-        icon: 'manage_accounts',
-      },
-    }
-    
   ] as INavigationRoute[],
 }

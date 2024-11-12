@@ -5,6 +5,7 @@ import { Network } from '../pages/networks/types'
 import { KeyPair } from '../pages/keypairs/types'
 import { Invoice } from '../pages/billing/types'
 import { PaymentCard } from '../pages/payments/types'
+import { InstancePrice } from '../pages/pricing-plans/types'
 
 export interface empty extends ResponseData {}
 
@@ -64,4 +65,8 @@ export interface paymentCardList extends ResponseData {
 
 export interface paymentCardItem extends ResponseData {
   data: PaymentCard
+}
+
+export interface instancePrice extends ResponseData {
+  data: InstancePrice[]
 }

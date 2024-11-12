@@ -3,14 +3,16 @@
     <VaSelect
       v-model="networkLocal.instance_id"
       :options="instanceListOptions"
-      :rules="[(v) => !!v || '此为必选项']"
+      :rules="[(v) => !!v || t('rules.required')]"
       class="mb-4"
-      label="选择实例"
-      text-by="label" value-by="value" track-by="value"
+      :label="t('network.select_instance')"
+      text-by="label"
+      value-by="value"
+      track-by="value"
     />
 
     <div class="flex justify-end gap-3">
-      <VaButton color="secondary" preset="secondary" @click="emits('cancel')">取消</VaButton>
+      <VaButton color="secondary" preset="secondary" @click="emits('cancel')">{{ t('confirm.cacel') }}</VaButton>
       <VaButton @click="submit">{{ submitText }}</VaButton>
     </div>
   </VaForm>
@@ -20,13 +22,14 @@
 import { useForm } from 'vuestic-ui'
 import { Network } from '../../types'
 import { watch, ref } from 'vue'
-
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 const { validate } = useForm('form')
 const emits = defineEmits(['save', 'cancel'])
 
 const props = defineProps<{
   network: Network
-  instanceListOptions: {}[]
+  instanceListOptions: any[]
   submitText: string
 }>()
 

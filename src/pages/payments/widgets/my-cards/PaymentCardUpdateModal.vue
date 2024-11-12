@@ -1,7 +1,12 @@
 <template>
   <VaModal hide-default-actions model-value size="small" close-button @cancel="emits('close')">
-    <h3 class="va-h4 mb-4">Add payment card</h3>
-    <PaymentCardEdit :payment-card="paymentCard" submit-text="Save Card" @cancel="emits('close')" @save="updateCard" />
+    <h3 class="va-h4 mb-4">{{ t('billing.edit_payment_card') }}</h3>
+    <PaymentCardEdit
+      :payment-card="paymentCard"
+      :submit-text="t('billing.save_card')"
+      @cancel="emits('close')"
+      @save="updateCard"
+    />
   </VaModal>
 </template>
 
@@ -11,7 +16,8 @@ import PaymentCardEdit from './PaymentCardEdit.vue'
 import { PaymentCard } from '../../types'
 import { usePaymentCardsStore } from '../../../../stores/payment-cards'
 import { useToast } from 'vuestic-ui'
-
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 const isModalOpen = ref(false)
 const { init } = useToast()
 

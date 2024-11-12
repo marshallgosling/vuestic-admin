@@ -18,7 +18,7 @@ export type Network = {
   instance_name: string
 }
 
-export type EmptyNetwork = Omit<Network, 'ip' | 'netmask' | 'gateway' | 'status' | 'created_at' | 'instance_name' > & {
+export type EmptyNetwork = Omit<Network, 'ip' | 'netmask' | 'gateway' | 'status' | 'created_at' | 'instance_name'> & {
   id: Network['id'] | ''
   name: Network['name'] | ''
   instance_id: Network['instance_id'] | ''
@@ -26,7 +26,17 @@ export type EmptyNetwork = Omit<Network, 'ip' | 'netmask' | 'gateway' | 'status'
 }
 
 export enum Status {
-  creating, created, starting, running, stopping, stopped, failed, error, deleting, deleted, banned
+  creating,
+  created,
+  starting,
+  running,
+  stopping,
+  stopped,
+  failed,
+  error,
+  deleting,
+  deleted,
+  banned,
 }
 
 export const StatusStringMap: Record<number, string> = {

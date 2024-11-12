@@ -16,8 +16,6 @@
             </p>
           </div>
         </div>
-
-       
       </div>
 
       <template v-if="paymentCard">

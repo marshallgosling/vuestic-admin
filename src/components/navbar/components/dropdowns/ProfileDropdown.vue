@@ -4,7 +4,7 @@
       <template #anchor>
         <VaButton preset="secondary" color="textPrimary">
           <span class="profile-dropdown__anchor min-w-max">
-            {{  t(`user.menu`) }}
+            {{ t(`user.menu`) }}
           </span>
         </VaButton>
       </template>

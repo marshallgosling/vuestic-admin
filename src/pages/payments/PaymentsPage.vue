@@ -1,17 +1,17 @@
 <template>
-  <h1 class="page-title">Payment methods</h1>
+  <h1 class="page-title">{{ t('billing.payment_method') }}</h1>
 
   <VaCard class="mb-6">
     <VaCardContent>
-      <div class="text-2xl font-bold leading-5 mb-6">My cards</div>
+      <div class="text-2xl font-bold leading-5 mb-6">{{ t('billing.payment_cards') }}</div>
 
       <PaymentCardList />
     </VaCardContent>
   </VaCard>
 
-  <VaCard class="mb-6">
+  <!-- <VaCard class="mb-6">
     <VaCardContent>
-      <div class="text-2xl font-bold leading-5 mb-6">Billing address</div>
+      <div class="text-2xl font-bold leading-5 mb-6">{{ t('billing.address') }}</div>
 
       <BillingAddressList />
 
@@ -23,10 +23,12 @@
         </div>
       </div>
     </VaCardContent>
-  </VaCard>
+  </VaCard> -->
 </template>
 
 <script lang="ts" setup>
 import PaymentCardList from './widgets/my-cards/PaymentCardList.vue'
-import BillingAddressList from './widgets/billing-address/BillingAddressList.vue'
+// import BillingAddressList from './widgets/billing-address/BillingAddressList.vue'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 </script>

@@ -12,7 +12,7 @@ const columns = defineVaDataTableColumns([
   { label: ' ', key: 'actions' },
 ])
 
-const props = defineProps({
+defineProps({
   keys: {
     type: Array as PropType<KeyPair[]>,
     required: true,
@@ -20,23 +20,18 @@ const props = defineProps({
   loading: {
     type: Boolean,
     required: true,
-  }
+  },
 })
 
-const emit = defineEmits<{
+defineEmits<{
   (event: 'check', instance: KeyPair): void
   (event: 'delete', instance: KeyPair): void
 }>()
-
 </script>
 
 <template>
   <div>
-    <VaDataTable
-      :items="keys"
-      :columns="columns"
-      :loading="loading"
-    >
+    <VaDataTable :items="keys" :columns="columns" :loading="loading">
       <template #cell(id)="{ rowData: key }">
         <div class="ellipsis max-w-[230px] lg:max-w-[450px]">
           {{ key.id }}
@@ -53,7 +48,6 @@ const emit = defineEmits<{
 
       <template #cell(actions)="{ rowData: key }">
         <div class="flex gap-2 justify-end">
-          
           <VaButton
             v-if="key.status == 0"
             preset="primary"
@@ -74,7 +68,6 @@ const emit = defineEmits<{
         </div>
       </template>
     </VaDataTable>
-    
   </div>
 </template>
 

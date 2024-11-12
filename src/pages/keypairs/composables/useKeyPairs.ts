@@ -1,10 +1,5 @@
 import { ref } from 'vue'
-import {
-  getKeyPairs,
-  createKeyPair,
-  enableKeyPair,
-  deleteKeyPair
-} from '../../../api/keypairs'
+import { getKeyPairs, createKeyPair, enableKeyPair, deleteKeyPair } from '../../../api/keypairs'
 
 import { KeyPair } from '../types'
 
@@ -52,6 +47,6 @@ export const useKeyPairs = () => {
       await fetch()
       isLoading.value = false
       return $res
-    }
+    },
   }
 }

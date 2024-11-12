@@ -1,4 +1,4 @@
-import { Network } from "../networks/types"
+import { Network } from '../networks/types'
 
 export type Pagination = {
   page: number
@@ -25,9 +25,18 @@ export enum DomainList {
   AZ2 = '区域 B',
 }
 
-
 export enum Status {
-  creating, created, starting, running, stopping, stopped, failed, error, deleting, deleted, banned
+  creating,
+  created,
+  starting,
+  running,
+  stopping,
+  stopped,
+  failed,
+  error,
+  deleting,
+  deleted,
+  banned,
 }
 
 export const StatusStringMap: Record<number, string> = {
@@ -71,7 +80,10 @@ export type Instance = {
   storages: Storage[]
 }
 
-export type EmptyInstance = Omit<Instance, 'id' | 'status' | 'instance_type' | 'networks' | 'storages' | 'created_at' | 'key_name'> & {
+export type EmptyInstance = Omit<
+  Instance,
+  'id' | 'status' | 'instance_type' | 'networks' | 'storages' | 'created_at' | 'key_name'
+> & {
   name: Instance['name'] | ''
   domain: Instance['domain'] | ''
   description: Instance['description'] | ''

@@ -7,7 +7,8 @@ import InstanceTable from './widgets/InstanceTable.vue'
 import EditInstanceForm from './widgets/EditInstanceForm.vue'
 import { Instance } from './types'
 import { useModal, useToast } from 'vuestic-ui'
-
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 const doShowAsCards = useLocalStorage('instances-view', true)
 
 const { instances, update, add, isLoading, remove, start, stop, reboot } = useInstances()
@@ -33,13 +34,13 @@ const onInstanceSaved = async (instance: Instance) => {
     const ret = await update(instance as Instance)
     notify({
       message: ret.message,
-      color: ret.code==200?'success':'error',
+      color: ret.code == 200 ? 'success' : 'danger',
     })
   } else {
     const ret = await add(instance as Instance)
     notify({
       message: ret.message,
-      color: ret.code==200?'success':'error',
+      color: ret.code == 200 ? 'success' : 'danger',
     })
   }
 }
@@ -48,9 +49,9 @@ const { confirm } = useModal()
 
 const onInstanceReboot = async (instance: Instance) => {
   const response = await confirm({
-    title: 'Reboot Instance',
-    message: `Are you sure you want to reboot Instance "${instance.name}"?`,
-    okText: 'Reboot',
+    title: t('instance.reboot_instance'),
+    message: t('instance.confirm_reboot', { name: instance.name }),
+    okText: t('instance.reboot'),
     size: 'small',
     maxWidth: '380px',
   })
@@ -60,24 +61,24 @@ const onInstanceReboot = async (instance: Instance) => {
   }
 
   const res = await reboot(instance)
-  if(res.code == 200) {
+  if (res.code == 200) {
     notify({
-      message: 'Instance rebooted',
+      message: t('instance.reboot_success'),
       color: 'success',
     })
   } else {
     notify({
       message: res.message,
-      color: 'error',
+      color: 'danger',
     })
   }
 }
 
 const onInstanceStart = async (instance: Instance) => {
   const response = await confirm({
-    title: 'Start Instance',
-    message: `Are you sure you want to start Instance "${instance.name}"?`,
-    okText: 'Start',
+    title: t('instance.start_instance'),
+    message: t('instance.confirm_start', { name: instance.name }),
+    okText: t('instance.start'),
     size: 'small',
     maxWidth: '380px',
   })
@@ -87,25 +88,24 @@ const onInstanceStart = async (instance: Instance) => {
   }
 
   const res = await start(instance)
-  if(res.code == 200) {
+  if (res.code == 200) {
     notify({
-      message: 'Instance Started',
+      message: t('instance.start_success'),
       color: 'success',
     })
   } else {
     notify({
       message: res.message,
-      color: 'error',
+      color: 'danger',
     })
   }
-  
 }
 
 const onInstanceStop = async (instance: Instance) => {
   const response = await confirm({
-    title: 'Stop Instance',
-    message: `Are you sure you want to stop Instance "${instance.name}"?`,
-    okText: 'STOP',
+    title: t('instance.stop_instance'),
+    message: t('instance.confirm_stop', { name: instance.name }),
+    okText: t('instance.stop'),
     size: 'small',
     maxWidth: '380px',
   })
@@ -115,26 +115,24 @@ const onInstanceStop = async (instance: Instance) => {
   }
 
   const res = await stop(instance)
-  if(res.code == 200) {
+  if (res.code == 200) {
     notify({
-      message: 'Instance Stopped',
+      message: t('instance.stop_success'),
       color: 'success',
     })
   } else {
     notify({
       message: res.message,
-      color: 'error',
+      color: 'danger',
     })
   }
-  
 }
-
 
 const onInstanceDeleted = async (instance: Instance) => {
   const response = await confirm({
-    title: 'Delete Instance',
-    message: `Are you sure you want to delete Instance "${instance.name}"?`,
-    okText: 'Delete',
+    title: t('instance.delete_instance'),
+    message: t('instance.confirm_delete', { name: instance.name }),
+    okText: t('instance.delete'),
     size: 'small',
     maxWidth: '380px',
   })
@@ -145,7 +143,7 @@ const onInstanceDeleted = async (instance: Instance) => {
 
   await remove(instance)
   notify({
-    message: 'Instance deleted',
+    message: t('instance.delete_success'),
     color: 'success',
   })
 }
@@ -156,7 +154,7 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
   if (editFormRef.value.isFormHasUnsavedChanges) {
     const agreed = await confirm({
       maxWidth: '380px',
-      message: '确认要取消吗？',
+      message: t('confirm.cancel'),
       size: 'small',
     })
     if (agreed) {
@@ -169,7 +167,7 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
 </script>
 
 <template>
-  <h1 class="page-title">AI 实例列表</h1>
+  <h1 class="page-title">{{ t('instance.instances') }}</h1>
 
   <VaCard>
     <VaCardContent>
@@ -180,12 +178,12 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
             color="background-element"
             border-color="background-element"
             :options="[
-              { label: '图标', value: true },
-              { label: '列表', value: false },
+              { label: t('instance.card'), value: true },
+              { label: t('instance.table'), value: false },
             ]"
           />
         </div>
-        <VaButton icon="add" @click="createNewInstance">启动实例</VaButton>
+        <VaButton icon="add" size="medium" @click="createNewInstance">{{ t('instance.start_instance') }}</VaButton>
       </div>
 
       <InstanceCards
@@ -220,12 +218,12 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
       hide-default-actions
       :before-cancel="beforeEditFormModalClose"
     >
-      <h1 v-if="instanceToEdit === null" class="va-h5 mb-4">启动实例</h1>
-      <h1 v-else class="va-h5 mb-4">修改实例</h1>
+      <h1 v-if="instanceToEdit === null" class="va-h5 mb-4">{{ t('instance.start_instance') }}</h1>
+      <h1 v-else class="va-h5 mb-4">{{ t('instance.edit_instance') }}</h1>
       <EditInstanceForm
         ref="editFormRef"
         :instance="instanceToEdit"
-        :save-button-label="instanceToEdit === null ? '添加' : '保存'"
+        :save-button-label="instanceToEdit === null ? t('instance.add') : t('instance.save')"
         @close="cancel"
         @save="
           (instance) => {

@@ -7,17 +7,12 @@
     </p>
     <VaInput
       v-model="formData.email"
-      :rules="[(v) => !!v || t('rules.email_required'), (v) => /.+@.+\..+/.test(v) ||  t('rules.email_valid')]"
+      :rules="[(v) => !!v || t('rules.email_required'), (v) => /.+@.+\..+/.test(v) || t('rules.email_valid')]"
       class="mb-4"
       :label="t('auth.email')"
       type="email"
     />
-    <VaInput
-      v-model="formData.name"
-      class="mb-4"
-      :label="t('auth.name')"
-      type="text"
-    />
+    <VaInput v-model="formData.name" class="mb-4" :label="t('auth.name')" type="text" />
     <VaValue v-slot="isPasswordVisible" :default-value="false">
       <VaInput
         ref="password1"
@@ -60,7 +55,7 @@
     </VaValue>
 
     <div class="flex justify-center mt-4">
-      <VaButton class="w-full" @click="submit" :disabled="formData.submiting"> {{ t('auth.createAccount') }}</VaButton>
+      <VaButton class="w-full" :disabled="formData.submiting" @click="submit"> {{ t('auth.createAccount') }}</VaButton>
     </div>
   </VaForm>
 </template>
@@ -72,7 +67,7 @@ import { useForm, useToast } from 'vuestic-ui'
 import { register } from '../../api/auth'
 import { useI18n } from 'vue-i18n'
 
-const { t } = useI18n();
+const { t } = useI18n()
 const { validate } = useForm('form')
 const { push } = useRouter()
 const { init } = useToast()
@@ -82,20 +77,20 @@ const formData = reactive({
   name: '',
   password: '',
   repeatPassword: '',
-  submiting: false
+  submiting: false,
 })
 
 const submit = async () => {
   if (validate()) {
-    formData.submiting = true;
+    formData.submiting = true
     const loginUser = await register(formData.email, formData.name, formData.password)
     if (loginUser.code == 200) {
       init({ message: loginUser.message, color: 'success' })
       push({ name: 'login' })
     } else {
-      init({ message: loginUser.message, color: 'error' })
+      init({ message: loginUser.message, color: 'danger' })
     }
-    formData.submiting = false;
+    formData.submiting = false
   }
 }
 

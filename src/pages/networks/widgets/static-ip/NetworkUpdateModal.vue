@@ -28,8 +28,8 @@ const emits = defineEmits(['close', 'reload'])
 const update = async (network: Network) => {
   isModalOpen.value = false
   const res = await updateNetwork(network)
-  init({ message: res.message, color: res.code == 200 ? 'success' : 'error' })
+  init({ message: res.message, color: res.code == 200 ? 'success' : 'danger' })
   emits('close')
-  if(res.code==200)emits('reload')
+  if (res.code == 200) emits('reload')
 }
 </script>
