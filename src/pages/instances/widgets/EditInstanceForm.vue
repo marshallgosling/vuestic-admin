@@ -3,9 +3,11 @@ import { computed, ref, watch } from 'vue'
 import { EmptyInstance, Instance } from '../types'
 import { SelectOption } from 'vuestic-ui'
 import { useI18n } from 'vue-i18n'
+import { InstancePrice } from '../../pricing-plans/types'
 
 const props = defineProps<{
   instance: Instance | null
+  prices: InstancePrice[]
   saveButtonLabel: string
 }>()
 
@@ -71,16 +73,6 @@ const DomainListOptions = [
     value: 'AZ2',
   },
 ]
-const InstanceTypeOptions = [
-  {
-    label: 'NVIDIA H800, vCPUs:104,RAM:900  GiB,STORAGE:11 TiB SSD',
-    value: 'small',
-  },
-  {
-    label: 'NVIDIA H800, vCPUs:208,RAM:1800 GiB,STORAGE:22 TiB SSD',
-    value: 'medium',
-  },
-]
 </script>
 
 <template>
@@ -100,10 +92,10 @@ const InstanceTypeOptions = [
       v-model="newInstance.instance_type"
       :label="t('instance.type')"
       :rules="[required]"
-      :options="InstanceTypeOptions"
-      text-by="label"
-      value-by="value"
-      track-by="value"
+      :options="props.prices"
+      text-by="description"
+      value-by="name"
+      track-by="name"
     />
     <div class="flex justify-end flex-col-reverse sm:flex-row mt-4 gap-2">
       <VaButton preset="secondary" color="secondary" @click="$emit('close')">{{ t('confirm.close') }}</VaButton>

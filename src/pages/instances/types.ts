@@ -76,6 +76,7 @@ export type Instance = {
   instance_type: string
   created_at: string
   key_name: string
+  image_url: string
   networks: Network[]
   storages: Storage[]
 }

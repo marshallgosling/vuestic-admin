@@ -50,11 +50,7 @@ defineEmits<{
           </h4>
         </div>
         <div class="grid grid-cols-3 gap-4">
-          <VaImage
-            fit="contain"
-            class="max-h-32 col-span-1 pd-1"
-            src="http://localhost:8080/front/instance-small.png"
-          />
+          <VaImage fit="contain" class="max-h-32 col-span-1 pd-1" :src="instance.image_url" />
 
           <div class="flex flex-col gap-1 grow col-span-2">
             <p>
@@ -79,9 +75,9 @@ defineEmits<{
 
         <VaDivider class="my-2" />
         <div class="flex justify-right gap-2">
-          <VaButton preset="secondary" icon="mso-edit" color="primary" size="small" @click="$emit('edit', instance)">{{
-            t('instance.edit')
-          }}</VaButton>
+          <VaButton preset="secondary" icon="mso-edit" color="primary" size="small" @click="$emit('edit', instance)">
+            {{ t('instance.edit') }}</VaButton
+          >
           <VaButton
             preset="secondary"
             icon="mso-delete"

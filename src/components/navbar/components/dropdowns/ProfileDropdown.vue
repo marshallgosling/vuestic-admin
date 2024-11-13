@@ -80,11 +80,6 @@ withDefaults(
             to: 'billing',
             icon: 'mso-receipt_long',
           },
-          {
-            name: 'projects',
-            to: 'projects',
-            icon: 'mso-favorite',
-          },
         ],
       },
       {
@@ -98,7 +93,7 @@ withDefaults(
           },
           {
             name: 'helpAndSupport',
-            href: 'https://discord.gg/u7fQdqQt8c',
+            href: '#',
             icon: 'mso-error',
           },
         ],

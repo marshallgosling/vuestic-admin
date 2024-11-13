@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useLocalStorage } from '@vueuse/core'
 import { useInstances } from './composables/useInstances'
 import InstanceCards from './widgets/InstanceCards.vue'
@@ -8,11 +8,13 @@ import EditInstanceForm from './widgets/EditInstanceForm.vue'
 import { Instance } from './types'
 import { useModal, useToast } from 'vuestic-ui'
 import { useI18n } from 'vue-i18n'
+import { useInstancePricesStore } from '../../stores/price-store'
 const { t } = useI18n()
 const doShowAsCards = useLocalStorage('instances-view', true)
-
+const pricingStore = useInstancePricesStore()
+pricingStore.load()
 const { instances, update, add, isLoading, remove, start, stop, reboot } = useInstances()
-
+const pricingList = computed(() => pricingStore.all)
 const instanceToEdit = ref<Instance | null>(null)
 const doShowInstanceFormModal = ref(false)
 
@@ -223,6 +225,7 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
       <EditInstanceForm
         ref="editFormRef"
         :instance="instanceToEdit"
+        :prices="pricingList"
         :save-button-label="instanceToEdit === null ? t('instance.add') : t('instance.save')"
         @close="cancel"
         @save="

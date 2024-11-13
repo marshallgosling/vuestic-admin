@@ -47,7 +47,7 @@
     "description": "描述",
     "domain": "域",
     "type": "实例类型",
-    "keypair": "密钥对",
+    "keypair": "密钥",
 
     "confirm_reboot": "确认要重启实例 {name} 吗?",
     "reboot_instance": "重启实例",

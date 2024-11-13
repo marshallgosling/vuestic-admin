@@ -5,10 +5,9 @@ import { useInstancePricesStore } from '../../stores/price-store'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 const pricingStore = useInstancePricesStore()
+pricingStore.load()
 const pricingList = computed(() => pricingStore.all)
 const isLoading = ref(pricingStore.loading)
-
-pricingStore.load()
 
 const columns = defineVaDataTableColumns([
   { label: t('pricing.name'), key: 'name', sortable: true },
