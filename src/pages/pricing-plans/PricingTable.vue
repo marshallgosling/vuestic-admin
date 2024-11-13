@@ -1,13 +1,24 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
 import { defineVaDataTableColumns } from 'vuestic-ui'
-import { useInstancePricesStore } from '../../stores/price-store'
 import { useI18n } from 'vue-i18n'
+import { InstancePrice } from './types'
+import { PropType } from 'vue'
 const { t } = useI18n()
-const pricingStore = useInstancePricesStore()
-pricingStore.load()
-const pricingList = computed(() => pricingStore.all)
-const isLoading = ref(pricingStore.loading)
+
+defineProps({
+  pricingList: {
+    type: Array as PropType<InstancePrice[]>,
+    required: true,
+  },
+  loading: {
+    type: Boolean,
+    required: true,
+  },
+  currency: {
+    type: String,
+    required: true,
+  },
+})
 
 const columns = defineVaDataTableColumns([
   { label: t('pricing.name'), key: 'name', sortable: true },
@@ -18,7 +29,7 @@ const columns = defineVaDataTableColumns([
 
 <template>
   <div>
-    <VaDataTable :items="pricingList" :columns="columns" :loading="isLoading">
+    <VaDataTable :items="pricingList" :columns="columns" :loading="loading">
       <template #cell(name)="{ rowData: instance }">
         <div class="flex items-center gap-2 ellipsis max-w-[100px]">
           {{ instance.name.toUpperCase() }}
@@ -31,7 +42,7 @@ const columns = defineVaDataTableColumns([
       </template>
       <template #cell(price)="{ rowData: instance }">
         <div class="flex items-center gap-2 ellipsis max-w-[120px]">
-          {{ pricingStore.currency }} {{ instance.price }} / {{ t('pricing.month') }}
+          {{ currency }} {{ instance.price }} / {{ t('pricing.month') }}
         </div>
       </template>
     </VaDataTable>

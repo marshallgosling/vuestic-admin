@@ -12,6 +12,7 @@
       :rules="[(v) => !!v || t('rules.card_holder_required')]"
       class="mb-4"
       :label="t('billing.payment_card_holder')"
+      placeholder="John Doe"
     />
     <VaSelect
       v-model="paymentCardLocal.paymentSystem"
@@ -27,6 +28,7 @@
       :label="t('billing.payment_card_number')"
       mask="creditCard"
       placeholder="#### #### #### ####"
+      autocomplete="false"
     />
     <VaInput
       v-model="paymentCardLocal.expirationDate"
@@ -40,6 +42,8 @@
       ]"
       class="mb-4"
       :label="t('billing.payment_card_expires_at')"
+      placeholder="MM/YY"
+      autocomplete="false"
     />
 
     <VaInput
@@ -48,6 +52,8 @@
       :rules="[(v) => !!v || t('rules.cvv_required'), (v) => /^\d{3}$/.test(v) || t('rules.cvv_format')]"
       class="mb-4"
       :label="t('billing.payment_card_cvv')"
+      placeholder="123"
+      autocomplete="false"
     />
 
     <div class="flex justify-end gap-3">

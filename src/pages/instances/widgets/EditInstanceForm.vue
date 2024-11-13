@@ -23,6 +23,7 @@ const defaultNewInstance: EmptyInstance = {
   domain: 'AZ1',
   description: '',
   instance_type: 'small',
+  image_url: '',
 }
 
 const newInstance = ref({ ...defaultNewInstance })
