@@ -34,6 +34,11 @@ const routes: Array<RouteRecordRaw> = [
       {
         name: 'instances',
         path: 'instances',
+        component: () => import('../pages/instances/InstanceList.vue'),
+      },
+      {
+        name: 'instance',
+        path: 'instance/:id',
         component: () => import('../pages/instances/InstancePage.vue'),
       },
       {

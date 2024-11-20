@@ -111,14 +111,7 @@ defineEmits<{
             aria-label="Reboot"
             @click="$emit('reboot', instance as Instance)"
           />
-          <VaButton
-            preset="primary"
-            size="small"
-            color="primary"
-            icon="mso-edit"
-            aria-label="Edit"
-            @click="$emit('edit', instance as Instance)"
-          />
+
           <VaButton
             preset="primary"
             size="small"

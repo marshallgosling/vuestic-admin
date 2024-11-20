@@ -12,7 +12,7 @@
     />
 
     <div class="flex justify-end gap-3">
-      <VaButton color="secondary" preset="secondary" @click="emits('cancel')">{{ t('confirm.cacel') }}</VaButton>
+      <VaButton color="secondary" preset="secondary" @click="emits('cancel')">{{ t('vuestic.cancel') }}</VaButton>
       <VaButton @click="submit">{{ submitText }}</VaButton>
     </div>
   </VaForm>

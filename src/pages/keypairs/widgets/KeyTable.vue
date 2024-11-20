@@ -25,6 +25,7 @@ defineProps({
 
 defineEmits<{
   (event: 'check', instance: KeyPair): void
+  (event: 'download', instance: KeyPair): void
   (event: 'delete', instance: KeyPair): void
 }>()
 </script>
@@ -56,6 +57,14 @@ defineEmits<{
             icon="mso-check"
             aria-label="default"
             @click="$emit('check', key as KeyPair)"
+          />
+          <VaButton
+            preset="primary"
+            size="small"
+            icon="mso-download"
+            color="primary"
+            aria-label="Download"
+            @click="$emit('download', key as KeyPair)"
           />
           <VaButton
             preset="primary"

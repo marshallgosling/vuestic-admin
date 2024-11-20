@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import {
   getInstances,
+  getInstanceInfo,
   startInstance,
   stopInstance,
   rebootInstance,
@@ -23,6 +24,13 @@ export const useInstances = () => {
     isLoading.value = false
   }
 
+  const info = async (id: string) => {
+    isLoading.value = true
+    const { data } = await getInstanceInfo(id)
+    isLoading.value = false
+    return data
+  }
+
   //const { ignoreUpdates } = watchIgnorable([pagination, sorting], fetch, { deep: true })
 
   fetch()
@@ -33,6 +41,8 @@ export const useInstances = () => {
     instances,
 
     fetch,
+
+    info,
 
     async add(instance: Instance) {
       isLoading.value = true

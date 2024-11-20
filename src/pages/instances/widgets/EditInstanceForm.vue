@@ -78,17 +78,6 @@ const DomainListOptions = [
 
 <template>
   <VaForm v-slot="{ validate }" class="flex flex-col gap-2">
-    <VaInput v-model="newInstance.name" :label="t('instance.name')" :rules="[required]" />
-    <VaInput v-model="newInstance.description" :label="t('instance.description')" />
-    <VaSelect
-      v-model="newInstance.domain"
-      :label="t('instance.domain')"
-      :rules="[required]"
-      :options="DomainListOptions"
-      text-by="label"
-      value-by="value"
-      track-by="value"
-    />
     <VaSelect
       v-model="newInstance.instance_type"
       :label="t('instance.type')"
@@ -98,6 +87,17 @@ const DomainListOptions = [
       value-by="name"
       track-by="name"
     />
+    <VaSelect
+      v-model="newInstance.domain"
+      :label="t('instance.domain')"
+      :rules="[required]"
+      :options="DomainListOptions"
+      text-by="label"
+      value-by="value"
+      track-by="value"
+    />
+    <VaInput v-model="newInstance.name" :label="t('instance.name')" />
+
     <div class="flex justify-end flex-col-reverse sm:flex-row mt-4 gap-2">
       <VaButton preset="secondary" color="secondary" @click="$emit('close')">{{ t('confirm.close') }}</VaButton>
       <VaButton @click="validate() && $emit('save', newInstance as Instance)">{{ saveButtonLabel }}</VaButton>

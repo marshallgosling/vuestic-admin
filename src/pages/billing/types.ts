@@ -6,3 +6,12 @@ export interface Invoice {
   tax: number
   tax_amount: number
 }
+
+export interface Billing {
+  id: string
+  name: string
+  amount: number
+  month: string
+  status: number
+  created_at: string
+}

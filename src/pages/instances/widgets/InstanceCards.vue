@@ -43,10 +43,13 @@ defineEmits<{
       outlined
     >
       <VaCardContent class="flex flex-col h-full">
-        <div class="text-[var(--va-secondary)]">{{ instance.created_at }}</div>
+        <div class="grid grid-cols-4 gap-4">
+          <div class="flex flex-col gap-1 grow col-span-3">{{ instance.created_at }}</div>
+          <div class="flex flex-col gap-1 grow col-span-1"><InstanceStatusBadge :status="instance.status" /></div>
+        </div>
         <div class="flex flex-col gap-1 grow">
           <h4 class="va-h4 text-left self-stretch overflow-hidden line-clamp-2 text-ellipsis">
-            {{ instance.name }}
+            <RouterLink :to="{ name: 'instance', params: { id: instance.id }}">{{ instance.name }}</RouterLink> 
           </h4>
         </div>
         <div class="grid grid-cols-3 gap-4">
@@ -63,21 +66,17 @@ defineEmits<{
             </p>
             <p>
               <span class="text-[var(--va-secondary)]">IP: </span>
-              <span>{{ instance.networks[0].ip }}</span>
+              <span>{{ instance.networks[1]?.ip }}</span>
             </p>
             <p>
               <span class="text-[var(--va-secondary)]">{{ t('instance.keypair') }}: </span>
               <span>{{ instance.key_name }}</span>
             </p>
-            <InstanceStatusBadge :status="instance.status" />
           </div>
         </div>
 
         <VaDivider class="my-2" />
         <div class="flex justify-right gap-2">
-          <VaButton preset="secondary" icon="mso-edit" color="primary" size="small" @click="$emit('edit', instance)">
-            {{ t('instance.edit') }}</VaButton
-          >
           <VaButton
             preset="secondary"
             icon="mso-delete"

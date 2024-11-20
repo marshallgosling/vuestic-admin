@@ -78,12 +78,13 @@ export type Instance = {
   key_name: string
   image_url: string
   networks: Network[]
+  securities: Security[]
   storages: Storage[]
 }
 
 export type EmptyInstance = Omit<
   Instance,
-  'id' | 'status' | 'instance_type' | 'networks' | 'storages' | 'created_at' | 'key_name'
+  'id' | 'status' | 'instance_type' | 'networks' | 'storages' | 'created_at' | 'key_name' | 'securities'
 > & {
   name: Instance['name'] | ''
   domain: Instance['domain'] | ''
@@ -98,4 +99,12 @@ export type Storage = {
   status: Status
   description: string
   created_at: string
+}
+
+export type Security = {
+  id: number
+  name: string
+  proto: string
+  port: string
+  help?: string
 }

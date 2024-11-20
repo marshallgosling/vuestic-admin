@@ -21,7 +21,7 @@
         :key="network.id"
         :network="network"
         @edit="networkToEdit = network"
-        @remove="remove(network)"
+        @remove="networkToDelete = network"
         @bind="networkToBind = network"
       />
       <div
@@ -52,6 +52,7 @@
     @close="networkToBind = undefined"
     @reload="reload"
   />
+  <NetworkDeleteModal v-if="networkToDelete" @delete="remove" @close="networkToDelete = undefined" />
 </template>
 
 <script lang="ts" setup>
@@ -59,13 +60,14 @@ import NetworkListItem from './NetworkListItem.vue'
 import { ref } from 'vue'
 import { useColors } from 'vuestic-ui'
 import { Network } from '../../types'
-import { useModal, useToast } from 'vuestic-ui'
+import { useToast } from 'vuestic-ui'
 import NetworkCreateModal from './NetworkCreateModal.vue'
 import NetworkUpdateModal from './NetworkUpdateModal.vue'
 import NetworkBindModal from './NetworkBindModal.vue'
 import { deleteNetwork, getNetworks } from '../../../../api/network'
 import { getInstances } from '../../../../api/instance'
 import { useI18n } from 'vue-i18n'
+import NetworkDeleteModal from './NetworkDeleteModal.vue'
 const { t } = useI18n()
 
 const loading = ref(false)
@@ -93,24 +95,16 @@ const fetchInstance = async () => {
 
 fetchInstance()
 
-const { confirm } = useModal()
-
 const showCreate = ref<boolean>(false)
 const networkToEdit = ref<Network>()
 const networkToBind = ref<Network>()
+const networkToDelete = ref<Network>()
 const { init } = useToast()
 
 const remove = async (network: Network) => {
-  confirm({
-    message: t('network.confirm_delete'),
-    size: 'small',
-    maxWidth: '380px',
-  }).then(async (ok) => {
-    if (!ok) return
-    const res = await deleteNetwork(network.id)
-    init({ message: res.message, color: res.code == 200 ? 'success' : 'danger' })
-    fetch()
-  })
+  const res = await deleteNetwork(network.id)
+  init({ message: res.message, color: res.code == 200 ? 'success' : 'danger' })
+  fetch()
 }
 
 const reload = () => {

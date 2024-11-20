@@ -1,7 +1,7 @@
 <template>
   <VaCard class="mb-6">
     <VaCardContent>
-      <h2 class="page-sub-title">{{ t('billing.payment_info') }}</h2>
+      <h2 class="page-sub-title mb-2">{{ t('billing.payment_info') }}</h2>
 
       <div class="flex items-center justify-between md:justify-items-stretch">
         <div

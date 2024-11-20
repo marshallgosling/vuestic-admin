@@ -38,7 +38,7 @@
     </div>
 
     <div class="flex justify-center mt-4">
-      <VaButton class="w-full" :disabled="formData.submiting" @click="submit()">{{ t('auth.login') }}</VaButton>
+      <VaButton class="w-full" :disabled="formData.submiting" type="submit">{{ t('auth.login') }}</VaButton>
     </div>
   </VaForm>
 </template>
@@ -47,7 +47,6 @@
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { useForm, useToast } from 'vuestic-ui'
-import { validators } from '../../services/utils'
 import { login } from '../../api/auth'
 import { useI18n } from 'vue-i18n'
 
@@ -62,6 +61,15 @@ const formData = reactive({
   keepLoggedIn: true,
   submiting: false,
 })
+
+/** Validation */
+const validators = {
+  email: (v: string) => {
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    return pattern.test(v) || t('rules.email_invalid')
+  },
+  required: (v: any) => !!v || t('rules.required'),
+}
 
 const submit = async () => {
   if (validate()) {

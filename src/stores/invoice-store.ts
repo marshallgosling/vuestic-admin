@@ -21,7 +21,7 @@ export const usePaymentInvoicesStore = defineStore({
   },
   actions: {
     async load() {
-      if(this.invoices.length > 0) return
+      if (this.invoices.length > 0) return
       this.loading = true
       this.invoices = await fetchInvoices()
       this.loading = false

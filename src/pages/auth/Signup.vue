@@ -35,10 +35,7 @@
       <VaInput
         ref="password2"
         v-model="formData.repeatPassword"
-        :rules="[
-          (v) => !!v || 'Repeat Password field is required',
-          (v) => v === formData.password || 'Passwords don\'t match',
-        ]"
+        :rules="[(v) => !!v || t('rules.repeat_password'), (v) => v === formData.password || t('rules.password_match')]"
         :type="isPasswordVisible.value ? 'text' : 'password'"
         class="mb-4"
         :label="t('auth.password')"
@@ -55,7 +52,7 @@
     </VaValue>
 
     <div class="flex justify-center mt-4">
-      <VaButton class="w-full" :disabled="formData.submiting" @click="submit"> {{ t('auth.createAccount') }}</VaButton>
+      <VaButton class="w-full" :disabled="formData.submiting" type="submit"> {{ t('auth.createAccount') }}</VaButton>
     </div>
   </VaForm>
 </template>

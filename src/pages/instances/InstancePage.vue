@@ -1,240 +1,34 @@
-<script setup lang="ts">
-import { computed, ref } from 'vue'
-import { useLocalStorage } from '@vueuse/core'
-import { useInstances } from './composables/useInstances'
-import InstanceCards from './widgets/InstanceCards.vue'
-import InstanceTable from './widgets/InstanceTable.vue'
-import EditInstanceForm from './widgets/EditInstanceForm.vue'
-import { Instance } from './types'
-import { useModal, useToast } from 'vuestic-ui'
+<template>
+  <h1 class="page-title">{{ instance?.name }} <small>{{ t('instance.information') }}</small></h1>
+
+  <VaSkeletonGroup v-if="isLoading">
+    <VaSkeleton class="mb-4" height="160px" variant="squared" />
+    <VaSkeleton class="mb-4" height="160px" variant="squared" />
+    <VaSkeleton height="360px" variant="squared" />
+  </VaSkeletonGroup>
+
+  <template v-else>
+    <InstanceInfo :instance="instance" :is-ready="!isLoading" :price-list="pricingList" />
+    <Security :security-list="instance?.securities" />
+    <Billing :billing-list="instance?.billings" />
+  </template>
+</template>
+
+<script lang="ts" setup>
 import { useI18n } from 'vue-i18n'
-import { useInstancePricesStore } from '../../stores/price-store'
+import { useRoute } from 'vue-router'
+import Security from './widgets/Security.vue'
+import { useInstance } from './composables/useInstance'
+import { computed } from 'vue';
+import InstanceInfo from './widgets/InstanceInfo.vue';
+import { useInstancePricesStore } from '../../stores/price-store';
+import Billing from './widgets/billing.vue';
 const { t } = useI18n()
-const doShowAsCards = useLocalStorage('instances-view', true)
+const route = useRoute()
+
+const { instance, isLoading } = useInstance(route.params['id'] as string)
 const pricingStore = useInstancePricesStore()
 pricingStore.load()
-const { instances, update, add, isLoading, remove, start, stop, reboot } = useInstances()
 const pricingList = computed(() => pricingStore.all)
-const instanceToEdit = ref<Instance | null>(null)
-const doShowInstanceFormModal = ref(false)
 
-const editInstance = (instance: Instance) => {
-  instanceToEdit.value = instance
-  doShowInstanceFormModal.value = true
-}
-
-const createNewInstance = () => {
-  instanceToEdit.value = null
-  doShowInstanceFormModal.value = true
-}
-
-const { init: notify } = useToast()
-
-const onInstanceSaved = async (instance: Instance) => {
-  doShowInstanceFormModal.value = false
-  if ('id' in instance) {
-    const ret = await update(instance as Instance)
-    notify({
-      message: ret.message,
-      color: ret.code == 200 ? 'success' : 'danger',
-    })
-  } else {
-    const ret = await add(instance as Instance)
-    notify({
-      message: ret.message,
-      color: ret.code == 200 ? 'success' : 'danger',
-    })
-  }
-}
-
-const { confirm } = useModal()
-
-const onInstanceReboot = async (instance: Instance) => {
-  const response = await confirm({
-    title: t('instance.reboot_instance'),
-    message: t('instance.confirm_reboot', { name: instance.name }),
-    okText: t('instance.reboot'),
-    size: 'small',
-    maxWidth: '380px',
-  })
-
-  if (!response) {
-    return
-  }
-
-  const res = await reboot(instance)
-  if (res.code == 200) {
-    notify({
-      message: t('instance.reboot_success'),
-      color: 'success',
-    })
-  } else {
-    notify({
-      message: res.message,
-      color: 'danger',
-    })
-  }
-}
-
-const onInstanceStart = async (instance: Instance) => {
-  const response = await confirm({
-    title: t('instance.start_instance'),
-    message: t('instance.confirm_start', { name: instance.name }),
-    okText: t('instance.start'),
-    size: 'small',
-    maxWidth: '380px',
-  })
-
-  if (!response) {
-    return
-  }
-
-  const res = await start(instance)
-  if (res.code == 200) {
-    notify({
-      message: t('instance.start_success'),
-      color: 'success',
-    })
-  } else {
-    notify({
-      message: res.message,
-      color: 'danger',
-    })
-  }
-}
-
-const onInstanceStop = async (instance: Instance) => {
-  const response = await confirm({
-    title: t('instance.stop_instance'),
-    message: t('instance.confirm_stop', { name: instance.name }),
-    okText: t('instance.stop'),
-    size: 'small',
-    maxWidth: '380px',
-  })
-
-  if (!response) {
-    return
-  }
-
-  const res = await stop(instance)
-  if (res.code == 200) {
-    notify({
-      message: t('instance.stop_success'),
-      color: 'success',
-    })
-  } else {
-    notify({
-      message: res.message,
-      color: 'danger',
-    })
-  }
-}
-
-const onInstanceDeleted = async (instance: Instance) => {
-  const response = await confirm({
-    title: t('instance.delete_instance'),
-    message: t('instance.confirm_delete', { name: instance.name }),
-    okText: t('instance.delete'),
-    size: 'small',
-    maxWidth: '380px',
-  })
-
-  if (!response) {
-    return
-  }
-
-  await remove(instance)
-  notify({
-    message: t('instance.delete_success'),
-    color: 'success',
-  })
-}
-
-const editFormRef = ref()
-
-const beforeEditFormModalClose = async (hide: () => unknown) => {
-  if (editFormRef.value.isFormHasUnsavedChanges) {
-    const agreed = await confirm({
-      maxWidth: '380px',
-      message: t('confirm.cancel'),
-      size: 'small',
-    })
-    if (agreed) {
-      hide()
-    }
-  } else {
-    hide()
-  }
-}
 </script>
-
-<template>
-  <h1 class="page-title">{{ t('instance.instances') }}</h1>
-
-  <VaCard>
-    <VaCardContent>
-      <div class="flex flex-col md:flex-row gap-2 mb-2 justify-between">
-        <div class="flex flex-col md:flex-row gap-2 justify-start">
-          <VaButtonToggle
-            v-model="doShowAsCards"
-            color="background-element"
-            border-color="background-element"
-            :options="[
-              { label: t('instance.card'), value: true },
-              { label: t('instance.table'), value: false },
-            ]"
-          />
-        </div>
-        <VaButton icon="add" size="medium" @click="createNewInstance">{{ t('instance.start_instance') }}</VaButton>
-      </div>
-
-      <InstanceCards
-        v-if="doShowAsCards"
-        :instances="instances"
-        :loading="isLoading"
-        @edit="editInstance"
-        @delete="onInstanceDeleted"
-        @reboot="onInstanceReboot"
-        @start="onInstanceStart"
-        @stop="onInstanceStop"
-      />
-      <InstanceTable
-        v-else
-        :instances="instances"
-        :loading="isLoading"
-        @edit="editInstance"
-        @delete="onInstanceDeleted"
-        @reboot="onInstanceReboot"
-        @start="onInstanceStart"
-        @stop="onInstanceStop"
-      />
-    </VaCardContent>
-
-    <VaModal
-      v-slot="{ cancel, ok }"
-      v-model="doShowInstanceFormModal"
-      size="small"
-      mobile-fullscreen
-      close-button
-      stateful
-      hide-default-actions
-      :before-cancel="beforeEditFormModalClose"
-    >
-      <h1 v-if="instanceToEdit === null" class="va-h5 mb-4">{{ t('instance.start_instance') }}</h1>
-      <h1 v-else class="va-h5 mb-4">{{ t('instance.edit_instance') }}</h1>
-      <EditInstanceForm
-        ref="editFormRef"
-        :instance="instanceToEdit"
-        :prices="pricingList"
-        :save-button-label="instanceToEdit === null ? t('instance.add') : t('instance.save')"
-        @close="cancel"
-        @save="
-          (instance) => {
-            onInstanceSaved(instance)
-            ok()
-          }
-        "
-      />
-    </VaModal>
-  </VaCard>
-</template>

@@ -45,7 +45,7 @@ export const updateInstance = (instance: Instance) => {
 }
 
 export const createInstance = (instance: Instance) => {
-  return request.post<any, instanceItem>(API.UPDATE_URL, instance)
+  return request.post<any, instanceItem>(API.CREATE_URL, instance)
 }
 
 export const getInstancePrices = () => {

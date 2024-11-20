@@ -4,8 +4,9 @@ import { useForm } from 'vuestic-ui'
 import { User, UserRole } from '../types'
 import UserAvatar from './UserAvatar.vue'
 import { useProjects } from '../../projects/composables/useProjects'
-import { validators } from '../../../services/utils'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const props = defineProps({
   user: {
     type: Object as PropType<User | null>,
@@ -16,6 +17,15 @@ const props = defineProps({
     default: 'Save',
   },
 })
+
+/** Validation */
+const validators = {
+  email: (v: string) => {
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    return pattern.test(v) || t('rules.email_valid')
+  },
+  required: (v: any) => !!v || t('rules.required'),
+}
 
 const defaultNewUser: User = {
   id: -1,

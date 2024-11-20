@@ -5,8 +5,9 @@ import KeyTable from './widgets/KeyTable.vue'
 import EditKeyForm from './widgets/EditKeyForm.vue'
 import { KeyPair } from './types'
 import { useModal, useToast } from 'vuestic-ui'
+import { useI18n } from 'vue-i18n'
 
-useKeyPairs
+const { t } = useI18n()
 const { keys, add, isLoading, remove, enable } = useKeyPairs()
 
 const keyToEdit = ref<KeyPair | null>(null)
@@ -45,9 +46,9 @@ const { confirm } = useModal()
 
 const onKeyDeleted = async (key: KeyPair) => {
   const response = await confirm({
-    title: 'Delete Instance',
-    message: `Are you sure you want to delete Key "${key.name}"?`,
-    okText: 'Delete',
+    title: t('keypair.deletekey'),
+    message: t('keypair.deletekey_confirm', { name: key.name }),
+    okText: t('keypair.delete'),
     size: 'small',
     maxWidth: '380px',
   })
@@ -63,11 +64,27 @@ const onKeyDeleted = async (key: KeyPair) => {
   })
 }
 
+const onKeyDownload = async (key: KeyPair) => {
+  const response = await confirm({
+    title: t('keypair.downloadkey'),
+    message: t('keypair.downloadkey_confirm', { name: key.name }),
+    okText: t('keypair.download'),
+    size: 'small',
+    maxWidth: '380px',
+  })
+
+  if (!response) {
+    return
+  }
+
+  window.open('/api/keypair/download/' + key.id)
+}
+
 const onKeyCheck = async (key: KeyPair) => {
   const response = await confirm({
-    title: 'Enable Key',
-    message: `Are you sure you want to enable Key "${key.name}"?`,
-    okText: 'Enable',
+    title: t('keypair.enablekey'),
+    message: t('keypair.enablekey_confirm', { name: key.name }),
+    okText: t('keypair.enable'),
     size: 'small',
     maxWidth: '380px',
   })
@@ -89,7 +106,7 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
   if (editFormRef.value.isFormHasUnsavedChanges) {
     const agreed = await confirm({
       maxWidth: '380px',
-      message: '确认要取消吗？',
+      message: t('keypair.cancel_confirm'),
       size: 'small',
     })
     if (agreed) {
@@ -102,15 +119,21 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
 </script>
 
 <template>
-  <h1 class="page-title">密钥对</h1>
+  <h1 class="page-title">{{ t('keypair.title') }}</h1>
 
   <VaCard>
     <VaCardContent>
       <div class="flex flex-col md:flex-row gap-2 mb-2 justify-between">
-        <VaButton icon="add" @click="createNewKeyPair">创建</VaButton>
+        <VaButton icon="add" @click="createNewKeyPair">{{ t('keypair.create') }}</VaButton>
       </div>
 
-      <KeyTable :keys="keys" :loading="isLoading" @check="onKeyCheck" @delete="onKeyDeleted" />
+      <KeyTable
+        :keys="keys"
+        :loading="isLoading"
+        @check="onKeyCheck"
+        @delete="onKeyDeleted"
+        @download="onKeyDownload"
+      />
     </VaCardContent>
 
     <VaModal
@@ -123,12 +146,12 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
       hide-default-actions
       :before-cancel="beforeEditFormModalClose"
     >
-      <h1 v-if="keyToEdit === null" class="va-h5 mb-4">create key</h1>
+      <h1 v-if="keyToEdit === null" class="va-h5 mb-4">{{ t('keypair.createkey') }}</h1>
       <h1 v-else class="va-h5 mb-4">Edit key</h1>
       <EditKeyForm
         ref="editFormRef"
         :keypair="keyToEdit"
-        :save-button-label="keyToEdit === null ? 'Add' : 'Save'"
+        :save-button-label="keyToEdit === null ? t('keypair.create') : 'Save'"
         @close="cancel"
         @save="
           (keypair) => {
