@@ -39,7 +39,7 @@
   },
   "security": {
     "ipv4": "IPv4 防火墙",
-    "name":"应用程序",
+    "name": "应用程序",
     "proto": "协议",
     "port": "端口",
     "help": "限制说明",

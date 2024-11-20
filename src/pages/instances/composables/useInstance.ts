@@ -1,9 +1,5 @@
 import { ref } from 'vue'
-import {
-
-  getInstanceInfo,
-
-} from '../../../api/instance'
+import { getInstanceInfo } from '../../../api/instance'
 
 import { Instance } from '../types'
 
@@ -27,6 +23,5 @@ export const useInstance = (id: string) => {
     isLoading,
 
     instance,
-
   }
 }

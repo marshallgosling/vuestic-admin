@@ -27,7 +27,9 @@
           <div class="w-20">{{ item.port }}</div>
           <div class="w-20">{{ item.help }}</div>
           <div class="w-20">
-            <VaButton preset="primary" size="small" @click="delete">{{ t('security.delete') }}</VaButton>
+            <VaButton preset="primary" size="small" @click="$emit('delete', item as Security)">{{
+              t('security.delete')
+            }}</VaButton>
           </div>
         </div>
         <VaDivider v-if="securityList && index !== securityList.length - 1" />
@@ -37,17 +39,19 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType } from 'vue';
+import { PropType } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { Security } from '../types';
+import { Security } from '../types'
 
 defineProps({
   securityList: {
     type: Array as PropType<Security[] | undefined>,
     required: true,
-  }
+  },
 })
 const { t } = useI18n()
 
-
+defineEmits<{
+  (event: 'delete', security: Security): void
+}>()
 </script>

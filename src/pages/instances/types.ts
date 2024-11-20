@@ -1,3 +1,4 @@
+import { Billing } from '../billing/types'
 import { Network } from '../networks/types'
 
 export type Pagination = {
@@ -79,12 +80,22 @@ export type Instance = {
   image_url: string
   networks: Network[]
   securities: Security[]
+  billings: Billing[]
   storages: Storage[]
 }
 
 export type EmptyInstance = Omit<
   Instance,
-  'id' | 'status' | 'instance_type' | 'networks' | 'storages' | 'created_at' | 'key_name' | 'securities'
+  | 'id'
+  | 'status'
+  | 'instance_type'
+  | 'networks'
+  | 'storages'
+  | 'created_at'
+  | 'key_name'
+  | 'securities'
+  | 'billings'
+  | 'image_url'
 > & {
   name: Instance['name'] | ''
   domain: Instance['domain'] | ''

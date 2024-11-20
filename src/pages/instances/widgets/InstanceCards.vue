@@ -49,7 +49,7 @@ defineEmits<{
         </div>
         <div class="flex flex-col gap-1 grow">
           <h4 class="va-h4 text-left self-stretch overflow-hidden line-clamp-2 text-ellipsis">
-            <RouterLink :to="{ name: 'instance', params: { id: instance.id }}">{{ instance.name }}</RouterLink> 
+            <RouterLink :to="{ name: 'instance', params: { id: instance.id } }">{{ instance.name }}</RouterLink>
           </h4>
         </div>
         <div class="grid grid-cols-3 gap-4">

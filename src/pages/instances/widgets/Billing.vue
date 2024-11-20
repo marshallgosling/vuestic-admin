@@ -38,8 +38,8 @@
 <script lang="ts" setup>
 import { PropType } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { Billing } from '../../billing/types';
-import BillingStatusBadge from '../components/BillingStatusBadge.vue';
+import { Billing } from '../../billing/types'
+import BillingStatusBadge from '../components/BillingStatusBadge.vue'
 
 const { t } = useI18n()
 
