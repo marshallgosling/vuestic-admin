@@ -6,6 +6,7 @@ import EditKeyForm from './widgets/EditKeyForm.vue'
 import { KeyPair } from './types'
 import { useModal, useToast } from 'vuestic-ui'
 import { useI18n } from 'vue-i18n'
+import { downloadKeyPair } from '../../api/keypairs'
 
 const { t } = useI18n()
 const { keys, add, isLoading, remove, enable } = useKeyPairs()
@@ -77,7 +78,17 @@ const onKeyDownload = async (key: KeyPair) => {
     return
   }
 
-  window.open('/api/keypair/download/' + key.id)
+  const ret = await downloadKeyPair(key.id)
+  const blob = new Blob([ret]) //创建一个blob
+  const downloadElement = document.createElement('a') //创建一个a链接
+  const href = window.URL.createObjectURL(blob) //下载链接
+  const fileName = key.name + '.pem'
+  downloadElement.download = `${fileName}` // 下载后文件名
+  downloadElement.href = href //链接等于链接
+  document.body.appendChild(downloadElement) //将元素加在dom尾部
+  downloadElement.click() //点击a链接
+  document.body.removeChild(downloadElement) //点击完后删掉
+  window.URL.revokeObjectURL(href) //释放这个url内存
 }
 
 const onKeyCheck = async (key: KeyPair) => {

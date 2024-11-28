@@ -1,17 +1,6 @@
 import { Billing } from '../billing/types'
 import { Network } from '../networks/types'
 
-export type Pagination = {
-  page: number
-  perPage: number
-  total: number
-}
-
-export type Sorting = {
-  sortBy: 'created_at' | undefined
-  sortingOrder: 'asc' | 'desc' | null
-}
-
 export enum InstanceType {
   small = 'NVIDIA VRAM/GPU:24 GB,vCPUs:8,RAM:50 GiB,STORAGE:0.5 TiB SSD',
   medium = 'NVIDIA VRAM/GPU:40 GB,vCPUs:13,RAM:100 GiB,STORAGE:1 TiB SSD',
@@ -66,6 +55,16 @@ export const StatusColorMap: Record<number, string> = {
   8: 'danger',
   9: 'gray',
   10: 'black',
+}
+
+export type Sorting = {
+  sortBy: string | undefined
+  sortingOrder: 'asc' | 'desc' | null
+}
+
+export type Filters = {
+  status: number | null
+  type: string | null
 }
 
 export type Instance = {

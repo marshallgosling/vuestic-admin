@@ -10,8 +10,10 @@
           <div class="md:w-48">
             <p class="mb-1">{{ t('billing.payment_amount') }}</p>
             <p class="font-bold">
-              {{ paymentPlan.isYearly ? paymentPlan.priceYear : paymentPlan.priceMonth }}&nbsp;/{{
-                paymentPlan.isYearly ? 'yearly' : 'monthly'
+              {{
+                paymentInvoices.length > 0
+                  ? paymentInvoices[0].name + ':     ' + currency + paymentInvoices[0].amount
+                  : '-'
               }}
             </p>
           </div>
@@ -37,45 +39,22 @@
       </template>
     </VaCardContent>
   </VaCard>
-
-  <ChangeYourPaymentPlan
-    v-if="isChangeYourPaymentPlanModalOpen"
-    :yearly-plan="paymentPlan.isYearly"
-    @confirm="updatePaymentPlan"
-    @cancel="togglePaymentPlanModal"
-  />
 </template>
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
 import { usePaymentCardsStore } from '../../stores/payment-cards'
 import { useI18n } from 'vue-i18n'
-import ChangeYourPaymentPlan from './modals/ChangeYourPaymentPlan.vue'
+import { usePaymentInvoicesStore } from '../../stores/invoice-store'
 
-const paymentPlan = ref({
-  id: '1',
-  name: 'Gold',
-  isYearly: false,
-  type: 'current',
-  padletsUsed: 19,
-  padletsTotal: '20',
-  priceMonth: '$6.99',
-  priceYear: '$69.99',
-  switchToYearlySave: '16%',
-  uploadLimit: '100MB',
-})
+const invoicesStore = usePaymentInvoicesStore()
+invoicesStore.load()
+const paymentInvoices = computed(() => invoicesStore.allInvoices)
+
+const currency = ref(invoicesStore.currency)
 
 const cardStore = usePaymentCardsStore()
 const { t } = useI18n()
-const isChangeYourPaymentPlanModalOpen = ref(false)
 
 const paymentCard = computed(() => cardStore.currentPaymentCard)
-const togglePaymentPlanModal = () => {
-  isChangeYourPaymentPlanModalOpen.value = !isChangeYourPaymentPlanModalOpen.value
-}
-
-const updatePaymentPlan = () => {
-  paymentPlan.value.isYearly = !paymentPlan.value.isYearly
-  isChangeYourPaymentPlanModalOpen.value = false
-}
 </script>

@@ -22,9 +22,15 @@ export interface userProfile extends ResponseData {
     email: string
   }
 }
+export type Pagination = {
+  page: number
+  perPage: number
+  total: number
+}
 
 export interface networkList extends ResponseData {
   data: Network[]
+  pagination: Pagination
 }
 
 export interface storageList extends ResponseData {
@@ -33,6 +39,7 @@ export interface storageList extends ResponseData {
 
 export interface instanceList extends ResponseData {
   data: Instance[]
+  pagination: Pagination
 }
 
 export interface instanceItem extends ResponseData {
@@ -41,6 +48,7 @@ export interface instanceItem extends ResponseData {
 
 export interface networkItem extends ResponseData {
   data: Network
+  pagination: Pagination
 }
 
 export interface keypairList extends ResponseData {
@@ -53,6 +61,7 @@ export interface keypairItem extends ResponseData {
 
 export interface invoiceList extends ResponseData {
   data: Invoice[]
+  pagination: Pagination
 }
 
 export interface invoiceItem extends ResponseData {

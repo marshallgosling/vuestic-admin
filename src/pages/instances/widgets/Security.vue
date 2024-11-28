@@ -3,7 +3,7 @@
     <VaCardContent>
       <h2 class="page-sub-title mb-2">{{ t('security.ipv4') }}</h2>
       <div class="flex items-center mt-2 justify-between md:justify-items-stretch mb-1">
-        <div class="flex items-center w-48 font-bold">
+        <div class="flex items-center w-20 font-bold">
           {{ t('security.name') }}
         </div>
         <div class="w-20 font-bold">
@@ -12,22 +12,22 @@
         <div class="w-20 font-bold">
           {{ t('security.port') }}
         </div>
-        <div class="w-20 font-bold">
+        <div class="w-48 font-bold">
           {{ t('security.help') }}
         </div>
-        <div class="w-20"></div>
+        <div class="w-48"></div>
       </div>
       <VaDivider />
       <template v-for="(item, index) in securityList" :key="item.id">
         <div class="flex items-center justify-between md:justify-items-stretch">
-          <div class="flex items-center w-48">
+          <div class="flex items-center w-20">
             {{ item.name }}
           </div>
           <div class="w-20">{{ item.proto }}</div>
           <div class="w-20">{{ item.port }}</div>
-          <div class="w-20">{{ item.help }}</div>
-          <div class="w-20">
-            <VaButton preset="primary" size="small" @click="$emit('delete', item as Security)">{{
+          <div class="w-48">{{ item.help }}</div>
+          <div class="w-48">
+            <VaButton color="danger" size="small" @click="$emit('delete', item as Security)">{{
               t('security.delete')
             }}</VaButton>
           </div>

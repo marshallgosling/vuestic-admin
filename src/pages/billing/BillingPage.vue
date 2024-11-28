@@ -9,6 +9,7 @@
 
   <template v-else>
     <PaymentInfo />
+    <InvoiceDetails />
     <Invoices />
   </template>
 </template>
@@ -18,7 +19,9 @@ import { useI18n } from 'vue-i18n'
 import PaymentInfo from './PaymentInfo.vue'
 import { usePaymentCardsStore } from '../../stores/payment-cards'
 import { usePaymentInvoicesStore } from '../../stores/invoice-store'
+import InvoiceDetails from './InvoiceDetails.vue'
 import Invoices from './Invoices.vue'
+
 const { t } = useI18n()
 const cardStore = usePaymentCardsStore()
 cardStore.load()

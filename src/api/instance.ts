@@ -1,6 +1,6 @@
 import request from '../services/request'
-import { instanceList, instanceItem, instancePrice, empty } from './types'
-import { Instance } from '../pages/instances/types'
+import { instanceList, instanceItem, instancePrice, empty, Pagination } from './types'
+import { Instance, Filters, Sorting } from '../pages/instances/types'
 
 enum API {
   LIST_URL = '/instance/list',
@@ -12,8 +12,18 @@ enum API {
   ACTION_URL = '/instance/action',
 }
 
-export const getInstances = (query: string) => {
-  return request.get<any, instanceList>(API.LIST_URL + '?' + query)
+export const getInstances = (filters: Partial<Pagination & Sorting & Filters>) => {
+  const { sortBy, sortingOrder } = filters
+  const { page = 1, perPage = 10 } = filters || {}
+  const query = new URLSearchParams()
+
+  if (sortBy) query.set('sortBy', sortBy)
+  if (sortingOrder) query.set('sortingOrder', sortingOrder)
+
+  if (page) query.set('page', page.toString())
+  if (perPage) query.set('perPage', perPage.toString())
+
+  return request.get<any, instanceList>(API.LIST_URL + '?' + query.toString())
 }
 
 export const getInstanceInfo = (id: string) => {

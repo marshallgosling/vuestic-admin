@@ -77,10 +77,10 @@ const submit = async () => {
     const loginUser = await login(formData.email, formData.password)
     if (loginUser.code == 200) {
       localStorage.setItem('token', loginUser.data.token)
-      init({ message: loginUser.message, color: 'success' })
+      init({ message: t('auth.' + loginUser.message), color: 'success' })
       push({ name: 'instances' })
     } else {
-      init({ message: loginUser.message, color: 'danger' })
+      init({ message: t('auth.' + loginUser.message), color: 'danger' })
     }
     formData.submiting = false
   }

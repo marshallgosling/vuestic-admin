@@ -1,9 +1,10 @@
 import request from '../services/request'
-import { paymentCardList, paymentCardItem, invoiceList, empty } from './types'
+import { paymentCardList, paymentCardItem, invoiceList, invoiceItem, empty } from './types'
 import { PaymentCard } from '../pages/payments/types'
 
 enum API {
   INVOICES_URL = '/billing/invoices',
+  INVOICE_URL = '/billing/invoice/',
   CARD_URL = '/billing/card',
   CARDS_URL = '/billing/cards',
   CREATE_URL = '/billing/create',
@@ -13,6 +14,10 @@ enum API {
 
 export const getInvoices = (query: string) => {
   return request.get<any, invoiceList>(API.INVOICES_URL + '?' + query)
+}
+
+export const getInvoiceDetails = (id: string) => {
+  return request.get<any, invoiceItem>(API.INVOICE_URL + '/' + id)
 }
 
 export const getPaymentCard = () => {

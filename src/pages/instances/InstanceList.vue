@@ -10,11 +10,11 @@ import { useModal, useToast } from 'vuestic-ui'
 import { useI18n } from 'vue-i18n'
 import { useInstancePricesStore } from '../../stores/price-store'
 const { t } = useI18n()
-const doShowAsCards = useLocalStorage('instances-view', true)
+const doShowAsCards = useLocalStorage('instances-view', false)
 const pricingStore = useInstancePricesStore()
 pricingStore.load()
 const pricingList = computed(() => pricingStore.all)
-const { instances, update, add, isLoading, remove, start, stop, reboot } = useInstances()
+const { instances, isLoading, sorting, pagination, ...usersApi } = useInstances()
 
 const instanceToEdit = ref<Instance | null>(null)
 const doShowInstanceFormModal = ref(false)
@@ -34,13 +34,13 @@ const { init: notify } = useToast()
 const onInstanceSaved = async (instance: Instance) => {
   doShowInstanceFormModal.value = false
   if ('id' in instance) {
-    const ret = await update(instance as Instance)
+    const ret = await usersApi.update(instance as Instance)
     notify({
       message: ret.message,
       color: ret.code == 200 ? 'success' : 'danger',
     })
   } else {
-    const ret = await add(instance as Instance)
+    const ret = await usersApi.add(instance as Instance)
     notify({
       message: ret.message,
       color: ret.code == 200 ? 'success' : 'danger',
@@ -63,7 +63,7 @@ const onInstanceReboot = async (instance: Instance) => {
     return
   }
 
-  const res = await reboot(instance)
+  const res = await usersApi.reboot(instance)
   if (res.code == 200) {
     notify({
       message: t('instance.reboot_success'),
@@ -90,7 +90,7 @@ const onInstanceStart = async (instance: Instance) => {
     return
   }
 
-  const res = await start(instance)
+  const res = await usersApi.start(instance)
   if (res.code == 200) {
     notify({
       message: t('instance.start_success'),
@@ -117,7 +117,7 @@ const onInstanceStop = async (instance: Instance) => {
     return
   }
 
-  const res = await stop(instance)
+  const res = await usersApi.stop(instance)
   if (res.code == 200) {
     notify({
       message: t('instance.stop_success'),
@@ -144,7 +144,7 @@ const onInstanceDeleted = async (instance: Instance) => {
     return
   }
 
-  await remove(instance)
+  await usersApi.remove(instance)
   notify({
     message: t('instance.delete_success'),
     color: 'success',
@@ -201,8 +201,11 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
       />
       <InstanceTable
         v-else
+        v-model:sort-by="sorting.sortBy"
+        v-model:sorting-order="sorting.sortingOrder"
         :instances="instances"
         :loading="isLoading"
+        :pagination="pagination"
         @edit="editInstance"
         @delete="onInstanceDeleted"
         @reboot="onInstanceReboot"

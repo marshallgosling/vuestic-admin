@@ -5,6 +5,18 @@ export interface Invoice {
   currency: string
   tax: number
   tax_amount: number
+  status: number
+  items: InvoiceItem[]
+}
+
+export interface InvoiceItem {
+  id: string
+  name: string
+  amount: number
+  duration: string
+  description: string
+  created_at: string
+  updated_at: string
 }
 
 export interface Billing {
@@ -12,6 +24,7 @@ export interface Billing {
   name: string
   amount: number
   month: string
+  duration: string
   status: number
   created_at: string
 }

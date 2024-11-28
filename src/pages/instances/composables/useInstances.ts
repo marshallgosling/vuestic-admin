@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { Ref, ref, unref, watch } from 'vue'
 import {
   getInstances,
   getInstanceInfo,
@@ -10,19 +10,40 @@ import {
   updateInstance,
   createInstance,
 } from '../../../api/instance'
+import { Pagination } from '../../../api/types'
+import { Instance, Sorting, Filters } from '../types'
+import { watchIgnorable } from '@vueuse/core'
 
-import { Instance } from '../types'
+const makePaginationRef = () => ref<Pagination>({ page: 1, perPage: 20, total: 0 })
+const makeSortingRef = () => ref<Sorting>({ sortBy: 'id', sortingOrder: null })
+const makeFiltersRef = () => ref<Partial<Filters>>({ status: null, type: null })
 
-export const useInstances = () => {
+export const useInstances = (options?: {
+  pagination?: Ref<Pagination>
+  sorting?: Ref<Sorting>
+  filters?: Ref<Partial<Filters>>
+}) => {
   const isLoading = ref(false)
   const instances = ref<Instance[]>([])
+  const { filters = makeFiltersRef(), sorting = makeSortingRef(), pagination = makePaginationRef() } = options || {}
 
   const fetch = async () => {
     isLoading.value = true
-    const { data } = await getInstances('all')
+    const { data, pagination: newPagination } = await getInstances({
+      ...unref(sorting),
+      ...unref(pagination),
+      ...unref(filters),
+    })
     instances.value = data as Instance[]
+
+    ignoreUpdates(() => {
+      pagination.value = newPagination
+    })
+
     isLoading.value = false
   }
+
+  const { ignoreUpdates } = watchIgnorable([pagination, sorting], fetch, { deep: true })
 
   const info = async (id: string) => {
     isLoading.value = true
@@ -31,12 +52,24 @@ export const useInstances = () => {
     return data
   }
 
-  //const { ignoreUpdates } = watchIgnorable([pagination, sorting], fetch, { deep: true })
+  watch(
+    filters,
+    () => {
+      // Reset pagination to first page when filters changed
+      pagination.value.page = 1
+      fetch()
+    },
+    { deep: true },
+  )
 
   fetch()
 
   return {
     isLoading,
+
+    filters,
+    sorting,
+    pagination,
 
     instances,
 

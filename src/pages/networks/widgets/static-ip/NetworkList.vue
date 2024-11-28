@@ -57,7 +57,7 @@
 
 <script lang="ts" setup>
 import NetworkListItem from './NetworkListItem.vue'
-import { ref } from 'vue'
+import { ref, unref } from 'vue'
 import { useColors } from 'vuestic-ui'
 import { Network } from '../../types'
 import { useToast } from 'vuestic-ui'
@@ -68,6 +68,8 @@ import { deleteNetwork, getNetworks } from '../../../../api/network'
 import { getInstances } from '../../../../api/instance'
 import { useI18n } from 'vue-i18n'
 import NetworkDeleteModal from './NetworkDeleteModal.vue'
+import { Pagination } from '../../../../api/types'
+import { Sorting, Filters } from '../../../instances/types'
 const { t } = useI18n()
 
 const loading = ref(false)
@@ -83,8 +85,16 @@ const fetch = async () => {
 
 fetch()
 
+const makePaginationRef = () => ref<Pagination>({ page: 1, perPage: 20, total: 0 })
+const makeSortingRef = () => ref<Sorting>({ sortBy: 'id', sortingOrder: null })
+const makeFiltersRef = () => ref<Partial<Filters>>({ status: null, type: null })
+const { filters = makeFiltersRef(), sorting = makeSortingRef(), pagination = makePaginationRef() } = {}
 const fetchInstance = async () => {
-  const instanceList = await getInstances('new')
+  const instanceList = await getInstances({
+    ...unref(sorting),
+    ...unref(pagination),
+    ...unref(filters),
+  })
   instanceListOptions = instanceList.data.map((instance) => {
     return {
       label: instance.name,

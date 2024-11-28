@@ -7,6 +7,7 @@ enum API {
   CREATE_URL = '/keypair/create',
   DELETE_URL = '/keypair/delete/',
   ACTION_URL = '/keypair/action',
+  DOWNLOAD_URL = '/keypair/download/',
 }
 
 export const getKeyPairs = (query: string) => {
@@ -23,4 +24,8 @@ export const deleteKeyPair = (id: string) => {
 
 export const enableKeyPair = (id: string) => {
   return request.post<any, empty>(API.ACTION_URL, { action: 'enable', id })
+}
+
+export const downloadKeyPair = (id: string) => {
+  return request.get<any, any>(API.DOWNLOAD_URL + id)
 }

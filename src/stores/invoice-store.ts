@@ -17,6 +17,7 @@ export const usePaymentInvoicesStore = defineStore({
   }),
   getters: {
     //currentPaymentCard: (state): PaymentCard | undefined => state.paymentCards.find((card) => card.isPrimary),
+    latestInvoice: (state) => (state.invoices.length == 0 ? null : state.invoices[0]),
     allInvoices: (state) => state.invoices,
   },
   actions: {

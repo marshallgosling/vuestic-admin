@@ -82,10 +82,10 @@ const submit = async () => {
     formData.submiting = true
     const loginUser = await register(formData.email, formData.name, formData.password)
     if (loginUser.code == 200) {
-      init({ message: loginUser.message, color: 'success' })
+      init({ message: t('auth.' + loginUser.message), color: 'success' })
       push({ name: 'login' })
     } else {
-      init({ message: loginUser.message, color: 'danger' })
+      init({ message: t('auth.' + loginUser.message), color: 'danger' })
     }
     formData.submiting = false
   }
