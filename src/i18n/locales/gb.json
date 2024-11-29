@@ -359,6 +359,8 @@
     "previousPeriod": "previous period",
     "removeFile": "remove file",
     "reset": "reset",
+    "results": "record(s)",
+    "total": "{start} - {end}, {total} record(s)",
     "pagination": "pagination",
     "goToTheFirstPage": "go to the first page",
     "goToPreviousPage": "go to the previous page",

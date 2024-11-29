@@ -13,8 +13,8 @@ enum API {
 }
 
 export const getInstances = (filters: Partial<Pagination & Sorting & Filters>) => {
-  const { sortBy, sortingOrder } = filters
-  const { page = 1, perPage = 10 } = filters || {}
+  const { sortBy, sortingOrder, status, type } = filters
+  const { page = 1, perPage = 15 } = filters || {}
   const query = new URLSearchParams()
 
   if (sortBy) query.set('sortBy', sortBy)
@@ -22,6 +22,9 @@ export const getInstances = (filters: Partial<Pagination & Sorting & Filters>) =
 
   if (page) query.set('page', page.toString())
   if (perPage) query.set('perPage', perPage.toString())
+
+  if (status != null) query.set('status', status.toString())
+  if (type != null) query.set('type', type)
 
   return request.get<any, instanceList>(API.LIST_URL + '?' + query.toString())
 }

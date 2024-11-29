@@ -5,7 +5,7 @@ import { useInstances } from './composables/useInstances'
 import InstanceCards from './widgets/InstanceCards.vue'
 import InstanceTable from './widgets/InstanceTable.vue'
 import EditInstanceForm from './widgets/EditInstanceForm.vue'
-import { Instance } from './types'
+import { Instance, StatusStringMap } from './types'
 import { useModal, useToast } from 'vuestic-ui'
 import { useI18n } from 'vue-i18n'
 import { useInstancePricesStore } from '../../stores/price-store'
@@ -14,7 +14,7 @@ const doShowAsCards = useLocalStorage('instances-view', false)
 const pricingStore = useInstancePricesStore()
 pricingStore.load()
 const pricingList = computed(() => pricingStore.all)
-const { instances, isLoading, sorting, pagination, ...usersApi } = useInstances()
+const { instances, isLoading, sorting, filters, pagination, ...usersApi } = useInstances()
 
 const instanceToEdit = ref<Instance | null>(null)
 const doShowInstanceFormModal = ref(false)
@@ -167,6 +167,10 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
     hide()
   }
 }
+const StatusListOptions = Object.keys(StatusStringMap).map((key) => ({
+  value: key,
+  label: StatusStringMap[parseInt(key)],
+}))
 </script>
 
 <template>
@@ -175,24 +179,48 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
   <VaCard>
     <VaCardContent>
       <div class="flex flex-col md:flex-row gap-2 mb-2 justify-between">
+        <div class="flex flex-col md:flex-row gap-2 mb-2 justify-between">
+          <div class="flex flex-col md:flex-row gap-2 justify-between">
+            <VaSelect
+              v-model="filters.status"
+              :placeholder="t('instance.status')"
+              :label="t('instance.status')"
+              track-by="value"
+              value-by="value"
+              text-by="label"
+              :options="StatusListOptions"
+            />
+            <VaSelect
+              v-model="filters.type"
+              :placeholder="t('instance.type')"
+              :label="t('instance.type')"
+              track-by="name"
+              value-by="name"
+              text-by="name"
+              :options="pricingList"
+            />
+          </div>
+        </div>
         <div class="flex flex-col md:flex-row gap-2 justify-start">
           <VaButtonToggle
             v-model="doShowAsCards"
             color="background-element"
             border-color="background-element"
+            size="small"
             :options="[
               { label: t('instance.card'), value: true },
               { label: t('instance.table'), value: false },
             ]"
           />
+          <VaButton icon="add" size="small" @click="createNewInstance">{{ t('instance.start_instance') }}</VaButton>
         </div>
-        <VaButton icon="add" size="medium" @click="createNewInstance">{{ t('instance.start_instance') }}</VaButton>
       </div>
 
       <InstanceCards
         v-if="doShowAsCards"
         :instances="instances"
         :loading="isLoading"
+        :pagination="pagination"
         @edit="editInstance"
         @delete="onInstanceDeleted"
         @reboot="onInstanceReboot"

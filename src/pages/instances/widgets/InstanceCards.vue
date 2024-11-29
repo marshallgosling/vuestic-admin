@@ -1,16 +1,21 @@
 <script setup lang="ts">
-import { PropType } from 'vue'
+import { PropType, computed, toRef } from 'vue'
 import { Instance } from '../types'
 import InstanceStatusBadge from '../components/InstanceStatusBadge.vue'
+import { Pagination } from '../../../api/types'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
-defineProps({
+const props = defineProps({
   instances: {
     type: Array as PropType<Instance[]>,
     required: true,
   },
   loading: {
     type: Boolean,
+    required: true,
+  },
+  pagination: {
+    type: Object as PropType<Pagination>,
     required: true,
   },
 })
@@ -22,12 +27,8 @@ defineEmits<{
   (event: 'stop', instance: Instance): void
   (event: 'reboot', instance: Instance): void
 }>()
-
-// const avatarColor = (userName: string) => {
-//   const colors = ['primary', '#FFD43A', '#ADFF00', '#262824', 'danger']
-//   const index = userName.charCodeAt(0) % colors.length
-//   return colors[index]
-// }
+const instances = toRef(props, 'instances')
+const totalPages = computed(() => Math.ceil(props.pagination.total / props.pagination.perPage))
 </script>
 
 <template>
@@ -116,5 +117,48 @@ defineEmits<{
   </VaInnerLoading>
   <div v-else class="p-4 flex justify-center items-center text-[var(--va-secondary)]">
     {{ t('instance.no_instance') }}
+  </div>
+  <div
+    v-if="instances.length > 0 || loading"
+    class="flex flex-col-reverse md:flex-row gap-5 justify-between items-center py-2"
+  >
+    <div>
+      <b>{{
+        t('vuestic.total', {
+          start: ($props.pagination.page - 1) * $props.pagination.perPage + 1,
+          end:
+            $props.pagination.page * $props.pagination.perPage > $props.pagination.total
+              ? $props.pagination.total
+              : $props.pagination.page * $props.pagination.perPage,
+          total: $props.pagination.total,
+        })
+      }}</b>
+    </div>
+    <div v-if="totalPages > 1" class="flex">
+      <VaSelect v-model="$props.pagination.perPage" class="!w-20" :options="[15, 30, 90]" />
+      <VaButton
+        preset="secondary"
+        icon="va-arrow-left"
+        aria-label="Previous page"
+        :disabled="$props.pagination.page === 1"
+        @click="$props.pagination.page--"
+      />
+      <VaPagination
+        v-model="$props.pagination.page"
+        buttons-preset="secondary"
+        :pages="totalPages"
+        :visible-pages="5"
+        :boundary-links="false"
+        :direction-links="false"
+      />
+      <VaButton
+        class="mr-2"
+        preset="secondary"
+        icon="va-arrow-right"
+        aria-label="Next page"
+        :disabled="$props.pagination.page === totalPages"
+        @click="$props.pagination.page++"
+      />
+    </div>
   </div>
 </template>

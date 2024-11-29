@@ -1,5 +1,5 @@
 <template>
-  <div class="grid md:grid-cols-2 grid-cols-1 gap-4">
+  <div class="grid md:grid-cols-4 grid-cols-1 gap-4">
     <template v-if="loading">
       <div
         v-for="i in 4"

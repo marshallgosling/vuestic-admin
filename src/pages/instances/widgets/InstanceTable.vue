@@ -5,12 +5,14 @@ import { Instance, Sorting } from '../types'
 import InstanceStatusBadge from '../components/InstanceStatusBadge.vue'
 import { Pagination } from '../../../api/types'
 import { useI18n } from 'vue-i18n'
-// import { useVModel } from '@vueuse/core'
+import { useVModel } from '@vueuse/core'
+
 const { t } = useI18n()
 
 const columns = defineVaDataTableColumns([
   { label: 'ID', key: 'id', sortable: true },
   { label: t('instance.name'), key: 'name', sortable: false },
+  { label: t('instance.type'), key: 'type', sortable: true },
   { label: t('instance.domain'), key: 'domain', sortable: false },
   { label: t('network.private_ip_list'), key: 'private', sortable: false },
   { label: t('network.static_ip_list'), key: 'static', sortable: false },
@@ -42,7 +44,7 @@ const props = defineProps({
   },
 })
 
-defineEmits<{
+const emit = defineEmits<{
   (event: 'edit', instance: Instance): void
   (event: 'delete', instance: Instance): void
   (event: 'start', instance: Instance): void
@@ -55,14 +57,20 @@ defineEmits<{
 const totalPages = computed(() => Math.ceil(props.pagination.total / props.pagination.perPage))
 
 const instances = toRef(props, 'instances')
-// const sortByVModel = useVModel(props, 'sortBy', emit)
-// const sortingOrderVModel = useVModel(props, 'sortingOrder', emit)
+const sortByVModel = useVModel(props, 'sortBy', emit)
+const sortingOrderVModel = useVModel(props, 'sortingOrder', emit)
 </script>
 
 <template>
-  <VaDataTable :items="instances" :columns="columns" :loading="loading">
+  <VaDataTable
+    v-model:sort-by="sortByVModel"
+    v-model:sorting-order="sortingOrderVModel"
+    :items="instances"
+    :columns="columns"
+    :loading="loading"
+  >
     <template #cell(id)="{ rowData: instance }">
-      <div class="ellipsis max-w-[230px] lg:max-w-[450px]">
+      <div class="ellipsis max-w-[130px] lg:max-w-[250px]">
         <RouterLink :to="{ name: 'instance', params: { id: instance.id } }">{{ instance.id }}</RouterLink>
       </div>
     </template>
@@ -71,18 +79,23 @@ const instances = toRef(props, 'instances')
         <RouterLink :to="{ name: 'instance', params: { id: instance.id } }">{{ instance.name }}</RouterLink>
       </div>
     </template>
+    <template #cell(type)="{ rowData: instance }">
+      <div class="flex items-center gap-2 ellipsis max-w-[60px]">
+        {{ instance.instance_type }}
+      </div>
+    </template>
     <template #cell(domain)="{ rowData: instance }">
-      <div class="flex items-center gap-2 ellipsis max-w-[230px]">
+      <div class="flex items-center gap-2 ellipsis max-w-[30px]">
         {{ instance.domain }}
       </div>
     </template>
     <template #cell(private)="{ rowData: instance }">
-      <div class="flex items-center gap-2 ellipsis max-w-[230px]">
+      <div class="flex items-center gap-2 ellipsis max-w-[130px]">
         {{ instance.networks[0].ip ?? '-' }}
       </div>
     </template>
     <template #cell(static)="{ rowData: instance }">
-      <div class="flex items-center gap-2 ellipsis max-w-[230px]">
+      <div class="flex items-center gap-2 ellipsis max-w-[130px]">
         {{ instance.networks[1]?.ip ?? '-' }}
       </div>
     </template>
@@ -128,28 +141,27 @@ const instances = toRef(props, 'instances')
       </div>
     </template>
   </VaDataTable>
-  <div class="flex flex-col-reverse md:flex-row gap-2 justify-between items-center py-2">
+  <div class="flex flex-col-reverse md:flex-row gap-5 justify-between items-center py-2">
     <div>
-      <b>{{ $props.pagination.total }} {{ t('vuestic.results') }}</b>
-      {{ t('vuestic.perPage') }}
-      <VaSelect v-model="$props.pagination.perPage" class="!w-20" :options="[20, 50, 100]" />
+      <b>{{
+        t('vuestic.total', {
+          start: ($props.pagination.page - 1) * $props.pagination.perPage + 1,
+          end:
+            $props.pagination.page * $props.pagination.perPage > $props.pagination.total
+              ? $props.pagination.total
+              : $props.pagination.page * $props.pagination.perPage,
+          total: $props.pagination.total,
+        })
+      }}</b>
     </div>
-
     <div v-if="totalPages > 1" class="flex">
+      <VaSelect v-model="$props.pagination.perPage" class="!w-20" :options="[15, 30, 90]" />
       <VaButton
         preset="secondary"
         icon="va-arrow-left"
         aria-label="Previous page"
         :disabled="$props.pagination.page === 1"
         @click="$props.pagination.page--"
-      />
-      <VaButton
-        class="mr-2"
-        preset="secondary"
-        icon="va-arrow-right"
-        aria-label="Next page"
-        :disabled="$props.pagination.page === totalPages"
-        @click="$props.pagination.page++"
       />
       <VaPagination
         v-model="$props.pagination.page"
@@ -158,6 +170,14 @@ const instances = toRef(props, 'instances')
         :visible-pages="5"
         :boundary-links="false"
         :direction-links="false"
+      />
+      <VaButton
+        class="mr-2"
+        preset="secondary"
+        icon="va-arrow-right"
+        aria-label="Next page"
+        :disabled="$props.pagination.page === totalPages"
+        @click="$props.pagination.page++"
       />
     </div>
   </div>

@@ -14,7 +14,7 @@ export const useInstancePricesStore = defineStore({
   state: () => ({
     prices: [] as InstancePrice[],
     loading: ref(false),
-    currency: '￥',
+    currency: '$',
   }),
   getters: {
     all: (state) => state.prices,

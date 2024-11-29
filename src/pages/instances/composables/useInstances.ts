@@ -14,7 +14,7 @@ import { Pagination } from '../../../api/types'
 import { Instance, Sorting, Filters } from '../types'
 import { watchIgnorable } from '@vueuse/core'
 
-const makePaginationRef = () => ref<Pagination>({ page: 1, perPage: 20, total: 0 })
+const makePaginationRef = () => ref<Pagination>({ page: 1, perPage: 15, total: 0 })
 const makeSortingRef = () => ref<Sorting>({ sortBy: 'id', sortingOrder: null })
 const makeFiltersRef = () => ref<Partial<Filters>>({ status: null, type: null })
 
