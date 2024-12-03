@@ -96,6 +96,9 @@
     "name": "Name",
     "description": "Description",
     "price": "Price",
+    "monthly": "/month",
+    "hourly": "/hour",
+    "yearly": "/year",
     "guidelines": "Pricing guidelines"
   },
   "confirm": {
