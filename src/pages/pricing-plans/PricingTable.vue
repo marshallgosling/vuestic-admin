@@ -42,7 +42,7 @@ const columns = defineVaDataTableColumns([
       </template>
       <template #cell(price)="{ rowData: instance }">
         <div class="flex items-center gap-2 ellipsis max-w-[120px]">
-          {{ currency }} {{ instance.price }} / {{ t('pricing.month') }}
+          {{ currency }} {{ instance.price }} / {{ t('pricing.' + instance.payment) }}
         </div>
       </template>
     </VaDataTable>

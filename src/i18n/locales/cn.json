@@ -135,6 +135,9 @@
     "name": "名称",
     "description": "描述",
     "price": "价格",
+    "monthly": "按月",
+    "hourly": "按小时",
+    "yearly": "按年",
     "guidelines": "定价指南"
   },
   "confirm": {
