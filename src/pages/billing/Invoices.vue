@@ -16,7 +16,7 @@
         <div class="w-20"></div>
       </div>
       <VaDivider />
-      <template v-for="(item, index) in paymentInvoices" :key="item.id">
+      <template v-for="(item, index) in invoices" :key="item.id">
         <div class="flex items-center justify-between md:justify-items-stretch">
           <div class="flex items-center w-24">
             {{ item.name }}
@@ -30,26 +30,32 @@
             <VaButton preset="primary" size="small" @click="download">{{ t('billing.download') }}</VaButton>
           </div>
         </div>
-        <VaDivider v-if="index !== paymentInvoices.length - 1" />
+        <VaDivider v-if="index !== invoices.length - 1" />
       </template>
     </VaCardContent>
   </VaCard>
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
+import { PropType } from 'vue'
 import { useToast } from 'vuestic-ui'
 import { useI18n } from 'vue-i18n'
 import BillingStatusBadge from './BillingStatusBadge.vue'
-import { usePaymentInvoicesStore } from '../../stores/invoice-store'
+import { Invoice } from './types'
 
 const { init } = useToast()
 const { t } = useI18n()
 
-const invoiceStore = usePaymentInvoicesStore()
-
-const paymentInvoices = computed(() => invoiceStore.allInvoices)
-const currency = ref(invoiceStore.currency)
+defineProps({
+  invoices: {
+    type: Array as PropType<Invoice[]>,
+    required: true,
+  },
+  currency: {
+    type: String,
+    required: true,
+  },
+})
 
 const download = () => {
   init({

@@ -27,11 +27,6 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../pages/preferences/Preferences.vue'),
       },
       {
-        name: 'users',
-        path: 'users',
-        component: () => import('../pages/users/UsersPage.vue'),
-      },
-      {
         name: 'instances',
         path: 'instances',
         component: () => import('../pages/instances/InstanceList.vue'),
@@ -50,11 +45,6 @@ const routes: Array<RouteRecordRaw> = [
         name: 'keypairs',
         path: 'keypairs',
         component: () => import('../pages/keypairs/KeysPage.vue'),
-      },
-      {
-        name: 'projects',
-        path: 'projects',
-        component: () => import('../pages/projects/ProjectsPage.vue'),
       },
       {
         name: 'payments',
@@ -77,11 +67,6 @@ const routes: Array<RouteRecordRaw> = [
             component: () => import('../pages/pricing-plans/PricingPlans.vue'),
           },
         ],
-      },
-      {
-        name: 'faq',
-        path: '/faq',
-        component: () => import('../pages/faq/FaqPage.vue'),
       },
     ],
   },

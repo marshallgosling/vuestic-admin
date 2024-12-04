@@ -10,11 +10,7 @@
           <div class="md:w-48">
             <p class="mb-1">{{ t('billing.payment_amount') }}</p>
             <p class="font-bold">
-              {{
-                paymentInvoices.length > 0
-                  ? paymentInvoices[0].name + ':     ' + currency + paymentInvoices[0].amount
-                  : '-'
-              }}
+              {{ invoices.length > 0 ? invoices[0].name + ':     ' + currency + invoices[0].amount : '-' }}
             </p>
           </div>
         </div>
@@ -42,16 +38,21 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
+import { computed, PropType } from 'vue'
 import { usePaymentCardsStore } from '../../stores/payment-cards'
 import { useI18n } from 'vue-i18n'
-import { usePaymentInvoicesStore } from '../../stores/invoice-store'
+import { Invoice } from './types'
 
-const invoicesStore = usePaymentInvoicesStore()
-invoicesStore.load()
-const paymentInvoices = computed(() => invoicesStore.allInvoices)
-
-const currency = ref(invoicesStore.currency)
+defineProps({
+  invoices: {
+    type: Array as PropType<Invoice[]>,
+    required: true,
+  },
+  currency: {
+    type: String,
+    required: true,
+  },
+})
 
 const cardStore = usePaymentCardsStore()
 const { t } = useI18n()
