@@ -136,28 +136,11 @@ const totalPages = computed(() => Math.ceil(props.pagination.total / props.pagin
     </div>
     <div v-if="totalPages > 1" class="flex">
       <VaSelect v-model="$props.pagination.perPage" class="!w-20" :options="[15, 30, 90]" />
-      <VaButton
-        preset="secondary"
-        icon="va-arrow-left"
-        aria-label="Previous page"
-        :disabled="$props.pagination.page === 1"
-        @click="$props.pagination.page--"
-      />
       <VaPagination
         v-model="$props.pagination.page"
         buttons-preset="secondary"
         :pages="totalPages"
         :visible-pages="5"
-        :boundary-links="false"
-        :direction-links="false"
-      />
-      <VaButton
-        class="mr-2"
-        preset="secondary"
-        icon="va-arrow-right"
-        aria-label="Next page"
-        :disabled="$props.pagination.page === totalPages"
-        @click="$props.pagination.page++"
       />
     </div>
   </div>

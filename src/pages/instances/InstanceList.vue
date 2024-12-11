@@ -179,8 +179,7 @@ const StatusListOptions = Object.keys(StatusStringMap).map((key) => ({
   <VaCard>
     <VaCardContent>
       <div class="flex flex-col md:flex-row gap-2 mb-2 justify-between">
-        <div class="flex flex-col md:flex-row gap-2 mb-2 justify-between">
-          <div class="flex flex-col md:flex-row gap-2 justify-between">
+        <div class="flex flex-col md:flex-row gap-2 justify-between">
             <VaSelect
               v-model="filters.status"
               :placeholder="t('instance.status')"
@@ -188,6 +187,7 @@ const StatusListOptions = Object.keys(StatusStringMap).map((key) => ({
               track-by="value"
               value-by="value"
               text-by="label"
+              :clearable="true"
               :options="StatusListOptions"
             />
             <VaSelect
@@ -197,10 +197,11 @@ const StatusListOptions = Object.keys(StatusStringMap).map((key) => ({
               track-by="name"
               value-by="name"
               text-by="name"
+              :clearable="true"
               :options="pricingList"
             />
-          </div>
         </div>
+
         <div class="flex flex-col md:flex-row gap-2 justify-start">
           <VaButtonToggle
             v-model="doShowAsCards"
