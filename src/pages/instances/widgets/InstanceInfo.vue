@@ -2,11 +2,7 @@
   <VaCard class="mb-6">
     <VaCardContent v-if="isReady">
       <h3 class="page-sub-title mb-6">
-        {{
-          priceList.find((e) => {
-            return e.name == instance.instance_type
-          })?.description
-        }}
+        {{ t('instance.info') }}
       </h3>
 
       <div class="flex items-center gap-2 md:h-12">

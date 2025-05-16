@@ -27,7 +27,7 @@
             <BillingStatusBadge :status="item.status" />
           </div>
           <div class="w-20">
-            <VaButton preset="primary" size="small" @click="download">{{ t('billing.download') }}</VaButton>
+            <VaButton preset="primary" size="small" @click="download(item)">{{ t('billing.download') }}</VaButton>
           </div>
         </div>
         <VaDivider v-if="index !== invoices.length - 1" />
@@ -38,12 +38,11 @@
 
 <script lang="ts" setup>
 import { PropType } from 'vue'
-import { useToast } from 'vuestic-ui'
 import { useI18n } from 'vue-i18n'
 import BillingStatusBadge from './BillingStatusBadge.vue'
 import { Invoice } from './types'
+// import { downloadInvoice } from '../../api/billing'
 
-const { init } = useToast()
 const { t } = useI18n()
 
 defineProps({
@@ -57,10 +56,18 @@ defineProps({
   },
 })
 
-const download = () => {
-  init({
-    message: "Request received. We'll email your invoice once we've completed data collection.",
-    color: 'success',
-  })
+const download = async (key: Invoice) => {
+  window.open('/api/invoice/download/' + key.id)
+  // const ret = await downloadInvoice(key.id)
+  // const blob = new Blob([ret])
+  // const downloadElement = document.createElement('a')
+  // const href = window.URL.createObjectURL(blob)
+  // const fileName = 'invoice.pdf'
+  // downloadElement.download = `${fileName}` // 下载后文件名
+  // downloadElement.href = href //链接等于链接
+  // document.body.appendChild(downloadElement) //将元素加在dom尾部
+  // downloadElement.click() //点击a链接
+  // document.body.removeChild(downloadElement) //点击完后删掉
+  // window.URL.revokeObjectURL(href) //释放这个url内存
 }
 </script>

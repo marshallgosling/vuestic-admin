@@ -57,6 +57,13 @@ export const StatusColorMap: Record<number, string> = {
   10: 'black',
 }
 
+export type Log = {
+  id: number
+  name: string
+  flag: string
+  created_at: string
+}
+
 export type Sorting = {
   sortBy: string | undefined
   sortingOrder: 'asc' | 'desc' | null
@@ -81,6 +88,18 @@ export type Instance = {
   securities: Security[]
   billings: Billing[]
   storages: Storage[]
+  logs: Log[]
+}
+
+export type Metadata = {
+  id: string
+  name: string
+  project: string
+  profile: string
+  status: Status
+  cluster: string
+  created_at: string
+  services: Service[]
 }
 
 export type EmptyInstance = Omit<
@@ -95,6 +114,7 @@ export type EmptyInstance = Omit<
   | 'securities'
   | 'billings'
   | 'image_url'
+  | 'logs'
 > & {
   name: Instance['name'] | ''
   domain: Instance['domain'] | ''
@@ -117,4 +137,14 @@ export type Security = {
   proto: string
   port: string
   help?: string
+}
+
+export type Service = {
+  id: string
+  name: string
+  status: string
+  service_type: string
+  api_key: string
+  model: string
+  url: string
 }

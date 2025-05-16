@@ -75,27 +75,6 @@ withDefaults(
             to: 'settings',
             icon: 'mso-settings',
           },
-          {
-            name: 'billing',
-            to: 'billing',
-            icon: 'mso-receipt_long',
-          },
-        ],
-      },
-      {
-        name: 'explore',
-        separator: true,
-        list: [
-          {
-            name: 'faq',
-            to: 'faq',
-            icon: 'mso-quiz',
-          },
-          {
-            name: 'helpAndSupport',
-            href: '#',
-            icon: 'mso-error',
-          },
         ],
       },
       {

@@ -1,6 +1,13 @@
 {
   "billing": {
+    "invoiceDetails": "账单详情",
+    "Instance": "实例",
+    "Service": "服务",
+    "StaticIP": "静态IP地址",
+    "Traffic": "流量",
+    "Storage": "存储",
     "information": "Billing information",
+    "name": "Name",
     "month": "Month",
     "amount": "Amount",
     "duration": "Duration (Sec)",
@@ -23,6 +30,32 @@
     "important_note": "Important note",
     "new_address": "New address",
     "address_help": "Please ensure the provided billing address matches the information on file with your financial institution to avoid any processing delays."
+  },
+  "service": {
+    "list": "AI/LLM Service",
+    "name": "Name",
+    "type": "Profile",
+    "status": "Status",
+    "api_key": "API Key",
+    "model": "Model",
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+  "metadata": {
+    "name": "Name",
+    "profile": "Profile",
+    "cluster": "Cluster",
+    "status": "Status",
+    "createdAt": "Created At"
+  },
+  "security": {
+    "ipv4": "IPv4 Firewall",
+    "name": "app",
+    "proto": "proto",
+    "port": "port",
+    "help": "Help",
+    "edit": "Edit",
+    "delete": "Delete"
   },
   "keypair": {
     "title": "Key pairs",
@@ -204,6 +237,7 @@
     "networks": "Networks",
     "keypairs": "Key Pairs",
     "signup": "Signup",
+    "tools": "Tools",
     "recover-password": "Recover password",
     "recover-password-email": "Recover password email",
     "404": "404",

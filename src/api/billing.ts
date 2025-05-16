@@ -10,6 +10,7 @@ enum API {
   CREATE_URL = '/billing/create',
   UPDATE_URL = '/billing/update',
   DELETE_URL = '/billing/delete/',
+  DOWNLOAD_URL = '/invoice/download/',
 }
 
 export const getInvoices = (query: string) => {
@@ -38,4 +39,8 @@ export const updatePaymentCard = (card: PaymentCard) => {
 
 export const createPaymentCard = (card: any) => {
   return request.post<any, paymentCardItem>(API.CREATE_URL, card)
+}
+
+export const downloadInvoice = (id: string) => {
+  return request.get<any, any>(API.DOWNLOAD_URL + id)
 }

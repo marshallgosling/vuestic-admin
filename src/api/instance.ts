@@ -1,5 +1,5 @@
 import request from '../services/request'
-import { instanceList, instanceItem, instancePrice, empty, Pagination } from './types'
+import { instanceList, instanceItem, instancePrice, instanceMetadata, empty, Pagination } from './types'
 import { Instance, Filters, Sorting } from '../pages/instances/types'
 
 enum API {
@@ -9,6 +9,7 @@ enum API {
   UPDATE_URL = '/instance/update',
   DELETE_URL = '/instance/delete/',
   INFO_URL = '/instance/info/',
+  METADATA_URL = '/instance/metadata/',
   ACTION_URL = '/instance/action',
 }
 
@@ -63,4 +64,8 @@ export const createInstance = (instance: Instance) => {
 
 export const getInstancePrices = () => {
   return request.get<any, instancePrice>(API.PRICE_URL)
+}
+
+export const getInstanceMetadata = (id: string) => {
+  return request.get<any, instanceMetadata>(API.METADATA_URL + id)
 }

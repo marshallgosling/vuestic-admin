@@ -33,6 +33,19 @@ export default {
       },
     },
     {
+      name: 'tools',
+      displayName: 'menu.tools',
+      meta: {
+        icon: 'widgets',
+      },
+      children: [
+        {
+          name: 'tools-dialog',
+          displayName: 'menu.tools-dialog',
+        },
+      ],
+    },
+    {
       name: 'payments',
       displayName: 'menu.payments',
       meta: {
@@ -53,12 +66,5 @@ export default {
         },
       ],
     },
-    // {
-    //   name: 'faq',
-    //   displayName: 'menu.faq',
-    //   meta: {
-    //     icon: 'quiz',
-    //   },
-    // },
   ] as INavigationRoute[],
 }

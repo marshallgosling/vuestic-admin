@@ -47,6 +47,23 @@
     "new_address": "新建地址",
     "address_help": "请确保提供的账单地址与您金融机构的记录相匹配，以避免任何处理延迟。"
   },
+  "service": {
+    "list": "AI/LLM 服务",
+    "name": "服务名称",
+    "type": "类型",
+    "status": "状态",
+    "api_key": "API Key",
+    "model": "模型",
+    "edit": "编辑",
+    "delete": "删除"
+  },
+  "metadata": {
+    "name": "名称",
+    "profile": "Profile",
+    "cluster": "集群名",
+    "status": "状态",
+    "createdAt": "创建时间"
+  },
   "security": {
     "ipv4": "IPv4 防火墙",
     "name": "应用程序",
@@ -73,9 +90,12 @@
   },
   "instance": {
     "instances": "AI 实例列表",
+    "info": "实例信息",
     "information": "信息",
+    "metadata": "资源信息",
     "instance": "实例",
     "billing": "计费信息",
+    "logs": "运行日志",
     "no_instance": "没有任何实例",
     "add": "添加",
     "save": "保存",
@@ -139,6 +159,19 @@
     "hourly": "按小时",
     "yearly": "按年",
     "guidelines": "定价指南"
+  },
+  "logs": {
+    "name": "日志类型",
+    "flag": "标签",
+    "created_at": "时间",
+    "results": "运行结果"
+  },
+  "bot": {
+    "title": "Deepseek 试用"
+  },
+  "deepseek": {
+    "title": "Deepseek 试用",
+    "model": "模型"
   },
   "confirm": {
     "cancel": "确认要取消吗？",
@@ -289,6 +322,7 @@
     "timelines": "时间线",
     "dashboard": "仪表板",
     "billing": "计费账单",
+    "deepseek": "DeepSeek",
     "login": "登录",
     "signUp": "注册",
     "preferences": "偏好",
@@ -299,6 +333,8 @@
     "networks": "网络",
     "keypairs": "密钥",
     "settings": "设置",
+    "tools": "工具",
+    "tools-dialog": "对话",
     "pricing-plans": "服务定价",
     "login-singup": "登录/注册",
     "payment-methods": "支付卡号",

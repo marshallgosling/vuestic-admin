@@ -47,6 +47,18 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../pages/keypairs/KeysPage.vue'),
       },
       {
+        name: 'tools',
+        path: '/tools',
+        component: RouteViewComponent,
+        children: [
+          {
+            name: 'tools-dialog',
+            path: 'tools-dialog',
+            component: () => import('../pages/deepseek/demo.vue'),
+          },
+        ],
+      },
+      {
         name: 'payments',
         path: '/payments',
         component: RouteViewComponent,

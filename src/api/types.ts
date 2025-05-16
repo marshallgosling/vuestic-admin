@@ -1,6 +1,6 @@
 // type.ts
 import type { ResponseData } from './responseType'
-import { Instance } from '../pages/instances/types'
+import { Instance, Metadata } from '../pages/instances/types'
 import { Network } from '../pages/networks/types'
 import { KeyPair } from '../pages/keypairs/types'
 import { Invoice } from '../pages/billing/types'
@@ -12,6 +12,10 @@ export interface empty extends ResponseData {}
 export interface loginUser extends ResponseData {
   data: {
     token: string
+    user: {
+      type: number
+      menu: any
+    }
   }
 }
 // 定义一个接口，用于规范用户的数据类型
@@ -78,4 +82,8 @@ export interface paymentCardItem extends ResponseData {
 
 export interface instancePrice extends ResponseData {
   data: InstancePrice[]
+}
+
+export interface instanceMetadata extends ResponseData {
+  data: Metadata
 }

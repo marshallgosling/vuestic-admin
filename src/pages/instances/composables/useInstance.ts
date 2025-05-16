@@ -1,18 +1,21 @@
 import { ref } from 'vue'
-import { getInstanceInfo } from '../../../api/instance'
+import { getInstanceInfo, getInstanceMetadata } from '../../../api/instance'
 
-import { Instance } from '../types'
+import { Instance, Metadata } from '../types'
 
 export const useInstance = (id: string) => {
   const isLoading = ref(false)
   const instance = ref<Instance>({} as Instance)
+  const metadata = ref<Metadata>({} as Metadata)
 
   const info = async (id: string) => {
     isLoading.value = true
-    const { data } = await getInstanceInfo(id)
-    instance.value = data
+    const a = await getInstanceInfo(id)
+    instance.value = a.data
+
+    const b = await getInstanceMetadata(id)
+    metadata.value = b.data
     isLoading.value = false
-    return data
   }
 
   //const { ignoreUpdates } = watchIgnorable([pagination, sorting], fetch, { deep: true })
@@ -23,5 +26,7 @@ export const useInstance = (id: string) => {
     isLoading,
 
     instance,
+
+    metadata,
   }
 }

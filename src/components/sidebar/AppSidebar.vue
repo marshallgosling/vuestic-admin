@@ -1,7 +1,7 @@
 <template>
   <VaSidebar v-model="writableVisible" :width="sidebarWidth" :color="color" minimized-width="0">
     <VaAccordion v-model="value" multiple>
-      <VaCollapse v-for="(route, index) in navigationRoutes.routes" :key="index">
+      <VaCollapse v-for="(route, index) in userRoutes" :key="index">
         <template #header="{ value: isCollapsed }">
           <VaSidebarItem
             :to="route.children ? undefined : { name: route.name }"
@@ -73,6 +73,11 @@ export default defineComponent({
 
     const value = ref<boolean[]>([])
 
+    const userRoutes = computed(() => {
+      return (JSON.parse(localStorage.getItem('menu')?.toString() ?? '') ??
+        navigationRoutes.routes) as INavigationRoute[]
+    })
+
     const writableVisible = computed({
       get: () => props.visible,
       set: (v: boolean) => emit('update:visible', v),
@@ -89,7 +94,7 @@ export default defineComponent({
     }
 
     const setActiveExpand = () =>
-      (value.value = navigationRoutes.routes.map((route: INavigationRoute) => routeHasActiveChild(route)))
+      (value.value = userRoutes.value.map((route: INavigationRoute) => routeHasActiveChild(route)))
 
     const sidebarWidth = computed(() => (props.mobile ? '100vw' : '180px'))
     const color = computed(() => getColor('background-secondary'))
@@ -107,7 +112,7 @@ export default defineComponent({
       value,
       color,
       activeColor,
-      navigationRoutes,
+      userRoutes,
       routeHasActiveChild,
       isActiveChildRoute,
       t,
