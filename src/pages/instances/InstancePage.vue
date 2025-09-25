@@ -12,6 +12,7 @@
   <template v-else>
     <InstanceInfo :instance="instance" :is-ready="!isLoading" :price-list="pricingList" />
     <InstanceMetadata :metadata="metadata" :is-ready="!isLoading" />
+    <Storage :storage-list="instance?.storages" />
     <Security :security-list="instance?.securities" />
     <Billing v-if="userType == 1" :billing-list="instance?.billings" :currency="currency" />
     <Logs :logs-list="instance?.logs" />
@@ -29,6 +30,7 @@ import InstanceMetadata from './widgets/InstanceMetadata.vue'
 import { useInstancePricesStore } from '../../stores/price-store'
 import Billing from './widgets/Billing.vue'
 import Logs from './widgets/Logs.vue'
+import Storage from './widgets/Storage.vue'
 const { t } = useI18n()
 const route = useRoute()
 

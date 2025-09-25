@@ -18,6 +18,16 @@ export type Network = {
   instance_name: string
 }
 
+export type NetworkConfig = {
+  id: string
+  name: string
+  ip: string
+  ipv6: string
+  type: string
+  status: Status
+  created_at: string
+}
+
 export type EmptyNetwork = Omit<Network, 'ip' | 'netmask' | 'gateway' | 'status' | 'created_at' | 'instance_name'> & {
   id: Network['id'] | ''
   name: Network['name'] | ''

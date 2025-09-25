@@ -15,7 +15,6 @@
         <div class="w-48 font-bold">
           {{ t('security.help') }}
         </div>
-        <div class="w-48"></div>
       </div>
       <VaDivider />
       <template v-for="(item, index) in securityList" :key="item.id">
@@ -26,11 +25,6 @@
           <div class="w-20">{{ item.proto }}</div>
           <div class="w-20">{{ item.port }}</div>
           <div class="w-48">{{ item.help }}</div>
-          <div class="w-48">
-            <VaButton color="danger" size="small" @click="$emit('delete', item as Security)">{{
-              t('security.delete')
-            }}</VaButton>
-          </div>
         </div>
         <VaDivider v-if="securityList && index !== securityList.length - 1" />
       </template>

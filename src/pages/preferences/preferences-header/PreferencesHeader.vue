@@ -1,11 +1,10 @@
 <template>
-  <VaAvatar size="large" color="warning"><span class="text-4xl"> </span></VaAvatar>
+  <VaAvatar size="large" color="warning"><span class="text-4xl"> U </span></VaAvatar>
   <div class="flex flex-col justify-center">
-    <h2 class="text-[28px] md:text-[32px] leading-10 font-bold">{{ store.userName }}</h2>
     <div class="flex space-x-1 text-[13px] leading-4">
-      <p>Email:</p>
-      <p>{{ store.email }}</p>
+      <p>Century LT Uid:</p>
     </div>
+    <h2 class="text-[28px] md:text-[32px] leading-10 font-bold">{{ store.uid }}</h2>
   </div>
 </template>
 <script lang="ts" setup>

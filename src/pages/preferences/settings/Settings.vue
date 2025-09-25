@@ -12,7 +12,7 @@
   </div>
   <VaDivider />
   <div class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6 min-h-[36px] leading-5">
-    <p class="font-bold w-[200px]">Email</p>
+    <p class="font-bold w-[200px]">Email / Username</p>
     <div class="flex-1">
       <div class="max-w-[748px]">
         {{ store.email }}

@@ -11,7 +11,7 @@
             <div class="flex-col">
               <p class="mb-1">{{ t('instance.domain') }}</p>
               <p class="font-bold">
-                {{ instance.domain }}
+                <VaPopover :message="DomainStringMap[instance.domain]">{{ instance.domain }}</VaPopover>
               </p>
             </div>
           </VaCardContent>
@@ -64,7 +64,7 @@
 <script lang="ts" setup>
 import { PropType } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { Instance } from '../types'
+import { Instance, DomainStringMap } from '../types'
 import { InstancePrice } from '../../pricing-plans/types'
 import InstanceStatusBadge from '../components/InstanceStatusBadge.vue'
 const { t } = useI18n()

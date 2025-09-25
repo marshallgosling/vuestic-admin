@@ -13,16 +13,16 @@ export const useUserStore = defineStore('user', {
   actions: {
     async changeUserName(userName: string) {
       this.userName = userName
-      await setUserProfile({ name: userName })
+      await setUserProfile({ uid: localStorage.getItem('uid') ?? '', name: userName })
     },
 
     async changePassword(password: string) {
       //this.password = password
-      await setUserPassword({ password })
+      await setUserPassword({ uid: localStorage.getItem('uid') ?? '', password })
     },
 
     async fetchUserPreference() {
-      const loginUser = await getUserProfile()
+      const loginUser = await getUserProfile(localStorage.getItem('uid') ?? '')
       this.userName = loginUser.data.name
       this.email = loginUser.data.email
       // this.group = loginUser.data.group

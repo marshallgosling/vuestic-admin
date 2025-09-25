@@ -24,6 +24,33 @@ export default {
       meta: {
         icon: 'multiple_stop',
       },
+      children: [
+        {
+          name: 'network-config',
+          displayName: 'menu.network-config',
+        },
+        {
+          name: 'network-ip',
+          displayName: 'menu.network-ip',
+        },
+      ],
+    },
+    {
+      name: 'storages',
+      displayName: 'menu.storages',
+      meta: {
+        icon: 'storage',
+      },
+      children: [
+        {
+          name: 'storage-config',
+          displayName: 'menu.storage-config',
+        },
+        {
+          name: 'storage-block',
+          displayName: 'menu.storage-block',
+        },
+      ],
     },
     {
       name: 'keypairs',
@@ -31,19 +58,6 @@ export default {
       meta: {
         icon: 'vpn_key',
       },
-    },
-    {
-      name: 'tools',
-      displayName: 'menu.tools',
-      meta: {
-        icon: 'widgets',
-      },
-      children: [
-        {
-          name: 'tools-dialog',
-          displayName: 'menu.tools-dialog',
-        },
-      ],
     },
     {
       name: 'payments',

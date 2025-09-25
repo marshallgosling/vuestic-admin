@@ -9,10 +9,10 @@
     </p>
     <VaInput
       v-model="formData.email"
-      :rules="[validators.required, validators.email]"
+      :rules="[validators.required]"
       class="mb-4"
       :label="t('auth.email')"
-      type="email"
+      type="text"
     />
     <VaValue v-slot="isPasswordVisible" :default-value="false">
       <VaInput
@@ -79,8 +79,8 @@ const submit = async () => {
       localStorage.setItem('token', loginUser.data.token)
       localStorage.setItem('menu', loginUser.data.user.menu)
       localStorage.setItem('type', loginUser.data.user.type.toString())
+      localStorage.setItem('uid', loginUser.data.user.uid.toString())
       init({ message: t('auth.' + loginUser.message), color: 'success' })
-      console.log(loginUser.data.user)
       push({ name: 'instances' })
     } else {
       init({ message: t('auth.' + loginUser.message), color: 'danger' })

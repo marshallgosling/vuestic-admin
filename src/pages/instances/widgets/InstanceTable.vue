@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { PropType, computed, toRef } from 'vue'
 import { defineVaDataTableColumns } from 'vuestic-ui'
-import { Instance, Sorting } from '../types'
+import { Instance, Sorting, DomainStringMap, ProfileStringMap } from '../types'
 import InstanceStatusBadge from '../components/InstanceStatusBadge.vue'
 import { Pagination } from '../../../api/types'
 import { useI18n } from 'vue-i18n'
@@ -42,6 +42,10 @@ const props = defineProps({
     type: Object as PropType<Pagination>,
     required: true,
   },
+  button: {
+    type: Boolean,
+    required: true,
+  },
 })
 
 const emit = defineEmits<{
@@ -68,10 +72,11 @@ const sortingOrderVModel = useVModel(props, 'sortingOrder', emit)
     :items="instances"
     :columns="columns"
     :loading="loading"
+    :no-data-html="t('vuestic.noItems')"
   >
     <template #cell(id)="{ rowData: instance }">
       <div class="ellipsis max-w-[130px] lg:max-w-[250px]">
-        <RouterLink :to="{ name: 'instance', params: { id: instance.id } }">{{ instance.id }}</RouterLink>
+        <VaPopover :message="instance.id">{{ instance.id }}</VaPopover>
       </div>
     </template>
     <template #cell(name)="{ rowData: instance }">
@@ -81,17 +86,19 @@ const sortingOrderVModel = useVModel(props, 'sortingOrder', emit)
     </template>
     <template #cell(type)="{ rowData: instance }">
       <div class="flex items-center gap-2 ellipsis max-w-[60px]">
-        {{ instance.instance_type }}
+        <VaPopover :message="ProfileStringMap[instance.instance_type]">
+          {{ instance.instance_type }}
+        </VaPopover>
       </div>
     </template>
     <template #cell(domain)="{ rowData: instance }">
       <div class="flex items-center gap-2 ellipsis max-w-[30px]">
-        {{ instance.domain }}
+        <VaPopover :message="DomainStringMap[instance.domain]">{{ instance.domain }}</VaPopover>
       </div>
     </template>
     <template #cell(private)="{ rowData: instance }">
       <div class="flex items-center gap-2 ellipsis max-w-[130px]">
-        {{ instance.networks[0].ip ?? '-' }}
+        {{ instance.networks[0]?.ip ?? '-' }}
       </div>
     </template>
     <template #cell(static)="{ rowData: instance }">
@@ -105,7 +112,9 @@ const sortingOrderVModel = useVModel(props, 'sortingOrder', emit)
 
     <template #cell(actions)="{ rowData: instance }">
       <div class="flex gap-2 justify-end">
+        <RouterLink :to="{ name: 'instance', params: { id: instance.id } }">{{ t('instance.info') }}</RouterLink>
         <VaButton
+          v-if="button"
           preset="primary"
           size="small"
           color="success"
@@ -114,6 +123,7 @@ const sortingOrderVModel = useVModel(props, 'sortingOrder', emit)
           @click="$emit('start', instance as Instance)"
         />
         <VaButton
+          v-if="button"
           preset="primary"
           size="small"
           color="danger"
@@ -122,6 +132,7 @@ const sortingOrderVModel = useVModel(props, 'sortingOrder', emit)
           @click="$emit('stop', instance as Instance)"
         />
         <VaButton
+          v-if="button"
           preset="primary"
           size="small"
           color="warning"
@@ -131,6 +142,7 @@ const sortingOrderVModel = useVModel(props, 'sortingOrder', emit)
         />
 
         <VaButton
+          v-if="button"
           preset="primary"
           size="small"
           icon="mso-delete"

@@ -21,7 +21,9 @@
             <div class="flex-col">
               <p class="mb-1">{{ t('metadata.profile') }}</p>
               <p class="font-bold">
-                {{ metadata.profile ?? '-' }}
+                <VaPopover :message="ProfileStringMap[metadata.profile.toLowerCase()]">
+                  {{ metadata.profile ?? '-' }}
+                </VaPopover>
               </p>
             </div>
           </VaCardContent>
@@ -41,9 +43,9 @@
         <VaCard>
           <VaCardContent class="flex flex-col md:w-48 md:items-center">
             <div class="flex-col">
-              <p class="mb-1">{{ t('metadata.status') }}</p>
+              <p class="mb-1">{{ t('metadata.network') }}</p>
               <p class="font-bold">
-                {{ metadata.status ?? '-' }}
+                {{ metadata.network?.ip ?? '-' }}
               </p>
             </div>
           </VaCardContent>
@@ -52,8 +54,10 @@
         <VaCard>
           <VaCardContent class="flex flex-col md:w-48 md:items-center">
             <div class="flex-col">
-              <p class="mb-1">{{ t('metadata.createdAt') }}</p>
-              {{ metadata.created_at ?? '-' }}
+              <p class="mb-1">{{ t('metadata.status') }}</p>
+              <p class="font-bold">
+                {{ metadata.status ?? '-' }}
+              </p>
             </div>
           </VaCardContent>
         </VaCard>
@@ -102,7 +106,7 @@
 <script lang="ts" setup>
 import { PropType } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { Metadata } from '../types'
+import { Metadata, ProfileStringMap } from '../types'
 
 const { t } = useI18n()
 

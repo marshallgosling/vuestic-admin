@@ -3,7 +3,9 @@ import { PropType } from 'vue'
 import { defineVaDataTableColumns } from 'vuestic-ui'
 import { KeyPair } from '../types'
 import KeyStatusBadge from '../components/KeyStatusBadge.vue'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const columns = defineVaDataTableColumns([
   { label: 'ID', key: 'id', sortable: true },
   { label: '名称', key: 'name', sortable: true },
@@ -32,10 +34,10 @@ defineEmits<{
 
 <template>
   <div>
-    <VaDataTable :items="keys" :columns="columns" :loading="loading">
+    <VaDataTable :items="keys" :columns="columns" :loading="loading" :no-data-html="t('vuestic.noItems')">
       <template #cell(id)="{ rowData: key }">
-        <div class="ellipsis max-w-[230px] lg:max-w-[450px]">
-          {{ key.id }}
+        <div class="ellipsis max-w-[130px] lg:max-w-[150px]">
+          <VaPopover :message="key.id">{{ key.id }}</VaPopover>
         </div>
       </template>
       <template #cell(name)="{ rowData: key }">

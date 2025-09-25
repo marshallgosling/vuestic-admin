@@ -18,6 +18,7 @@ const { instances, isLoading, sorting, filters, pagination, ...usersApi } = useI
 
 const instanceToEdit = ref<Instance | null>(null)
 const doShowInstanceFormModal = ref(false)
+const primaryAccount = !(localStorage.getItem('type') == '2')
 
 const editInstance = (instance: Instance) => {
   instanceToEdit.value = instance
@@ -213,7 +214,9 @@ const StatusListOptions = Object.keys(StatusStringMap).map((key) => ({
               { label: t('instance.table'), value: false },
             ]"
           />
-          <VaButton icon="add" size="small" @click="createNewInstance">{{ t('instance.start_instance') }}</VaButton>
+          <VaButton v-if="primaryAccount" icon="add" size="small" @click="createNewInstance">{{
+            t('instance.start_instance')
+          }}</VaButton>
         </div>
       </div>
 
@@ -222,6 +225,7 @@ const StatusListOptions = Object.keys(StatusStringMap).map((key) => ({
         :instances="instances"
         :loading="isLoading"
         :pagination="pagination"
+        :button="primaryAccount"
         @edit="editInstance"
         @delete="onInstanceDeleted"
         @reboot="onInstanceReboot"
@@ -235,6 +239,7 @@ const StatusListOptions = Object.keys(StatusStringMap).map((key) => ({
         :instances="instances"
         :loading="isLoading"
         :pagination="pagination"
+        :button="primaryAccount"
         @edit="editInstance"
         @delete="onInstanceDeleted"
         @reboot="onInstanceReboot"

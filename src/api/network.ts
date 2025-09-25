@@ -1,5 +1,5 @@
 import request from '../services/request'
-import { networkList, networkItem, empty } from './types'
+import { networkList, networkConfigList, networkItem, empty } from './types'
 import { Network } from '../pages/networks/types'
 
 enum API {
@@ -9,10 +9,15 @@ enum API {
   DELETE_URL = '/network/delete/',
   INFO_URL = '/network/info/',
   ACTION_URL = '/network/action',
+  CONFIG_LIST_URL = '/network/config',
 }
 
 export const getNetworks = (query: string) => {
   return request.get<any, networkList>(API.LIST_URL + '?' + query)
+}
+
+export const getNetworkConfigs = (query: string) => {
+  return request.get<any, networkConfigList>(API.CONFIG_LIST_URL + '?' + query)
 }
 
 export const getNetworkInfo = (id: string) => {

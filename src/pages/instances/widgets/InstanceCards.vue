@@ -18,6 +18,10 @@ const props = defineProps({
     type: Object as PropType<Pagination>,
     required: true,
   },
+  button: {
+    type: Boolean,
+    required: true,
+  },
 })
 
 defineEmits<{
@@ -79,6 +83,7 @@ const totalPages = computed(() => Math.ceil(props.pagination.total / props.pagin
         <VaDivider class="my-2" />
         <div class="flex justify-right gap-2">
           <VaButton
+            v-if="button"
             preset="secondary"
             icon="mso-delete"
             color="danger"
@@ -88,6 +93,7 @@ const totalPages = computed(() => Math.ceil(props.pagination.total / props.pagin
           >
 
           <VaButton
+            v-if="button"
             preset="secondary"
             icon="mso-play_arrow"
             color="primary"
@@ -96,6 +102,7 @@ const totalPages = computed(() => Math.ceil(props.pagination.total / props.pagin
             >{{ t('instance.start') }}</VaButton
           >
           <VaButton
+            v-if="button"
             preset="secondary"
             icon="mso-highlight_keyboard_focus"
             color="primary"
@@ -104,6 +111,7 @@ const totalPages = computed(() => Math.ceil(props.pagination.total / props.pagin
             >{{ t('instance.stop') }}</VaButton
           >
           <VaButton
+            v-if="button"
             preset="secondary"
             icon="mso-forward_media"
             color="primary"

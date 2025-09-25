@@ -1,11 +1,12 @@
 // type.ts
 import type { ResponseData } from './responseType'
 import { Instance, Metadata } from '../pages/instances/types'
-import { Network } from '../pages/networks/types'
+import { Network, NetworkConfig } from '../pages/networks/types'
 import { KeyPair } from '../pages/keypairs/types'
 import { Invoice } from '../pages/billing/types'
 import { PaymentCard } from '../pages/payments/types'
 import { InstancePrice } from '../pages/pricing-plans/types'
+import { Storage, StorageConfig } from '../pages/storages/types'
 
 export interface empty extends ResponseData {}
 
@@ -13,6 +14,7 @@ export interface loginUser extends ResponseData {
   data: {
     token: string
     user: {
+      uid: number
       type: number
       menu: any
     }
@@ -22,6 +24,7 @@ export interface loginUser extends ResponseData {
 export interface userProfile extends ResponseData {
   data: {
     id: number
+    uid: string
     name: string
     email: string
   }
@@ -37,8 +40,19 @@ export interface networkList extends ResponseData {
   pagination: Pagination
 }
 
+export interface networkConfigList extends ResponseData {
+  data: NetworkConfig[]
+  pagination: Pagination
+}
+
 export interface storageList extends ResponseData {
   data: Storage[]
+  pagination: Pagination
+}
+
+export interface storageConfigList extends ResponseData {
+  data: StorageConfig[]
+  pagination: Pagination
 }
 
 export interface instanceList extends ResponseData {

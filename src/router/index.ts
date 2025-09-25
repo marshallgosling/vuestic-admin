@@ -39,24 +39,41 @@ const routes: Array<RouteRecordRaw> = [
       {
         name: 'networks',
         path: 'networks',
-        component: () => import('../pages/networks/NetworksPage.vue'),
+        component: RouteViewComponent,
+        children: [
+          {
+            name: 'network-config',
+            path: 'network-config',
+            component: () => import('../pages/networks/ConfigPage.vue'),
+          },
+          {
+            name: 'network-ip',
+            path: 'network-ip',
+            component: () => import('../pages/networks/StaticIpPage.vue'),
+          },
+        ],
+      },
+      {
+        name: 'storages',
+        path: 'storages',
+        component: RouteViewComponent,
+        children: [
+          {
+            name: 'storage-config',
+            path: 'storage-config',
+            component: () => import('../pages/storages/ConfigPage.vue'),
+          },
+          {
+            name: 'storage-block',
+            path: 'storage-block',
+            component: () => import('../pages/storages/StorageBlock.vue'),
+          },
+        ],
       },
       {
         name: 'keypairs',
         path: 'keypairs',
         component: () => import('../pages/keypairs/KeysPage.vue'),
-      },
-      {
-        name: 'tools',
-        path: '/tools',
-        component: RouteViewComponent,
-        children: [
-          {
-            name: 'tools-dialog',
-            path: 'tools-dialog',
-            component: () => import('../pages/deepseek/demo.vue'),
-          },
-        ],
       },
       {
         name: 'payments',

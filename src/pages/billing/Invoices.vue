@@ -27,7 +27,9 @@
             <BillingStatusBadge :status="item.status" />
           </div>
           <div class="w-20">
-            <VaButton preset="primary" size="small" @click="download(item)">{{ t('billing.download') }}</VaButton>
+            <VaButton v-if="item.status < 2" preset="primary" size="small" @click="download(item)">{{
+              t('billing.download')
+            }}</VaButton>
           </div>
         </div>
         <VaDivider v-if="index !== invoices.length - 1" />

@@ -24,18 +24,6 @@
         @remove="networkToDelete = network"
         @bind="networkToBind = network"
       />
-      <div
-        class="sm:h-[114px] p-4 rounded-lg border border-dashed border-primary flex flex-col sm:flex-row items-start sm:items-center gap-4"
-        :style="{ backgroundColor: colorToRgba(getColor('primary'), 0.07) }"
-      >
-        <div class="flex flex-col gap-2 flex-grow">
-          <div class="text-lg font-bold leading-relaxed">{{ t('network.create') }}</div>
-          <div class="text-secondary text-sm leading-tight">
-            {{ t('network.help_create') }}
-          </div>
-        </div>
-        <VaButton class="flex-none w-full sm:w-auto" @click="showCreate = true">{{ t('network.create') }}</VaButton>
-      </div>
     </template>
   </div>
   <NetworkCreateModal v-if="showCreate" @close="showCreate = false" @reload="reload" />
@@ -58,7 +46,7 @@
 <script lang="ts" setup>
 import NetworkListItem from './NetworkListItem.vue'
 import { ref, unref } from 'vue'
-import { useColors } from 'vuestic-ui'
+
 import { Network } from '../../types'
 import { useToast } from 'vuestic-ui'
 import NetworkCreateModal from './NetworkCreateModal.vue'
@@ -66,11 +54,10 @@ import NetworkUpdateModal from './NetworkUpdateModal.vue'
 import NetworkBindModal from './NetworkBindModal.vue'
 import { deleteNetwork, getNetworks } from '../../../../api/network'
 import { getInstances } from '../../../../api/instance'
-import { useI18n } from 'vue-i18n'
+
 import NetworkDeleteModal from './NetworkDeleteModal.vue'
 import { Pagination } from '../../../../api/types'
 import { Sorting, Filters } from '../../../instances/types'
-const { t } = useI18n()
 
 const loading = ref(false)
 const networks = ref<Network[]>()
@@ -120,6 +107,4 @@ const remove = async (network: Network) => {
 const reload = () => {
   fetch()
 }
-
-const { getColor, colorToRgba } = useColors()
 </script>

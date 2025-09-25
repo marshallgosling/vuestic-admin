@@ -15,6 +15,8 @@ export interface InvoiceItem {
   amount: number
   duration: string
   description: string
+  price: number
+  quantity: number
   created_at: string
   updated_at: string
 }

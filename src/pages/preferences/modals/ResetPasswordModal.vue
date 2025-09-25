@@ -11,15 +11,6 @@
     <VaForm ref="form" class="space-y-6" @submit.prevent="submit">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <VaInput
-          v-model="oldPassowrd"
-          :rules="oldPasswordRules"
-          :label="t('auth.old_password')"
-          placeholder=""
-          required-mark
-          type="password"
-        />
-        <div class="hidden md:block" />
-        <VaInput
           v-model="newPassword"
           :rules="newPasswordRules"
           :label="t('auth.new_password')"
@@ -30,8 +21,8 @@
         <VaInput
           v-model="repeatNewPassword"
           :rules="repeatNewPasswordRules"
-          label="Repeat new password"
-          placeholder="Repeat new password"
+          :label="t('auth.repeat_password')"
+          :placeholder="t('auth.repeat_password')"
           required-mark
           type="password"
         />
@@ -55,8 +46,12 @@
         </div>
       </div>
       <div class="flex flex-col-reverse md:justify-end md:flex-row md:space-x-4">
-        <VaButton :style="buttonStyles" preset="secondary" color="secondary" @click="emits('cancel')"> Cancel</VaButton>
-        <VaButton :style="buttonStyles" class="mb-4 md:mb-0" type="submit" @click="submit"> Update Password</VaButton>
+        <VaButton :style="buttonStyles" preset="secondary" color="secondary" @click="emits('cancel')">
+          {{ t('vuestic.cancel') }}</VaButton
+        >
+        <VaButton :style="buttonStyles" class="mb-4 md:mb-0" type="submit" @click="submit">
+          {{ t('auth.reset_password') }}
+        </VaButton>
       </div>
     </VaForm>
   </VaModal>
@@ -71,7 +66,6 @@ import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 const store = useUserStore()
 
-const oldPassowrd = ref<string>()
 const newPassword = ref<string>()
 const repeatNewPassword = ref<string>()
 
@@ -88,13 +82,10 @@ const submit = () => {
   }
 }
 
-const oldPasswordRules = [(v: string) => !!v || t('rules.old_password_required')]
-
 const newPasswordRules = [
   (v: string) => !!v || t('rules.password_required'),
   (v: string) => v?.length >= 8 || t('rules.password_length'),
   (v: string) => new Set(v).size >= 6 || t('rules.password_unique'),
-  (v: string) => v !== oldPassowrd.value || t('rules.password_same'),
 ]
 
 const repeatNewPasswordRules = [

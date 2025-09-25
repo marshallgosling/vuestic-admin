@@ -1,5 +1,6 @@
 import { Billing } from '../billing/types'
-import { Network } from '../networks/types'
+import { Network, NetworkConfig } from '../networks/types'
+import { Storage } from '../storages/types'
 
 export enum InstanceType {
   small = 'NVIDIA VRAM/GPU:24 GB,vCPUs:8,RAM:50 GiB,STORAGE:0.5 TiB SSD',
@@ -27,6 +28,17 @@ export enum Status {
   deleting,
   deleted,
   banned,
+}
+
+export const DomainStringMap: Record<string, string> = {
+  GC: 'GLOBEL COMPUTER CENTER',
+  PT: 'PT. Telkom Data Ekosistem',
+}
+
+export const ProfileStringMap: Record<string, string> = {
+  '-': '-',
+  x4large: 'NVIDIA 4 GPU vCPUs:148,RAM:1000 GiB,STORAGE:24 TiB SSD',
+  x8large: 'NVIDIA 8 GPU vCPUs:294,RAM:2000 GiB,STORAGE:48 TiB SSD',
 }
 
 export const StatusStringMap: Record<number, string> = {
@@ -99,6 +111,7 @@ export type Metadata = {
   status: Status
   cluster: string
   created_at: string
+  network: NetworkConfig
   services: Service[]
 }
 
@@ -120,15 +133,6 @@ export type EmptyInstance = Omit<
   domain: Instance['domain'] | ''
   description: Instance['description'] | ''
   instance_type: Instance['instance_type'] | ''
-}
-
-export type Storage = {
-  id: string
-  name: string
-  amount: string
-  status: Status
-  description: string
-  created_at: string
 }
 
 export type Security = {

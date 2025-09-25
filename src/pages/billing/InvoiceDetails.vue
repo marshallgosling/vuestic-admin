@@ -20,8 +20,14 @@
             <div class="w-96 font-bold">
               {{ t('billing.description') }}
             </div>
-            <div class="w-40 font-bold">
+            <div class="w-20 font-bold">
               {{ t('billing.quantity') }}
+            </div>
+            <div class="w-40 font-bold">
+              {{ t('billing.duration') }}
+            </div>
+            <div class="w-20 font-bold">
+              {{ t('billing.price') }}
             </div>
             <div class="w-40 font-bold">
               {{ t('billing.amount') }}
@@ -35,7 +41,9 @@
               </div>
 
               <div class="w-96">{{ item.description }}</div>
+              <div class="w-20">{{ item.quantity }}</div>
               <div class="w-40">{{ item.duration }}</div>
+              <div class="w-20">{{ currency }} {{ item.price }}</div>
               <div class="w-40">{{ currency }} {{ item.amount }}</div>
             </div>
             <VaDivider v-if="invoice && index !== invoice?.items.length - 1" />
