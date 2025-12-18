@@ -69,11 +69,17 @@
     "createdAt": "Created At"
   },
   "storage": {
+    "configs": "Storage Config List",
+    "blocks": "Storage Block List",
     "block": "Storage Blocks",
     "name": "Name",
     "amount": "Sizes",
     "status": "Status",
     "description": "Description",
+    "type": "Type",
+    "network": "Network",
+    "instance": "Instance",
+    "created_at": "Created At",
     "edit": "Edit",
     "delete": "Delete"
   },
@@ -103,7 +109,12 @@
   },
   "instance": {
     "instances": "AI Instances",
-    "instance": "Instances",
+    "info": "Instance information",
+    "information": "information",
+    "metadata": "Metadata",
+    "instance": "Instance",
+    "billing": "Billing",
+    "logs": "Running logs",
     "no_instance": "No Instance",
     "add": "Add",
     "save": "Save",
@@ -116,12 +127,12 @@
     "domain": "Domain",
     "type": "Instance type",
     "keypair": "Key pair",
-
+    "status": "Instance Status",
     "confirm_reboot": "Are you sure you want to reboot instance \"{name}\" ?",
     "reboot_instance": "Reboot Instance",
     "reboot": "Reboot",
     "reboot_success": "Reboot instance successfully",
-
+    "running_at": "Running at",
     "confirm_start": "Are you sure you want to start instance \"{name}\" ?",
     "start_instance": "Start Instance",
     "start": "Start",
@@ -149,7 +160,9 @@
     "select_instance": "Choose an instance",
     "add": "Add",
     "save": "Save",
-    "static_ip_list": "Static IP address"
+    "static_ip_list": "Static IP address",
+    "private_ip_list": "Private IP address",
+    "static_ipv6_list": "Static IPv6 address"
   },
   "pricing": {
     "title": "Pricing Plans",
@@ -163,8 +176,14 @@
     "yearly": "/year",
     "guidelines": "Pricing guidelines"
   },
+  "logs": {
+    "name": "Log type",
+    "flag": "flag",
+    "created_at": "created_at",
+    "results": "results"
+  },
   "confirm": {
-    "cancel": "Aree you sure you want to cancel?",
+    "cancel": "Are you sure you want to cancel?",
     "close": "close"
   },
   "auth": {
@@ -270,6 +289,11 @@
     "tools": "Tools",
     "recover-password": "Recover password",
     "recover-password-email": "Recover password email",
+    "network-ip": "Static IP Address",
+    "network-config": "Network Configuration",
+    "storages": "Storage",
+    "storage-config": "Storage Configuration",
+    "storage-block": "Storage Block",
     "404": "404",
     "faq": "FAQ",
     "users": "Users",

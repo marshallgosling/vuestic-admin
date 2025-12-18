@@ -39,7 +39,6 @@
               <div class="flex items-center w-12">
                 {{ t('billing.' + item.name) }}
               </div>
-
               <div class="w-96">{{ item.description }}</div>
               <div class="w-20">{{ item.quantity }}</div>
               <div class="w-40">{{ item.duration }}</div>

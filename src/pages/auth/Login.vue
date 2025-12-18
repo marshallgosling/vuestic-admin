@@ -74,7 +74,7 @@ const validators = {
 const submit = async () => {
   if (validate()) {
     formData.submiting = true
-    const loginUser = await login(formData.email, formData.password)
+    const loginUser = await login(formData.email, formData.password, formData.keepLoggedIn)
     if (loginUser.code == 200) {
       localStorage.setItem('token', loginUser.data.token)
       localStorage.setItem('menu', loginUser.data.user.menu)

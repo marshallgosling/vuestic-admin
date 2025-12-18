@@ -7,11 +7,11 @@ import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
 const columns = defineVaDataTableColumns([
-  { label: '名称', key: 'name', sortable: true },
-  { label: '类型', key: 'type', sortable: true },
-  { label: '网络', key: 'network', sortable: false },
-  { label: '描述', key: 'description', sortable: false },
-  { label: '状态', key: 'status', sortable: true },
+  { label: t('storage.name'), key: 'name', sortable: true },
+  { label: t('storage.type'), key: 'type', sortable: true },
+  { label: t('storage.network'), key: 'network', sortable: false },
+  { label: t('storage.description'), key: 'description', sortable: false },
+  { label: t('storage.status'), key: 'status', sortable: true },
 ])
 
 defineProps({

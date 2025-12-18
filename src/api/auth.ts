@@ -7,8 +7,8 @@ enum API {
   AUTH_FORGOT_PASSWORD = '/auth/forgot',
 }
 
-export const login = (email: string, password: string) => {
-  return request.post<any, loginUser>(API.AUTH_LOGIN_URL, { email, password })
+export const login = (email: string, password: string, remember: boolean) => {
+  return request.post<any, loginUser>(API.AUTH_LOGIN_URL, { email, password, remember })
 }
 
 export const register = (email: string, name: string, password: string) => {

@@ -96,6 +96,7 @@ export type Instance = {
   created_at: string
   key_name: string
   image_url: string
+  running_at: string
   networks: Network[]
   securities: Security[]
   billings: Billing[]
@@ -123,6 +124,7 @@ export type EmptyInstance = Omit<
   | 'networks'
   | 'storages'
   | 'created_at'
+  | 'running_at'
   | 'key_name'
   | 'securities'
   | 'billings'

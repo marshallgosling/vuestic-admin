@@ -6,13 +6,14 @@
         <div class="flex items-center w-24 font-bold">
           {{ t('billing.month') }}
         </div>
-        <div class="w-56 font-bold">
+        <div class="w-48 font-bold">
           {{ t('billing.amount') }}
         </div>
 
         <div class="w-24 font-bold">
           {{ t('billing.status') }}
         </div>
+
         <div class="w-20"></div>
       </div>
       <VaDivider />
@@ -21,11 +22,12 @@
           <div class="flex items-center w-24">
             {{ item.name }}
           </div>
-          <div class="w-56">{{ currency }} {{ item.amount }}</div>
+          <div class="w-48">{{ currency }} {{ item.amount }}</div>
 
           <div class="w-24">
             <BillingStatusBadge :status="item.status" />
           </div>
+
           <div class="w-20">
             <VaButton v-if="item.status < 2" preset="primary" size="small" @click="download(item)">{{
               t('billing.download')

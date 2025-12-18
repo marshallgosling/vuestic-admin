@@ -76,6 +76,10 @@
     "amount": "大小",
     "status": "状态",
     "description": "说明",
+    "type": "类型",
+    "network": "网络",
+    "instance": "所属实例",
+    "created_at": "创建时间",
     "edit": "编辑",
     "delete": "删除"
   },
@@ -128,7 +132,7 @@
     "reboot_instance": "重启实例",
     "reboot": "重启",
     "reboot_success": "重启实例成功",
-
+    "running_at": "启动日期",
     "confirm_start": "确认要启动实例 {name} 吗?",
     "start_instance": "启动实例",
     "start": "启动",

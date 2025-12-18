@@ -1,7 +1,7 @@
 <template>
   <VaSidebar v-model="writableVisible" :width="sidebarWidth" :color="color" minimized-width="0">
     <VaAccordion v-model="value" multiple>
-      <VaCollapse v-for="(route, index) in userRoutes" :key="index">
+      <VaCollapse v-for="(route, index) in userRoutes" :key="index" :class="{ expanded: true }">
         <template #header="{ value: isCollapsed }">
           <VaSidebarItem
             :to="route.children ? undefined : { name: route.name }"
@@ -83,7 +83,9 @@ export default defineComponent({
       set: (v: boolean) => emit('update:visible', v),
     })
 
-    const isActiveChildRoute = (child: INavigationRoute) => route.name === child.name
+    const isActiveChildRoute = (child: INavigationRoute) => {
+      return route.name === child.name
+    }
 
     const routeHasActiveChild = (section: INavigationRoute) => {
       if (!section.children) {

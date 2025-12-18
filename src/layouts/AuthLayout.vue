@@ -2,12 +2,14 @@
   <VaLayout v-if="breakpoint.lgUp" class="h-screen bg-[var(--va-background-secondary)]">
     <template #left>
       <RouterLink
-        class="bg-primary h-full flex items-center justify-center"
-        style="width: 35vw"
+        class="bg-console h-full flex items-center justify-center"
+        style="width: 45vw"
         to="/"
         aria-label="Visit homepage"
       >
-        <CenturyLogo :height="28" start="#FFF" />
+        <div
+          style="width: 376px; height: 119px; background: url(/console/logo-l.png) no-repeat; background-size: cover"
+        ></div>
       </RouterLink>
     </template>
     <template #content>

@@ -15,7 +15,8 @@ const columns = defineVaDataTableColumns([
   { label: t('instance.type'), key: 'type', sortable: true },
   { label: t('instance.domain'), key: 'domain', sortable: false },
   { label: t('network.private_ip_list'), key: 'private', sortable: false },
-  { label: t('network.static_ip_list'), key: 'static', sortable: false },
+  //{ label: t('network.static_ip_list'), key: 'static', sortable: false },
+  { label: t('instance.running_at'), key: 'running', sortable: false },
   { label: t('instance.status'), key: 'status', sortable: true },
   { label: t('instance.description'), key: 'description', sortable: true },
   { label: ' ', key: 'actions' },
@@ -101,9 +102,9 @@ const sortingOrderVModel = useVModel(props, 'sortingOrder', emit)
         {{ instance.networks[0]?.ip ?? '-' }}
       </div>
     </template>
-    <template #cell(static)="{ rowData: instance }">
+    <template #cell(running)="{ rowData: instance }">
       <div class="flex items-center gap-2 ellipsis max-w-[130px]">
-        {{ instance.networks[1]?.ip ?? '-' }}
+        {{ instance.running_at ?? '-' }}
       </div>
     </template>
     <template #cell(status)="{ rowData: instance }">

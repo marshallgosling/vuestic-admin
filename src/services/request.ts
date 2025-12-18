@@ -54,7 +54,7 @@ request.interceptors.response.use(
     const status = error.response.status
     switch (status) {
       case 401:
-        message = 'TOKEN过期'
+        //message = 'TOKEN过期'
         localStorage.removeItem('token')
         //push({ name: 'login'} )
         window.location.href = '/console/auth/login'
@@ -72,8 +72,8 @@ request.interceptors.response.use(
         message = '网络出现问题'
         break
     }
-    // //提示错误信息
-    init({ message: message, color: 'error' })
+    // 提示错误信息
+    if (message) init({ message: message, color: 'error' })
 
     return Promise.reject(error)
   },

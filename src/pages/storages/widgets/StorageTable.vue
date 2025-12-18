@@ -9,11 +9,11 @@ import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 const columns = defineVaDataTableColumns([
   { label: 'ID', key: 'id', sortable: true },
-  { label: '名称', key: 'name', sortable: true },
-  { label: '大小', key: 'amount', sortable: true },
-  { label: '状态', key: 'status', sortable: true },
-  { label: '所属实例', key: 'instance', sortable: false },
-  { label: '创建日期', key: 'created_at', sortable: true },
+  { label: t('storage.name'), key: 'name', sortable: true },
+  { label: t('storage.amount'), key: 'amount', sortable: true },
+  { label: t('storage.status'), key: 'status', sortable: true },
+  { label: t('storage.instance'), key: 'instance', sortable: false },
+  { label: t('storage.created_at'), key: 'created_at', sortable: true },
   { label: ' ', key: 'actions' },
 ])
 
