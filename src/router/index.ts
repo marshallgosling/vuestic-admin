@@ -11,7 +11,7 @@ const routes: Array<RouteRecordRaw> = [
     redirect: { name: 'instances' },
   },
   {
-    name: 'console',
+    name: 'cmi',
     path: '/',
     component: AppLayout,
     redirect: { name: 'instances' },

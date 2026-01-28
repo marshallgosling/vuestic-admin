@@ -187,7 +187,7 @@
     "close": "close"
   },
   "auth": {
-    "console": "Login to Console",
+    "console": "Login to CMI",
     "not_a_member": "No a member ?",
     "already_a_member": "Already a member ?",
     "sign_up_rightnow": "Signup right now",

@@ -57,7 +57,7 @@ request.interceptors.response.use(
         //message = 'TOKEN过期'
         localStorage.removeItem('token')
         //push({ name: 'login'} )
-        window.location.href = '/console/auth/login'
+        window.location.href = '/cmi/auth/login'
         break
       case 403:
         message = '无权访问'
