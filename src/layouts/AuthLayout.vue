@@ -8,7 +8,7 @@
         aria-label="Visit homepage"
       >
         <div
-          style="width: 376px; height: 119px; background: url(/console/logo-l.png) no-repeat; background-size: cover"
+          style="width: 376px; height: 119px; background: url(/console/mcloud_logo.png) no-repeat; background-size: cover"
         ></div>
       </RouterLink>
     </template>

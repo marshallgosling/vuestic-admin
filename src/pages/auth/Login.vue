@@ -46,7 +46,7 @@
 <script lang="ts" setup>
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
-import { useForm, useToast } from 'vuestic-ui'
+import { useForm, useToast, VaButton, VaCheckbox, VaForm, VaIcon, VaInput, VaValue } from 'vuestic-ui'
 import { login } from '../../api/auth'
 import { useI18n } from 'vue-i18n'
 
